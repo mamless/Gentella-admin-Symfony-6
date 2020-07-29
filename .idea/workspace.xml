@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="03cfbe4d-8c7f-4d5b-a039-f6de4f091cb8" name="Default Changelist" comment="" />
+    <list default="true" id="03cfbe4d-8c7f-4d5b-a039-f6de4f091cb8" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/admin/main.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/main.html.twig" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -122,18 +125,25 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1595967621788</updated>
-      <workItem from="1595967624264" duration="7598000" />
+      <workItem from="1595967624264" duration="7922000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="2" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <option name="LAST_COMMIT_MESSAGE" value="" />
+  </component>
   <component name="WindowStateProjectService">
     <state x="275" y="22" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1596023254579">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="275" y="22" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1596023254579" />
+    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1596029850112">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1596029850112" />
     <state width="196" height="457" key="HiddenNamespacesPopup" timestamp="1596023329619">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
