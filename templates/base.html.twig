@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+
+        <title>{% block title %}Bienvenue{% endblock %}</title>
+        {% block metas %}
+            <meta charset="UTF-8">
+        {% endblock %}
+        {% block stylesheets %}
+        {% endblock %}
+    </head>
+    <body {% block bodyclass %}class="" {% endblock %}>
+
+        {% block impersionate %}
+            {% if is_granted('IS_IMPERSONATOR') %}
+            <div class="alert alert-warning" style="margin-bottom: 0;">
+                Vous êtes connecté en tant que : {{ app.user.username }}
+                <a href="{{ path('app_admin_index',{'_switch_user':'_exit'}) }}">Quitter l'impersonnation</a>
+            </div>
+            {% endif %}
+        {% endblock %}
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

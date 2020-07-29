@@ -1,0 +1,3 @@
+[01-Jul-2020 10:04:36 UTC] PHP Warning:  require(/home/ontecgfz/public_html/../../symfony/vendor/autoload.php): failed to open stream: No such file or directory in /home/ontecgfz/public_html/caac_cine/index.php on line 8
+[01-Jul-2020 10:04:36 UTC] PHP Warning:  require(/home/ontecgfz/public_html/../../symfony/vendor/autoload.php): failed to open stream: No such file or directory in /home/ontecgfz/public_html/caac_cine/index.php on line 8
+[01-Jul-2020 10:04:36 UTC] PHP Fatal error:  require(): Failed opening required '/home/ontecgfz/public_html/../../symfony/vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home/ontecgfz/public_html/caac_cine/index.php on line 8
