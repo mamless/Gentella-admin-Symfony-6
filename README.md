@@ -9,11 +9,11 @@ Gentelella A skeleton application with user account functionality on the foundat
 
 
 # **Features**
-Administration Dashboard with Gentelella Admin Theme
-Responsive Layout
-Bootstrap 4 
-USER/ROLES CRUD with ajax and symfony form system 
-Authentication system
+Administration Dashboard with Gentelella Admin Theme \n 
+Responsive Layout \n
+Bootstrap 4 \n
+USER/ROLES CRUD with ajax and symfony form system\n 
+Authentication system \n
 
 #**Credits**
 [Gentelella](https://github.com/ColorlibHQ/gentelella) - Admin template project is developed and maintained by [Colorlib](https://colorlib.com/ "Colorlib - Make Your First Blog") and Aigars Silkalns
