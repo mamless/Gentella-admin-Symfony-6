@@ -10,14 +10,17 @@ security:
                 class: App\Entity\User
                 property: username
     role_hierarchy:
-        ROLE_SUPERUSER: [ROLE_ADMIN, ROLE_MANAGER,ROLE_ALLOWED_TO_SWITCH,ROLE_PREMIUM_USER,ROLE_FREE_USER]
-        ROLE_EDITORIAL: [ROLE_ADMIN,ROLE_WRITER,ROLE_PREMIUM_USER,ROLE_FREE_USER]
+        ROLE_SUPERUSER: [ROLE_ADMINISTRATOR , ROLE_EDITORIAL]
+        ROLE_ADMINISTRATOR: [ROLE_ADMIN, ROLE_MANAGER,ROLE_ALLOWED_TO_SWITCH,ROLE_PREMIUM_USER,ROLE_FREE_USER]
+        ROLE_EDITORIAL: [ROLE_ADMIN,ROLE_WRITER,ROLE_PUBLISHER,ROLE_PREMIUM_USER,ROLE_FREE_USER]
         ROLE_USER: [ROLE_FREE_USER]
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+            pattern: ^/
+            user_checker: App\Security\UserChecker
             anonymous: true
             lazy: true
             provider: app_user_provider

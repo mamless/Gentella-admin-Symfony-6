@@ -100,7 +100,82 @@
     <script src="{{ asset('vendors/jquery.tagsinput/src/jquery.tagsinput.js') }}"></script>
 
     <script>
-        var dataminetables = $('.dataminetables').DataTable();
+        var dataminetables = $('.dataminetables').dataTable({
+            "columnDefs": [
+                {"orderable": false, "targets": 0}
+            ]
+        });
+
+        var datasorttables = $('.dataminetables').DataTable();
+
+        $(document).on("click",".activate-link",function (e) {
+            /*$(".activate-link").click(function(e) {*/
+            e.preventDefault();
+            var btn = $(this);
+            var link = $(this).attr("href");
+            $.ajax({
+                url: link,
+                method: 'POST',
+                success: function(data){
+                    if(data.message=="success"){
+                        if(data.value===true){
+                            btn.removeClass("btn-success");
+                            btn.removeClass("btn-warning");
+                            btn.addClass("btn-success");
+                            btn.html("<i class=\"fa fa-check\"></i>");
+                            notif("success","Reussi","Activée");
+                        }else if(data.value===false) {
+                            btn.removeClass("btn-success");
+                            btn.removeClass("btn-warning");
+                            btn.addClass("btn-warning");
+                            btn.html("<i class=\"fa fa-times\"></i>");
+                            notif("warning","Reussi","Desactivée");
+                        }
+
+
+                    }else {
+                        notif("error","Erreur","Une erreur innatendue est survenue.");
+                    }
+                },
+                error: function(xhr){
+                    notif("error","Erreur","Une erreur innatendue est survenue");
+                }
+            });
+        });
+
+        $(document).on("click",".del-link",function (e) {
+            /*$(".activate-link").click(function(e) {*/
+            e.preventDefault();
+            if(confirm("Voulez vous vraiment supprimer ?")){
+                var btn = $(this);
+                var link = $(this).attr("href");
+                $.ajax({
+                    url: link,
+                    method: 'POST',
+                    success: function(data){
+                        if(data.message=="success"){
+                            if(data.value===true){
+                                notif("success","Reussi","Suprimmé");
+                                // Get the position of the current data from the node
+                                var aPos = dataminetables.fnGetPosition( btn.closest('tr').get(0) );
+                                // Delete the row
+                                dataminetables.fnDeleteRow(aPos);
+                            }else if(data.value===false) {
+                                notif("warning","Erreur","Une erreur innatendue est survenue.");
+                            }
+
+
+                        }else {
+                            notif("error","Erreur","Une erreur innatendue est survenue.");
+                        }
+                    },
+                    error: function(xhr){
+                        notif("error","Erreur","Une erreur innatendue est survenue");
+                    }
+                });
+            }
+        });
+
 
         function notif(type,titre,text) {
             new PNotify({
@@ -113,7 +188,63 @@
         // transform all select
         $('select').selectpicker();
 
+        $('#select_all').click(function() {
+            if ($(this).is(':checked')) {
+                $('.chkgrp').prop('checked', true);
+            } else {
+                $('.chkgrp').prop('checked', false);
+            }
+        });
 
+        $("#grpaction").submit(function (e) {
+            e.preventDefault();
+            var ids = [];
+            var action = $("#action_select").val();
+
+            datasorttables.rows().every(function (rowIdx, tableLoop, rowLoop) {
+                var data = this.node();
+                if ($(data).find("input[name='chkgrp\[\]']").prop('checked')) {
+                    ids.push($(this.data()[0]).val());
+                }
+            });
+            if (ids.length === 0){
+                alert("Aucun article selectionné");
+            }else if (action === ""){
+                alert("Selectionner une action")
+            } else {
+                if (confirm("Veuillez confirmer votre action ?")){
+                    var link = $(this).attr("action");
+                    ;
+                    $.ajax({
+                        url: link,
+                        method: 'POST',
+                        data : {
+                            action:action,
+                            ids:ids
+                        },
+                        success: function(data){
+                            if(data.message==="success"){
+                                notif("success","Reussi",data.nb +" element(s) " +action);
+                                setTimeout(window.location.reload(), 2000);
+                            }else {
+                                $(".main_container").prepend(data);
+                                notif("error","Erreur","Une erreur innatendue est survenue.");
+                            }
+                        },
+                        error: function(xhr){
+                            notif("error","Erreur","Une erreur innatendue est survenue");
+                        }
+                    });
+                }
+            }
+        });
+
+        $("body").on('DOMSubtreeModified', ".dataTables_info", function () {
+
+            if ($("#select_all").is(':checked')) {
+                $('#select_all').prop('checked', false);
+            }
+        });
 
     </script>
 

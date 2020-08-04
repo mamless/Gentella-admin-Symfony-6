@@ -3,13 +3,16 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(fields={"username"})
+ * @UniqueEntity(fields={"email"})
  */
 class User implements UserInterface
 {
@@ -22,6 +25,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\NotBlank( message="Ne doit pas être vide")
      */
     private $username;
 
@@ -32,11 +36,14 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="Ne doit pas être vide")
      */
     private $nomComplet;
 
     /**
      * @ORM\Column(type="string", length=100, unique=true)
+     * @Assert\NotBlank(message="Ne doit pas être vide")
+     * @Assert\Email(message="Email invalide")
      */
     private $email;
 
@@ -51,14 +58,14 @@ class User implements UserInterface
     private $deleted;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255))
      */
     private $password;
 
 
     public function __construct()
     {
-        $this->maListes = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -76,7 +83,7 @@ class User implements UserInterface
         return (string) $this->username;
     }
 
-    public function setUsername(string $username): self
+    public function setUsername($username): self
     {
         $this->username = $username;
 
@@ -132,7 +139,7 @@ class User implements UserInterface
         return $this->nomComplet;
     }
 
-    public function setNomComplet(string $nomComplet): self
+    public function setNomComplet( $nomComplet): self
     {
         $this->nomComplet = $nomComplet;
 
@@ -144,14 +151,14 @@ class User implements UserInterface
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail( $email): self
     {
         $this->email = $email;
 
         return $this;
     }
 
-    public function getValid(): ?bool
+    public function isValid(): ?bool
     {
         return $this->valid;
     }
@@ -163,7 +170,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getDeleted(): ?bool
+    public function isDeleted(): ?bool
     {
         return $this->deleted;
     }
@@ -175,7 +182,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function setPassword(string $password): self
+    public function setPassword($password): self
     {
         $this->password = $password;
 
@@ -191,5 +198,18 @@ class User implements UserInterface
         $code = dechex(crc32($this->getUsername()));
         $code = substr($code, 0, 6);
         return "#".$code;
+    }
+
+    /**
+     * @Assert\Callback
+     */
+
+    public function validate(ExecutionContextInterface $context, $payload)
+    {
+        /*if (strlen($this->password)< 3){
+            $context->buildViolation('Mot de passe trop court')
+                ->atPath('justpassword')
+                ->addViolation();
+        }*/
     }
 }

@@ -68,4 +68,20 @@ class UserRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function changeValidite(User $user){
+        if ($user->isValid())
+            $user->setValid(false);
+        else
+            $user->setValid(true);
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+        return $user;
+    }
+
+    public function delete(User $user){
+        $user->setDeleted(true);
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+        return $user;
+    }
 }

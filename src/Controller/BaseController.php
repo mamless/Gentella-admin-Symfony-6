@@ -14,5 +14,9 @@ class BaseController extends AbstractController
         return parent::getUser();
     }
 
+    protected function getId() {
+        return $this->getUser()->getId();
+    }
+
 
 }
