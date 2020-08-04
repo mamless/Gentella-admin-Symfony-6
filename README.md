@@ -1,3 +1,7 @@
+<p align="center"><img src="https://symfony.com/images/logos/header-logo.svg"></p>
+
+
+
 # **Symfony 5 backoffice with Gentella Free Bootstrap 4 Admin Dashboard Template**
 
 Gentelella A skeleton application with user account functionality on the foundation of the Symfony 5 framework, Twitter Bootstrap and Gentelella template .
@@ -22,7 +26,7 @@ Gentelella A skeleton application with user account functionality on the foundat
 
 # **Credits**
 [Gentelella](https://github.com/ColorlibHQ/gentelella) - Admin template project is developed and maintained by [Colorlib](https://colorlib.com/ "Colorlib - Make Your First Blog") and Aigars Silkalns
-
+Mamour Wane co-founder of [ONETECHSN](https://onetechsn.com)
 
 
 ## License information
