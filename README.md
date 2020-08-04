@@ -3,7 +3,7 @@
 Gentelella A skeleton application with user account functionality on the foundation of the Symfony 5 framework, Twitter Bootstrap and Gentelella template .
 
 ## Theme Demo
-[Gentelella Bootstrap Admin Template](https://cdn.colorlib.com/wp/wp-content/uploads/sites/2/gentelella-admin-template-preview.jpg 
+![Gentelella Bootstrap Admin Template](https://cdn.colorlib.com/wp/wp-content/uploads/sites/2/gentelella-admin-template-preview.jpg 
 "Gentelella Theme Browser Preview")
 **[Template Demo](https://colorlib.com/polygon/gentelella/index.html)**
 
