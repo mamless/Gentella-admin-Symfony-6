@@ -26,8 +26,7 @@ Gentelella A skeleton application with user account functionality on the foundat
 
 # **Credits**
 [Gentelella](https://github.com/ColorlibHQ/gentelella) - Admin template project is developed and maintained by [Colorlib](https://colorlib.com/ "Colorlib - Make Your First Blog") and Aigars Silkalns
-Mamour Wane co-founder of [ONETECHSN](https://onetechsn.com)
-
+Mamour Wane (Mamless) co-founder of [ONETECHSN](https://onetechsn.com)
 
 ## License information
 Gentelella is licensed under The MIT License (MIT). Which means that you can use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software. But you always need to state that Colorlib is the original author of this template.
