@@ -5,6 +5,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/a61523c1-d381-4c1f-913b-87a4ddfc9951.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/a61523c1-d381-4c1f-913b-87a4ddfc9951.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UserController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/admincontroller.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AdminController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/.gitignore" beforeDir="false" />
@@ -170,7 +171,7 @@
       <updated>1595967621788</updated>
       <workItem from="1595967624264" duration="32359000" />
       <workItem from="1596311256000" duration="88525000" />
-      <workItem from="1596939844973" duration="8162000" />
+      <workItem from="1596939844973" duration="8936000" />
     </task>
     <task id="LOCAL-00001" summary="symfony 5 security only only 29/07/2020">
       <created>1596029872627</created>
