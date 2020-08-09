@@ -3,8 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -14,7 +17,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @UniqueEntity(fields={"username"})
  * @UniqueEntity(fields={"email"})
  */
-class User implements UserInterface
+class User implements UserInterface, EquatableInterface
 {
     /**
      * @ORM\Id()
@@ -62,10 +65,32 @@ class User implements UserInterface
      */
     private $password;
 
+    /**
+     * @ORM\OneToMany(targetEntity=BlogPost::class, mappedBy="author")
+     */
+    private $blogPosts;
+
+    /**
+     * @ORM\OneToMany(targetEntity=BlogPost::class, mappedBy="creator")
+     */
+    private $blogPostsCreated;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $admin;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Historique::class, mappedBy="user")
+     */
+    private $historiques;
+
 
     public function __construct()
     {
-
+        $this->blogPosts = new ArrayCollection();
+        $this->blogPostsCreated = new ArrayCollection();
+        $this->historiques = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -211,5 +236,123 @@ class User implements UserInterface
                 ->atPath('justpassword')
                 ->addViolation();
         }*/
+    }
+
+    /**
+     * @return Collection|BlogPost[]
+     */
+    public function getBlogPosts(): Collection
+    {
+        return $this->blogPosts;
+    }
+
+    public function addBlogPost(BlogPost $blogPost): self
+    {
+        if (!$this->blogPosts->contains($blogPost)) {
+            $this->blogPosts[] = $blogPost;
+            $blogPost->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBlogPost(BlogPost $blogPost): self
+    {
+        if ($this->blogPosts->contains($blogPost)) {
+            $this->blogPosts->removeElement($blogPost);
+            // set the owning side to null (unless already changed)
+            if ($blogPost->getAuthor() === $this) {
+                $blogPost->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|BlogPost[]
+     */
+    public function getBlogPostsCreated(): Collection
+    {
+        return $this->blogPostsCreated;
+    }
+
+    public function addBlogPostsCreated(BlogPost $blogPostsCreated): self
+    {
+        if (!$this->blogPostsCreated->contains($blogPostsCreated)) {
+            $this->blogPostsCreated[] = $blogPostsCreated;
+            $blogPostsCreated->setCreator($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBlogPostsCreated(BlogPost $blogPostsCreated): self
+    {
+        if ($this->blogPostsCreated->contains($blogPostsCreated)) {
+            $this->blogPostsCreated->removeElement($blogPostsCreated);
+            // set the owning side to null (unless already changed)
+            if ($blogPostsCreated->getCreator() === $this) {
+                $blogPostsCreated->setCreator(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return "$this->nomComplet ($this->id)";
+    }
+
+    public function isAdmin(): ?bool
+    {
+        return $this->admin;
+    }
+
+    public function setAdmin(bool $admin): self
+    {
+        $this->admin = $admin;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Historique[]
+     */
+    public function getHistoriques(): Collection
+    {
+        return $this->historiques;
+    }
+
+    public function addHistorique(Historique $historique): self
+    {
+        if (!$this->historiques->contains($historique)) {
+            $this->historiques[] = $historique;
+            $historique->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHistorique(Historique $historique): self
+    {
+        if ($this->historiques->contains($historique)) {
+            $this->historiques->removeElement($historique);
+            // set the owning side to null (unless already changed)
+            if ($historique->getUser() === $this) {
+                $historique->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+
+    public function isEqualTo(UserInterface $user)
+    {
+        if ($user instanceof User)
+        return $this->isValid() && !$this->isDeleted() && $this->getPassword() == $user->getPassword() && $this->getUsername() == $user->getUsername()
+            && $this->getEmail() == $user->getEmail() ;
     }
 }

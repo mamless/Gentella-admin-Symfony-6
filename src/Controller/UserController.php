@@ -53,7 +53,7 @@ class UserController extends BaseController
      */
     public function users(){
         $users = $this->userRepository->findAll();
-        return $this->render("admin/user.html.twig",["users"=>$users]);
+        return $this->render("admin/user/user.html.twig",["users"=>$users]);
     }
 
     /**
@@ -71,6 +71,7 @@ class UserController extends BaseController
             $role = $form["role"]->getData();
             $user->setValid(true)
                 ->setDeleted(false)
+                ->setAdmin(true)
                 ->setPassword($this->passwordEncoder->encodePassword($user,$password))
                 ->setRoles([$role->getRoleName()]);
             $this->entityManager->persist($user);
@@ -79,7 +80,7 @@ class UserController extends BaseController
             return $this->redirectToRoute("app_admin_users");
 
         }
-        return $this->render("admin/userform.html.twig",["userForm"=>$form->createView()]);
+        return $this->render("admin/user/userform.html.twig",["userForm"=>$form->createView()]);
     }
 
     /**
@@ -106,7 +107,7 @@ class UserController extends BaseController
             return $this->redirectToRoute("app_admin_users");
 
         }
-        return $this->render("admin/userform.html.twig",["userForm"=>$form->createView()]);
+        return $this->render("admin/user/userform.html.twig",["userForm"=>$form->createView()]);
     }
 
     /**
@@ -148,7 +149,7 @@ class UserController extends BaseController
                 $user->setPassword($this->passwordEncoder->encodePassword($user,$newPassword));
             }else{
                 $this->addFlash("error","Veuiller votre mot de passe actuel");
-                return $this->render("admin/changeMdpForm.html.twig",["passwordForm"=>$form->createView()]);
+                return $this->render("admin/params/changeMdpForm.html.twig",["passwordForm"=>$form->createView()]);
             }
 
             $this->entityManager->persist($user);
@@ -157,7 +158,7 @@ class UserController extends BaseController
             return $this->redirectToRoute("app_admin_index");
 
         }
-        return $this->render("admin/changeMdpForm.html.twig",["passwordForm"=>$form->createView()]);
+        return $this->render("admin/params/changeMdpForm.html.twig",["passwordForm"=>$form->createView()]);
     }
 
     /**

@@ -8,7 +8,7 @@ use App\Repository\CategorieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-class admincontroller extends AbstractController
+class AdminController extends AbstractController
 {
 
     /**

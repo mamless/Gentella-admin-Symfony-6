@@ -30,11 +30,25 @@
                     <ul class="nav side-menu">
                         <li><a href="{{ path('app_admin_index') }}"><i class="fa fa-home"></i> Accueil</a>
                         </li>
+                        {% if is_granted("ROLE_SUPERUSER") %}
                         <li><a><i class="fa fa-user"></i> Utilisateur <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                                 <li><a href="{{ path('app_admin_users') }}">Gérer</a></li>
                             </ul>
                         </li>
+                        {% endif %}
+                        {% if is_granted("ROLE_WRITER") %}
+                        <li><a><i class="fa fa-bookmark"></i> Categorie <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a href="{{ path('app_admin_categories') }}">Gérer</a></li>
+                            </ul>
+                        </li>
+                        <li><a><i class="fa fa-clipboard"></i> Blog <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a href="{{ path('app_admin_blogPosts') }}">Gérer</a></li>
+                            </ul>
+                        </li>
+                        {% endif %}
 
                     </ul>
                 </div>

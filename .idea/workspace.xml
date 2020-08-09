@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="03cfbe4d-8c7f-4d5b-a039-f6de4f091cb8" name="Default Changelist" comment="" />
+    <list default="true" id="03cfbe4d-8c7f-4d5b-a039-f6de4f091cb8" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a61523c1-d381-4c1f-913b-87a4ddfc9951.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/a61523c1-d381-4c1f-913b-87a4ddfc9951.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/admincontroller.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AdminController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Role.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/admin/bars.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/bars.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/admin/changeMdpForm.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/params/changeMdpForm.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/admin/user.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/user/user.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/admin/userform.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/user/userform.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/adminbase.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/adminbase.html.twig" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -138,6 +152,12 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
   </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\xampppnew\htdocs\onehealth\templates\admin\params" />
+      <recent name="C:\xampppnew\htdocs\onehealth\templates\admin\user" />
+    </key>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -149,7 +169,8 @@
       <option name="presentableId" value="Default" />
       <updated>1595967621788</updated>
       <workItem from="1595967624264" duration="32359000" />
-      <workItem from="1596311256000" duration="39016000" />
+      <workItem from="1596311256000" duration="88525000" />
+      <workItem from="1596939844973" duration="8162000" />
     </task>
     <task id="LOCAL-00001" summary="symfony 5 security only only 29/07/2020">
       <created>1596029872627</created>
@@ -177,18 +198,18 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="420" y="166" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1366.728@0.0.1366.728" timestamp="1596394744063" />
-    <state x="488" y="46" key="#com.intellij.ide.util.MemberChooser" timestamp="1596388447569">
+    <state x="488" y="46" key="#com.intellij.ide.util.MemberChooser" timestamp="1596943115235">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="488" y="46" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728@0.0.1366.728" timestamp="1596388447569" />
-    <state x="340" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1596388941133">
+    <state x="488" y="46" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728@0.0.1366.728" timestamp="1596943115235" />
+    <state x="340" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1596743239842">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="340" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1366.728@0.0.1366.728" timestamp="1596388941133" />
-    <state x="413" y="119" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1596395026151">
+    <state x="340" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1366.728@0.0.1366.728" timestamp="1596743239842" />
+    <state x="413" y="119" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1596765649864">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="413" y="119" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.728@0.0.1366.728" timestamp="1596395026151" />
+    <state x="413" y="119" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.728@0.0.1366.728" timestamp="1596765649864" />
     <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1596029871554">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -197,10 +218,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state width="196" height="457" key="HiddenNamespacesPopup/0.0.1366.728@0.0.1366.728" timestamp="1596325522277" />
-    <state x="480" y="87" key="NewPhpClassDialog" timestamp="1596388393879">
+    <state x="480" y="87" key="NewPhpClassDialog" timestamp="1596743038276">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="480" y="87" key="NewPhpClassDialog/0.0.1366.728@0.0.1366.728" timestamp="1596388393879" />
+    <state x="480" y="87" key="NewPhpClassDialog/0.0.1366.728@0.0.1366.728" timestamp="1596743038276" />
     <state x="517" y="287" key="NewPhpFileDialog" timestamp="1596399712930">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -209,21 +230,25 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="582" y="241" key="com.intellij.database.actions.DdlActions$CreateObject$1/0.0.1366.728@0.0.1366.728" timestamp="1596023310875" />
+    <state x="526" y="137" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog" timestamp="1596944907095">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="526" y="137" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog/0.0.1366.728@0.0.1366.728" timestamp="1596944907095" />
     <state x="522" y="98" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog" timestamp="1596029894094">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="522" y="98" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog/0.0.1366.728@0.0.1366.728" timestamp="1596029894094" />
-    <state x="390" y="99" width="585" height="530" key="find.popup" timestamp="1596393067512">
+    <state x="390" y="99" width="585" height="530" key="find.popup" timestamp="1596725938415">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="390" y="99" width="585" height="530" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1596393067512" />
-    <state x="339" y="162" key="run.anything.popup" timestamp="1596540398573">
+    <state x="390" y="99" width="585" height="530" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1596725938415" />
+    <state x="339" y="162" key="run.anything.popup" timestamp="1596948396431">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="339" y="162" key="run.anything.popup/0.0.1366.728@0.0.1366.728" timestamp="1596540398573" />
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1596397395458">
+    <state x="339" y="162" key="run.anything.popup/0.0.1366.728@0.0.1366.728" timestamp="1596948396431" />
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1596911293514">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1596397395458" />
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1596911293514" />
   </component>
 </project>
