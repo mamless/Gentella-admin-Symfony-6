@@ -170,16 +170,16 @@
                                 // Delete the row
                                 dataminetables.fnDeleteRow(aPos);
                             }else if(data.value===false) {
-                                notif("warning","Erreur","Une erreur innatendue est survenue.");
+                                notif("warning","{{"backend.global.error"|trans }}", "{{"backend.global.an_unexpected_error"|trans }}"  );
                             }
 
 
                         }else {
-                            notif("error","Erreur","Une erreur innatendue est survenue.");
+                            notif("error","{{"backend.global.error"|trans }}", "{{"backend.global.an_unexpected_error"|trans }}"  );
                         }
                     },
                     error: function(xhr){
-                        notif("error","Erreur","Une erreur innatendue est survenue");
+                        notif("error","{{"backend.global.error"|trans }}", "{{"backend.global.an_unexpected_error"|trans }}"  );
                     }
                 });
             }
@@ -217,11 +217,11 @@
                 }
             });
             if (ids.length === 0){
-                alert("Aucun article selectionné");
+                alert("{{'backend.global.no_item_selected'|trans }}");
             }else if (action === ""){
-                alert("Selectionner une action")
+                alert("{{'backend.global.choice_action'|trans }}")
             } else {
-                if (confirm("Veuillez confirmer votre action ?")){
+                if (confirm("{{"backend.global.please_confirm"|trans }}")){
                     var link = $(this).attr("action");
                     ;
                     $.ajax({
@@ -237,11 +237,11 @@
                                 setTimeout(window.location.reload(), 2000);
                             }else {
                                 $(".main_container").prepend(data);
-                                notif("error","Erreur","Une erreur innatendue est survenue.");
+                                notif("error","{{"backend.global.error"|trans }}", "{{"backend.global.an_unexpected_error"|trans }}"  );
                             }
                         },
                         error: function(xhr){
-                            notif("error","Erreur","Une erreur innatendue est survenue");
+                            notif("error","{{"backend.global.error"|trans }}", "{{"backend.global.an_unexpected_error"|trans }}"  );
                         }
                     });
                 }

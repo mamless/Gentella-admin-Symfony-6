@@ -19,36 +19,36 @@ class UserFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->translator = $options['translator'];
+
         $builder
-            ->add("username",TextType::class,["label"=>"Nom d'utilisateur"])
-            ->add("email",EmailType::class)
-            ->add("nomComplet",TextType::class)
-            ->add("justpassword",TextType::class,[
-                "label"=>"Mot de passe",
-                "required"=>true,
-                "mapped"=>false,
-                "constraints"=>[
-                    new NotBlank(["message"=>"Ne doit pas être vide"])
+            ->add("username", TextType::class, ["label" => $this->translator->trans('backend.user.username')])
+            ->add("email", EmailType::class)
+            ->add("nomComplet", TextType::class, ["label" => $this->translator->trans('backend.user.name')])
+            ->add("justpassword", TextType::class, [
+                "label" => $this->translator->trans('backend.user.password'),
+                "required" => true,
+                "mapped" => false,
+                "constraints" => [
+                    new NotBlank(["message" => $this->translator->trans('backend.global.must_not_be_empty')])
                 ]
             ])
-            ->add("role",EntityType::class,[
-                "mapped"=>false,
-                "class"=>Role::class,
-                "required"=>true,
-                "placeholder"=>"Choisissez un role",
-                "constraints"=>[
-                    new NotBlank(["message"=>"Ne doit pas être vide"]),
+            ->add("role", EntityType::class, [
+                "mapped" => false,
+                "class" => Role::class,
+                "required" => true,
+                "placeholder" => $this->translator->trans('backend.role.choice_role'),
+                "constraints" => [
+                    new NotBlank(["message" => $this->translator->trans('backend.global.must_not_be_empty')]),
                 ]
             ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
+        $resolver->setRequired('translator');
         $resolver->setDefaults([
-            'data_class'=>User::class
+            'data_class' => User::class
         ]);
     }
-
-
-
 }
