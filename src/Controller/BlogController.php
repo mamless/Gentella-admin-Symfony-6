@@ -8,7 +8,9 @@ use App\Entity\BlogPost;
 use App\Entity\Historique;
 use App\Entity\OldPost;
 use App\Form\BlogPostFormType;
+use App\Form\OldPostFormType;
 use App\Repository\BlogPostRepository;
+use App\Repository\HistoriqueRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Container\ContainerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -27,11 +29,16 @@ class BlogController extends BaseController
      * @var EntityManagerInterface
      */
     private $entityManager;
+    /**
+     * @var HistoriqueRepository
+     */
+    private $historiqueRepository;
 
-    public function __construct(BlogPostRepository $blogPostRepository,EntityManagerInterface $entityManager)
+    public function __construct(BlogPostRepository $blogPostRepository,EntityManagerInterface $entityManager, HistoriqueRepository $historiqueRepository)
     {
         $this->blogPostRepository = $blogPostRepository;
         $this->entityManager = $entityManager;
+        $this->historiqueRepository = $historiqueRepository;
     }
 
 
@@ -248,6 +255,32 @@ class BlogController extends BaseController
     }
 
     //TODO: add image upload support
-    //TODO: add preview support for blog posts
+
+    /**
+     * @Route("/admin/blog/preview/{id}",name="app_admin_preview_blogpost")
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function preview(BlogPost $blogPost){
+        //TODO: preview page for admins
+        return $this->json(["TODO"]);
+    }
+
+    /**
+     * @Route("/admin/blog/historique/oldpost/{id}",name="app_admin_oldpost_blogPosts")
+     * @IsGranted("ROLE_EDITORIAL")
+     */
+    public function oldPost(OldPost $oldPost){
+        $form = $this->createForm(OldPostFormType::class,$oldPost);
+        return $this->render("admin/blog/oldpostform.html.twig",["oldPostForm"=>$form->createView()]);
+    }
+
+    /**
+     * @Route("/admin/blog/historiques",name="app_admin_allhistorique_blogPosts")
+     * @IsGranted("ROLE_EDITORIAL")
+     */
+    public function historiques(){
+        $historiques = $this->historiqueRepository->findAll() ;
+        return $this->render("admin/blog/fullhistorique.html.twig",["historiques"=>$historiques]);
+    }
 
 }

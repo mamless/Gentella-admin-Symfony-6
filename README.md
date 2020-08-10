@@ -18,6 +18,7 @@ Gentelella A skeleton application with user account functionality on the foundat
 - Bootstrap 4 
 - USER/ROLES CRUD with ajax and symfony form system 
 - Authentication system
+- Powerful blog management module (CRUD, Change histrory, access control for Writers and Editors )
 
 # **Requirements**
 - PHP >= 7.4
@@ -30,3 +31,10 @@ Mamour Wane (Mamless) co-founder of [ONETECHSN](https://onetechsn.com)
 
 ## License information
 Gentelella is licensed under The MIT License (MIT). Which means that you can use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software. But you always need to state that Colorlib is the original author of this template.
+
+# **SETUP**
+You will need to import the **datas.sql** in your database to access the app with :
+- Username : "frcho" 
+- Password : "password"
+
+**ENJOY**

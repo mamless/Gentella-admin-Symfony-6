@@ -46,6 +46,9 @@
                         <li><a><i class="fa fa-clipboard"></i> Blog <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                                 <li><a href="{{ path('app_admin_blogPosts') }}">Gérer</a></li>
+                                {% if is_granted("ROLE_EDITORIAL") %}
+                                <li><a href="{{ path('app_admin_allhistorique_blogPosts') }}">Historiques</a></li>
+                                {% endif %}
                             </ul>
                         </li>
                         {% endif %}

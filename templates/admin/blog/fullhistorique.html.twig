@@ -4,7 +4,7 @@
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h5><a href="{{ path('app_admin_blogPosts') }}">Listing</a> >> <a href="{{ path('app_admin_edit_blogPosts', {'id': blogPost.id}) }}">Modifié blog</a> >> Historique  </h5>
+                <h5>Historique</h5>
             </div>
         </div>
 
@@ -14,7 +14,7 @@
             <div class="col-md-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Historique des modification du post du blog</h2>
+                        <h2>Historique du blog</h2>
                         <ul class="nav navbar-right panel_toolbox">
                         </ul>
                         <div class="clearfix"></div>
@@ -23,6 +23,7 @@
                         <div class="row">
                             <table id="example" class="display table table-striped table-bordered datanotminetables" >
                                 <thead>
+                                <th>Titre</th>
                                 <th>Action</th>
                                 <th>Date</th>
                                 <th>Utilisateur</th>
@@ -30,8 +31,9 @@
                                 <th>Ancienne version</th>
                                 </thead>
                                 <tbody>
-                                {% for historique in blogPost.historiques  %}
+                                {% for historique in historiques  %}
                                     <tr>
+                                        <td>{{ historique.blogPost.titre }}</td>
                                         <td>{{ historique.action }}</td>
                                         <td>{{ historique.actionDate|date("d/m/Y h:i:s") }}</td>
                                         <td>{{ historique.user.nomComplet }} ({{ historique.user.id }})</td>
@@ -40,9 +42,9 @@
                                         </td>
                                         <td>
                                             {% if historique.oldPost %}
-                                            <a class="btn btn-warning" href="{{ path('app_admin_oldpost_blogPosts', {'id': historique.oldPost.id}) }}">
-                                                <i class="fa fa-eye"></i>
-                                            </a>
+                                                <a class="btn btn-warning" href="{{ path('app_admin_oldpost_blogPosts', {'id': historique.oldPost.id}) }}">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
                                             {% endif %}
                                         </td>
                                     </tr>

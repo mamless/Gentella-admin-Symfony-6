@@ -43,14 +43,18 @@ class Historique
     private $blogPost;
 
     /**
-     * @ORM\ManyToOne(targetEntity=OldPost::class)
+     * @ORM\OneToOne(targetEntity=OldPost::class, inversedBy="historique", cascade={"persist", "remove"})
      */
     private $oldPost;
 
-    public function getId(): ?int
+    /**
+     * @return mixed
+     */
+    public function getId()
     {
         return $this->id;
     }
+
 
     public function getUser(): ?User
     {
@@ -112,4 +116,5 @@ class Historique
 
         return $this;
     }
+
 }

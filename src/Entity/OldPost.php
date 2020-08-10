@@ -61,6 +61,11 @@ class OldPost
      */
     private $image;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Historique::class, mappedBy="oldPost", cascade={"persist", "remove"})
+     */
+    private $historique;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -187,6 +192,24 @@ class OldPost
     public function setImage(string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getHistorique(): ?Historique
+    {
+        return $this->historique;
+    }
+
+    public function setHistorique(?Historique $historique): self
+    {
+        $this->historique = $historique;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newOldPost = null === $historique ? null : $this;
+        if ($historique->getOldPost() !== $newOldPost) {
+            $historique->setOldPost($newOldPost);
+        }
 
         return $this;
     }
