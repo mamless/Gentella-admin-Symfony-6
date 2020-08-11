@@ -4,7 +4,7 @@
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Changer de mot de passe</h3>
+                <h3>{{ "backend.user.changer_password"|trans }}</h3>
             </div>
 
         </div>
@@ -15,7 +15,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Changer mon mot de passe</h2>
+                        <h2>{{ "backend.user.changer_my_password"|trans }}</h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                             </li>
@@ -30,8 +30,8 @@
                         <div class="ln_solid"></div>
                         <div class="item form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                <a class="btn btn-warning" href="{{ path('app_admin_index') }}">Annuler</a>
-                                <button type="submit" name="valider" class="btn btn-success">Enregistrer</button>
+                                <a class="btn btn-warning" href="{{ path('app_admin_index') }}">{{ "backend.user.cancel"|trans }}</a>
+                                <button type="submit" name="valider" class="btn btn-success">{{ "backend.user.register"|trans }}</button>
                             </div>
                         </div>
                         {{ form_end(passwordForm) }}

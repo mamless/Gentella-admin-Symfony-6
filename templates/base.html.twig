@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
     <head>
-
-        <title>{% block title %}Bienvenue{% endblock %}</title>
+        <title>{% block title %}{{ "backend.global.welcome"|trans }}{% endblock %}</title>
         {% block metas %}
             <meta charset="UTF-8">
         {% endblock %}
@@ -14,8 +13,8 @@
         {% block impersionate %}
             {% if is_granted('IS_IMPERSONATOR') %}
             <div class="alert alert-warning" style="margin-bottom: 0;">
-                Vous êtes connecté en tant que : {{ app.user.username }}
-                <a href="{{ path('app_admin_index',{'_switch_user':'_exit'}) }}">Quitter l'impersonnation</a>
+                {{ "backend.global.you_are_logged"|trans }} : {{ app.user.username }}
+                <a href="{{ path('app_admin_index',{'_switch_user':'_exit'}) }}">{{ "backend.global.leave_impersonate"|trans }}</a>
             </div>
             {% endif %}
         {% endblock %}
