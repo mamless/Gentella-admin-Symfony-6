@@ -17,6 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Constraints\File;
 
+
 class BlogPostFormType extends AbstractType
 {
     /**
