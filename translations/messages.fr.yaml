@@ -1,0 +1,48 @@
+backend:
+  global:
+    welcome: Bienvenue
+    you_are_logged: Vous êtes connecté en tant que
+    leave_impersonate: Quitter l'impersonnation
+    change_my_password: Changer mon mot de passe
+    logout: Deconnexion
+    error: Erreur
+    success: Success
+    an_unexpected_error: Une erreur innatendue est survenue
+    must_not_be_empty: Ne doit pas être vide
+    please_confirm: Veuillez confirmer votre action?
+    choice_action: Selectionner une action
+    no_item_selected: Aucun article selectionné
+  menu:
+    home: Accueil
+    user: Utilisateur
+    manage: Gérer
+    categories: Categorie
+    blog: Blog
+    history: Historique
+  role:
+    choice_role: Choisissez un role
+  user:
+    listing: Listing
+    user_listing: Liste des ustilisateurs
+    group_actions: Action de groupe
+    deactivate: Desactiver
+    Activate: Activer
+    delete: Suprimer
+    username: Nom d'utilisateur
+    email: Email
+    name: Nom Complet
+    modifier: Modifier
+    status: Etat ?
+    password: Mot de passe
+    cancel: Annuler
+    register: Enregistrer
+    changer_password: Changer de mot de passe
+    changer_my_password: Changer mon mot de passe
+    current_password: Mot de passe actuel
+    new_password: Nouveau mot de passe
+    confirm_password: Confirmé mot de passe
+    remember_password: Veuiller votre mot de passe actuel
+    new_passwod_must_be: Les nouveaux mot de passe doivent être identique.
+    changed_password: Mot de passe modifié
+    add_user: Utilisateur ajouté
+    modify_user: Utilisateur modifié

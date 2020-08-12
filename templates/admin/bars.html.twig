@@ -1,0 +1,107 @@
+{% extends "adminbase.html.twig" %}
+{% block bars %}
+    <div class="col-md-3 left_col menu_fixed">
+        <div class="left_col scroll-view">
+            <div class="navbar nav_title" style="border: 0;">
+                <a href="{{ path('app_admin_index') }}" class="site_title"><i class="fa fa-paw"></i> <span>ONEHEALTH</span></a>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <!-- menu profile quick info -->
+            <div class="profile clearfix">
+                <div class="profile_pic">
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <img src="{{ app.user.avatarUrl(50) }}" alt="..." class="img-circle profile_img">
+                    {% endif %}
+                </div>
+                <div class="profile_info">
+                    <span>{{ "backend.global.welcome"|trans }},</span>
+                    <h2>{{ app.user.nomComplet }}</h2>
+                </div>
+            </div>
+            <!-- /menu profile quick info -->
+
+            <br />
+
+            <!-- sidebar menu -->
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu ">
+                <div class="menu_section">
+                    <ul class="nav side-menu">
+                        <li><a href="{{ path('app_admin_index') }}"><i class="fa fa-home"></i> {{ "backend.menu.home"|trans }}</a>
+                        </li>
+                        {% if is_granted("ROLE_SUPERUSER") %}
+                        <li><a><i class="fa fa-user"></i> {{ "backend.menu.user"|trans }} <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a href="{{ path('app_admin_users') }}">{{ "backend.menu.manage"|trans }}</a></li>
+                            </ul>
+                        </li>
+                        {% endif %}
+                        {% if is_granted("ROLE_WRITER") %}
+                        <li><a><i class="fa fa-bookmark"></i>{{ "backend.menu.categories"|trans }} <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a href="{{ path('app_admin_categories') }}">{{ "backend.menu.manage"|trans }}</a></li>
+                            </ul>
+                        </li>
+                        <li><a><i class="fa fa-clipboard"></i> {{ "backend.menu.blog"|trans }} <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a href="{{ path('app_admin_blogPosts') }}">{{ "backend.menu.manage"|trans }}</a></li>
+                                {% if is_granted("ROLE_EDITORIAL") %}
+                                    <li><a href="{{ path('app_admin_allhistorique_blogPosts') }}">{{ "backend.menu.history"|trans }}</a></li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+            </div>
+            <!-- /sidebar menu -->
+
+            <!-- /menu footer buttons -->
+        </div>
+    </div>
+
+    <!-- top navigation -->
+    <div class="top_nav">
+        <div class="nav_menu">
+            <div class="nav toggle">
+                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+            </div>
+            <nav class="nav navbar-nav">
+                <ul class=" navbar-right">
+                    <li class="nav-item dropdown open" style="padding-left: 15px;">
+                        <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
+                            <img src="{{ app.user.avatarUrl(30) }}" alt="">{{ app.user.nomComplet }}
+                        </a>
+                        <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item"  href="{{ path('app_admin_changepswd') }}"><i class="fa fa-key pull-right"></i>{{ "backend.global.change_my_password"|trans }}</a>
+                            <a class="dropdown-item"  href="{{ path('app_logout') }}"><i class="fa fa-sign-out pull-right"></i>{{ "backend.global.logout"|trans }}</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <!-- /top navigation -->
+
+    <!-- page content -->
+    <div class="right_col" role="main">
+        {% for message in app.flashes("error") %}
+            <div class="alert alert-danger alert-dismissible " role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                </button>
+                <strong>{{ "backend.global.error"|trans }}</strong> {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes("success") %}
+            <div class="alert alert-success alert-dismissible " role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                </button>
+                <strong>{{ "backend.global.success"|trans }}</strong> {{ message }}
+            </div>
+        {% endfor %}
+        {% block contenpage %}{% endblock %}
+    </div>
+    <!-- /page content -->
+{% endblock %}

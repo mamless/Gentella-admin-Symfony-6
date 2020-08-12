@@ -1,0 +1,4 @@
+#parameters:
+#  APP_ENV: "prod"
+#  env(DATABASE_URL): "mysql://ontecgfz_cci:Azertyuiop1@209.99.16.245:3306/ontecgfz_cci"
+#  APP_SECRET: "a01bdb2503c86b1bb3bad2ff71c19de5"

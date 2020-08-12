@@ -1,0 +1,94 @@
+{% extends "admin/bars.html.twig" %}
+
+{% block contenpage %}
+	<div class="">
+		<div class="page-title">
+			<div class="title_left">
+				<h5>
+					{{ "backend.user.listing"|trans }}
+				</h5>
+			</div>
+		</div>
+
+		<div class="clearfix"></div>
+
+		<div class="row">
+			<div class="col-md-12">
+				<div class="x_panel">
+					<div class="x_title">
+						<h2>
+							{{ "backend.user.user_listing"|trans }}</h2>
+						<ul class="nav navbar-right panel_toolbox">
+							<li>
+								<a href="{{ path('app_admin_new_user') }}" class="btn btn-success">NEW</a>
+							</li>
+						</ul>
+						<div class="clearfix"></div>
+					</div>
+					<div class="x_content">
+						<div class="row">
+							<form action="{{ path('app_admin_groupaction_user') }}" id="grpaction" method="post" name="grpaction">
+								<div class="form-group form-inline">
+									<select class="form-control" name="action" required id="action_select">
+										<option value="">
+											{{ "backend.user.group_actions"|trans }}</option>
+										<option value="{{"backend.user.deactivate"|trans }}">
+											{{ "backend.user.deactivate"|trans }}</option>
+										<option value="{{"backend.user.Activate"|trans }}">
+											{{ "backend.user.Activate"|trans }}</option>
+										<option value="{{"backend.user.delete"|trans }}">
+											{{ "backend.user.delete"|trans }}</option>
+									</select>
+									<button class="btn btn-primary" type="submit">Go!!</button>
+								</div>
+
+							</form>
+							<table id="example" class="display table table-striped table-bordered dataminetables">
+								<thead>
+									<th><input type="checkbox" id="select_all" name="select_all"></th>
+									<th>{{ "backend.user.username"|trans }}</th>
+									<th>{{ "backend.user.email"|trans }}</th>
+									<th>{{ "backend.user.name"|trans }}</th>
+									<th>{{ "backend.user.modifier"|trans }}</th>
+									<th>{{ "backend.user.status"|trans }}</th>
+									<th>{{ "backend.user.delete"|trans }}</th>
+								</thead>
+								<tbody>
+									{% for user in users|filter(user => not user.deleted)  %}
+										<tr>
+											<td><input type="checkbox" class="chkgrp" name="chkgrp[]" value="{{ user.id }}"></td>
+											<td>{{ user.username }}</td>
+											<td>{{ user.email }}</td>
+											<td>{{ user.nomComplet }}</td>
+											<td>
+												<a class="btn btn-primary" href="{{ path('app_admin_edit_user',{"id":user.id}) }}">
+													<i class="fa fa-edit"></i>
+												</a>
+											</td>
+											<td>
+												{%  if user.valid %}
+													<a class="btn btn-success activate-link" href="{{ path('app_admin_changevalidite_user', {'id': user.id}) }}">
+														<i class="fa fa-check"></i>
+													</a>
+												{% else %}
+													<a class="btn btn-warning activate-link" href="{{ path('app_admin_changevalidite_user', {'id': user.id}) }}">
+														<i class="fa fa-times"></i>
+													</a>
+												{% endif %}
+											</td>
+											<td>
+												<a href="{{ path('app_admin_delete_user', {'id': user.id}) }}" class="btn btn-danger disable-btn del-link" type="submit">
+													<i class="fa fa-trash"></i>
+												</a>
+											</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

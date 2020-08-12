@@ -1,0 +1,62 @@
+{% extends "admin/bars.html.twig" %}
+
+{% block contenpage %}
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h5><a href="{{ path('app_admin_blogPosts') }}">Listing</a> >> <a href="{{ path('app_admin_edit_blogPosts', {'id': blogPost.id}) }}">Modifié blog</a> >> Historique  </h5>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Historique des modification du post du blog</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="row">
+                            <table id="example" class="display table table-striped table-bordered datanotminetables" >
+                                <thead>
+                                <th>Action</th>
+                                <th>Date</th>
+                                <th>{{ "backend.menu.user"|trans }}</th>
+                                <th>Undo</th>
+                                <th>Ancienne version</th>
+                                </thead>
+                                <tbody>
+                                {% for historique in blogPost.historiques  %}
+                                    <tr>
+                                        <td>{{ historique.action }}</td>
+                                        <td>{{ historique.actionDate|date("d/m/Y h:i:s") }}</td>
+                                        <td>{{ historique.user.nomComplet }} ({{ historique.user.id }})</td>
+                                        <td>
+                                            {% if historique.action != "Creation"  %}
+                                                <a href="{{ path('app_admin_historique_undo', {'id': historique.id}) }}" class="btn btn-primary">Annuler</a>
+                                            {% else %}
+                                                No action
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if historique.oldPost %}
+                                            <a class="btn btn-warning" href="{{ path('app_admin_oldpost_blogPosts', {'id': historique.oldPost.id}) }}">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

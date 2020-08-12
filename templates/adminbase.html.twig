@@ -1,0 +1,273 @@
+{% extends "base.html.twig" %}
+
+{% block metas %}
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="images/favicon.ico" type="image/ico" />
+{% endblock %}
+{% block stylesheets %}
+
+    <!-- Bootstrap -->
+    <link href="{{ asset('vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="{{ asset('vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="{{ asset('vendors/nprogress/nprogress.css') }}" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="{{ asset('vendors/iCheck/skins/flat/green.css') }}" rel="stylesheet">
+
+    <!-- bootstrap-progressbar -->
+    <link href="{{ asset('vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css') }}" rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="{{ asset('vendors/jqvmap/dist/jqvmap.min.css') }}" rel="stylesheet"/>
+
+    <!-- Custom Theme Style -->
+    <link href="{{ asset('build/css/custom.min.css') }}" rel="stylesheet">
+    <!-- Datatables -->
+    <link href="{{ asset('vendors/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
+    <!-- PNotify -->
+    <link href="{{ asset('vendors/pnotify/dist/pnotify.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendors/pnotify/dist/pnotify.buttons.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendors/pnotify/dist/pnotify.nonblock.css') }}" rel="stylesheet">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+    <!-- include summernote css/js -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block bodyclass %} class="nav-md" {% endblock %}
+{% block body %}
+    <div class="container body">
+        <div class="main_container">
+            {% block bars %}{% endblock %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <!-- jQuery -->
+    <script src="{{ asset('vendors/jquery/dist/jquery.min.js') }}"></script>
+    <!-- Bootstrap -->
+    <script src="{{ asset('vendors/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
+    <!-- FastClick -->
+    <script src="{{ asset('vendors/fastclick/lib/fastclick.js')}}"></script>
+    <!-- NProgress -->
+    <script src="{{ asset('vendors/nprogress/nprogress.js')}}"></script>
+    <!-- Chart.js -->
+    <script src="{{ asset('vendors/Chart.js/dist/Chart.min.js')}}"></script>
+    <!-- gauge.js -->
+    <script src="{{ asset('vendors/gauge.js/dist/gauge.min.js')}}"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="{{ asset('vendors/bootstrap-progressbar/bootstrap-progressbar.min.js')}}"></script>
+    <!-- iCheck -->
+    <script src="{{ asset('vendors/iCheck/icheck.min.js')}}"></script>
+    <!-- Skycons -->
+    <script src="{{ asset('vendors/skycons/skycons.js')}}"></script>
+    <!-- Flot -->
+    <script src="{{ asset('vendors/Flot/jquery.flot.js')}}"></script>
+    <script src="{{ asset('vendors/Flot/jquery.flot.pie.js')}}"></script>
+    <script src="{{ asset('vendors/Flot/jquery.flot.time.js')}}"></script>
+    <script src="{{ asset('vendors/Flot/jquery.flot.stack.js')}}"></script>
+    <script src="{{ asset('vendors/Flot/jquery.flot.resize.js')}}"></script>
+    <!-- Flot plugins -->
+    <script src="{{ asset('vendors/flot.orderbars/js/jquery.flot.orderBars.js')}}"></script>
+    <script src="{{ asset('vendors/flot-spline/js/jquery.flot.spline.min.js')}}"></script>
+    <script src="{{ asset('vendors/flot.curvedlines/curvedLines.js')}}"></script>
+    <!-- DateJS -->
+    <script src="{{ asset('vendors/DateJS/build/date.js')}}"></script>
+    <!-- JQVMap -->
+    <script src="{{ asset('vendors/jqvmap/dist/jquery.vmap.js')}}"></script>
+    <script src="{{ asset('vendors/jqvmap/dist/maps/jquery.vmap.world.js')}}"></script>
+    <script src="{{ asset('vendors/jqvmap/examples/js/jquery.vmap.sampledata.js')}}"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="{{ asset('vendors/moment/min/moment.min.js')}}"></script>
+    <script src="{{ asset('vendors/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="{{ asset('build/js/custom.min.js')}}"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="{{ asset('vendors/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('vendors/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+
+    <!-- PNotify -->
+    <script src="{{ asset('vendors/pnotify/dist/pnotify.js') }}"></script>
+    <script src="{{ asset('vendors/pnotify/dist/pnotify.buttons.js') }}"></script>
+    <script src="{{ asset('vendors/pnotify/dist/pnotify.nonblock.js') }}"></script>
+    <!-- select-custom Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+    <!-- Tagsinput -->
+    <script src="{{ asset('vendors/jquery.tagsinput/src/jquery.tagsinput.js') }}"></script>
+    <!-- Summernote -->
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <script>
+        var dataminetables = $('.dataminetables').dataTable({
+            "columnDefs": [
+                {"orderable": false, "targets": 0}
+            ]
+        });
+
+        var datasorttables = $('.dataminetables').DataTable();
+
+        var datanotminetables = $('.datanotminetables').dataTable({
+        });
+
+        var datanotsorttables = $('.datanotminetables').DataTable();
+
+
+        $(document).on("click",".activate-link",function (e) {
+            /*$(".activate-link").click(function(e) {*/
+            e.preventDefault();
+            var btn = $(this);
+            var link = $(this).attr("href");
+            $.ajax({
+                url: link,
+                method: 'POST',
+                success: function(data){
+                    if(data.message=="success"){
+                        if(data.value===true){
+                            btn.removeClass("btn-success");
+                            btn.removeClass("btn-warning");
+                            btn.addClass("btn-success");
+                            btn.html("<i class=\"fa fa-check\"></i>");
+                            notif("success","Reussi","Activée");
+                        }else if(data.value===false) {
+                            btn.removeClass("btn-success");
+                            btn.removeClass("btn-warning");
+                            btn.addClass("btn-warning");
+                            btn.html("<i class=\"fa fa-times\"></i>");
+                            notif("warning","Reussi","Desactivée");
+                        }
+
+
+                    }else {
+                        notif("error","Erreur","Une erreur innatendue est survenue.");
+                    }
+                },
+                error: function(xhr){
+                    notif("error","Erreur","Une erreur innatendue est survenue");
+                }
+            });
+        });
+
+        $(document).on("click",".del-link",function (e) {
+            /*$(".activate-link").click(function(e) {*/
+            e.preventDefault();
+            if(confirm("Voulez vous vraiment supprimer ?")){
+                var btn = $(this);
+                var link = $(this).attr("href");
+                $.ajax({
+                    url: link,
+                    method: 'POST',
+                    success: function(data){
+                        if(data.message=="success"){
+                            if(data.value===true){
+                                notif("success","Reussi","Suprimmé");
+                                // Get the position of the current data from the node
+                                var aPos = dataminetables.fnGetPosition( btn.closest('tr').get(0) );
+                                // Delete the row
+                                dataminetables.fnDeleteRow(aPos);
+                            }else if(data.value===false) {
+                                notif("warning","{{"backend.global.error"|trans }}", "{{"backend.global.an_unexpected_error"|trans }}"  );
+                            }
+
+
+                        }else {
+                            notif("error","{{"backend.global.error"|trans }}", "{{"backend.global.an_unexpected_error"|trans }}"  );
+                        }
+                    },
+                    error: function(xhr){
+                        notif("error","{{"backend.global.error"|trans }}", "{{"backend.global.an_unexpected_error"|trans }}"  );
+                    }
+                });
+            }
+        });
+
+
+        function notif(type,titre,text) {
+            new PNotify({
+                title: titre,
+                text: text,
+                type: type,
+                styling: 'bootstrap3'
+            });
+        }
+        // transform all select
+        $('select').selectpicker();
+
+        $('#select_all').click(function() {
+            if ($(this).is(':checked')) {
+                $('.chkgrp').prop('checked', true);
+            } else {
+                $('.chkgrp').prop('checked', false);
+            }
+        });
+
+        $("#grpaction").submit(function (e) {
+            e.preventDefault();
+            var ids = [];
+            var action = $("#action_select").val();
+
+            datasorttables.rows().every(function (rowIdx, tableLoop, rowLoop) {
+                var data = this.node();
+                if ($(data).find("input[name='chkgrp\[\]']").prop('checked')) {
+                    ids.push($(this.data()[0]).val());
+                }
+            });
+            if (ids.length === 0){
+                alert("{{'backend.global.no_item_selected'|trans }}");
+            }else if (action === ""){
+                alert("{{'backend.global.choice_action'|trans }}")
+            } else {
+                if (confirm("{{"backend.global.please_confirm"|trans }}")){
+                    var link = $(this).attr("action");
+                    ;
+                    $.ajax({
+                        url: link,
+                        method: 'POST',
+                        data : {
+                            action:action,
+                            ids:ids
+                        },
+                        success: function(data){
+                            if(data.message==="success"){
+                                notif("success","Reussi",data.nb +" element(s) " +action);
+                                setTimeout(window.location.reload(), 2000);
+                            }else {
+                                $(".main_container").prepend(data);
+                                notif("error","{{"backend.global.error"|trans }}", "{{"backend.global.an_unexpected_error"|trans }}"  );
+                            }
+                        },
+                        error: function(xhr){
+                            notif("error","{{"backend.global.error"|trans }}", "{{"backend.global.an_unexpected_error"|trans }}"  );
+                        }
+                    });
+                }
+            }
+        });
+
+        $("body").on('DOMSubtreeModified', ".dataTables_info", function () {
+
+            if ($("#select_all").is(':checked')) {
+                $('#select_all').prop('checked', false);
+            }
+        });
+
+        {% block summernote %}
+        $(document).ready(function() {
+            $('.summernote').summernote();
+        });
+        {% endblock  %}
+
+        $('.custom-file-input').on('change', function(event) {
+            var inputFile = event.currentTarget;
+            $(inputFile).parent()
+                .find('.custom-file-label')
+                .html(inputFile.files[0].name);
+        });
+
+    </script>
+
+{% endblock %}

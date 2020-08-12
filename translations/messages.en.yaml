@@ -1,0 +1,55 @@
+backend:
+  global:
+    welcome: Welcome
+    you_are_logged: You are logged in as
+    leave_impersonate: Leaving impersonation
+    change_my_password: Change my password
+    logout: Logout
+    error: Error
+    success: Success
+    an_unexpected_error: An unexpected error has occurred
+    must_not_be_empty: Must not be empty
+    please_confirm: Please confirm your action?
+    choice_action: Select an action
+    no_item_selected: No items selected
+  menu:
+    home: Home
+    user: User
+    manage: Manage
+    categories: Categories
+    blog: Blog
+    history: History
+  role:
+    choice_role: Choose a role
+  user:
+    listing: Listing
+    user_listing: List of users
+    group_actions: Group action
+    deactivate: Deactivate
+    Activate: Activate
+    delete: Delete
+    username: Username
+    email: Email
+    name: Full Name
+    modifier: Edit
+    status: Status
+    password: Password
+    cancel: Cancel
+    register: Register
+    changer_password: Change Password
+    changer_my_password: Change my password
+    current_password: Current password
+    new_password: New password
+    confirm_password: Confirm password
+    remember_password: Remember your current password
+    new_passwod_must_be: The new passwords must be identical.
+    changed_password: Changed password
+    add_user: Added user
+    modify_user: Modified user
+  login:
+    new_site: New to site?
+    create_acount: Create Account
+    all_rights: All Rights Reserved.
+    already_member: Already a member?
+    log_in: Log in
+
