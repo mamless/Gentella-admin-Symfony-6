@@ -14,9 +14,11 @@ Gentelella A skeleton application with user account functionality on the foundat
 - Administration Dashboard with Gentelella Admin Theme
 - Responsive Layout
 - Bootstrap 4
-- USER/ROLES CRUD with ajax and symfony form system
+- USER/ROLES CRUD with ajax and symfony form system 
+- Password reset and send email, with link to reset the password
 - Authentication system
-- Powerful blog management module (CRUD, Change histrory, access control for Writers and Editors )
+- Powerful blog management module (CRUD, Change histrory, file upload access control for Writers and Editors )
+- Translation functionality (Easy to set up whatever language you need/use)
 
 # **Requirements**
 - PHP >= 7.4
