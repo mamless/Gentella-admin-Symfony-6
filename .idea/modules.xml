@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/Gentella-admin-Symfony-5-master.iml" filepath="$PROJECT_DIR$/.idea/Gentella-admin-Symfony-5-master.iml" />
-=======
-      <module fileurl="file://$PROJECT_DIR$/.idea/caacine.iml" filepath="$PROJECT_DIR$/.idea/caacine.iml" />
->>>>>>> c3d58d04a8bf9ccf18280fc5293e1d2f81496ca4
     </modules>
   </component>
 </project>

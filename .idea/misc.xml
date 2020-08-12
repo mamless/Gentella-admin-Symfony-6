@@ -3,10 +3,4 @@
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="ES6" />
   </component>
-<<<<<<< HEAD
-=======
-  <component name="PhpEntryPointsManager">
-    <suppressed_annotations>@Route</suppressed_annotations>
-  </component>
->>>>>>> c3d58d04a8bf9ccf18280fc5293e1d2f81496ca4
 </project>
