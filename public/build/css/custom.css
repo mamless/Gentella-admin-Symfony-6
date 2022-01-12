@@ -4968,3 +4968,7 @@ ul.notifications {
 
 .calendar-exibit .calendar-table {
   padding: 0 0 4px 0; }
+div.dataTables_wrapper div.dataTables_filter {
+  text-align: right;
+  display: none;
+}

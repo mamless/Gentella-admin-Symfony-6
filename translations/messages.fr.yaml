@@ -7,6 +7,7 @@ backend:
     logout: Deconnexion
     error: Erreur
     success: Success
+    actions: Actions
     an_unexpected_error: Une erreur innatendue est survenue
     must_not_be_empty: Ne doit pas être vide
     please_confirm: Veuillez confirmer votre action?
@@ -32,6 +33,7 @@ backend:
     email: Email
     name: Nom Complet
     modifier: Modifier
+    actions: actions
     status: Etat ?
     password: Mot de passe
     cancel: Annuler

@@ -6,13 +6,16 @@ namespace App\Controller;
 
 use App\Entity\Role;
 use App\Entity\User;
+use App\Factory\ServiceFactory;
 use App\Form\ChangePwsdFormType;
 use App\Form\UserFormType;
+use App\Repository\Interfaces\UserRepositoryInterface;
 use App\Repository\RoleRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -26,12 +29,13 @@ class UserController extends BaseController
     private $entityManager;
     private $roleRepository;
 
-    public function __construct(UserRepository $userRepository, RoleRepository $roleRepository, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $entityManager)
+    public function __construct(ServiceFactory $serviceFactory, UserRepositoryInterface $userRepository, RoleRepository $roleRepository, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $entityManager)
     {
         $this->userRepository = $userRepository;
         $this->passwordEncoder = $passwordEncoder;
         $this->entityManager = $entityManager;
         $this->roleRepository = $roleRepository;
+        parent::__construct($serviceFactory);
     }
 
     public function fakepswd(Request $request)
@@ -48,15 +52,84 @@ class UserController extends BaseController
         // $user = $this->userRepository->saveUser($user);
         return $this->json(["id" => $user->getId(), "password" => $user->getPassword(), "decode" => $this->passwordEncoder->isPasswordValid($user, 1)]);
     }
-
+    /**
+     * @Route("/admin/user/index",name="app_admin_users_list")
+     *
+     *
+     */
+    public function list()
+    {
+        return $this->render("admin/user/user.html.twig");
+    }
     /**
      * @Route("/admin/user",name="app_admin_users")
-     * @IsGranted("ROLE_SUPERUSER")
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function users()
+    public function users(Request $request)
     {
-        $users = $this->userRepository->findAll();
-        return $this->render("admin/user/user.html.twig", ["users" => $users]);
+        $format = $request->get('format', false);
+        $columns = $request->get('allVisiblecolumns', []);
+
+        $length = $request->get('length');
+        $length = $length && ($length != -1) ? $length : 0;
+
+        $start = $request->get('start');
+        $start = $length ? ($start && ($start != -1) ? $start : 0) / $length : 0;
+
+        $search = $request->get('columns');
+        $order = $request->get('order', false);
+
+        $filters = [
+            'query' => $search,
+            'order' => $order
+        ];
+        if($format){
+            $start=0;
+            $length=$this->userRepository->count([]);
+        }
+        $users=$this->userRepository->search($filters, $start, $length);
+
+        $output = array(
+            'data' => [],
+            'recordsFiltered' => $users->count(),
+            'recordsTotal' => $this->userRepository->count([])
+        );
+        if($users->count()){
+            foreach ($users as $user){
+                if($user->isValid()){
+                    $status='<a class="btn btn-success activate-link" href="'.$this->generateUrl('app_admin_changevalidite_user', ['id' => $user->getId()]).'">
+														<i class="fa fa-check"></i>
+													</a>';
+                }else{
+                    $status='<a class="btn btn-warning activate-link" href="{{ path(\'app_admin_changevalidite_user\', {\'id\': user.id}) }}">
+														<i class="fa fa-times"></i>
+													</a>';
+                }
+                $action='<a class="btn btn-primary" href="'.$this->generateUrl('app_admin_edit_user', ['id' => $user->getId()]).'">
+													<i class="fa fa-edit"></i>
+												</a>
+												<a href="'.$this->generateUrl('app_admin_delete_user', ['id' => $user->getId()]).'" class="btn btn-danger disable-btn del-link" type="submit">
+													<i class="fa fa-trash"></i>
+												</a>';
+                $d = [
+                    'select_item' => '<input type="checkbox" class="checkboxes" value="' . $user->getId() . '" name="users_id[]"  />',
+                    'id' => $user->getId(),
+                    'username' => $user->getUsername(),
+                    'email' => $user->getEmail(),
+                    'nomComplet' => $user->getNomComplet(),
+                    'status' => !$format ? $status : (int)$user->isValid(),
+                    'actions' => $action,
+                ];
+                $output['data'][] = $d;
+            }
+        }
+        if(!$format){
+            return new JsonResponse($output);
+        }
+
+        return $this->getService('sf.user')->export('users', $output['data'], $columns, $format);
+
     }
 
     /**
@@ -81,7 +154,7 @@ class UserController extends BaseController
             $this->entityManager->persist($user);
             $this->entityManager->flush();
             $this->addFlash("success", $translator->trans('backend.user.add_user'));
-            return $this->redirectToRoute("app_admin_users");
+            return $this->redirectToRoute("app_admin_users_list");
         }
         return $this->render("admin/user/userform.html.twig", ["userForm" => $form->createView()]);
     }
@@ -108,18 +181,18 @@ class UserController extends BaseController
             $this->entityManager->persist($user);
             $this->entityManager->flush();
             $this->addFlash("success", $translator->trans('backend.user.modify_user'));
-            return $this->redirectToRoute("app_admin_users");
+            return $this->redirectToRoute("app_admin_users_list");
         }
         return $this->render("admin/user/userform.html.twig", ["userForm" => $form->createView()]);
     }
 
     /**
-     * @Route("/admin/user/changevalidite/{id}",name="app_admin_changevalidite_user",methods={"post"})
+     * @Route("/admin/user/changeValidity/{id}",name="app_admin_changevalidite_user",methods={"post"})
      * @IsGranted("ROLE_SUPERUSER")
      */
     public function activate(User $user)
     {
-        $user = $this->userRepository->changeValidite($user);
+        $user = $this->userRepository->changeValidity($user);
         return $this->json(["message" => "success", "value" => $user->isValid()]);
     }
 
@@ -156,8 +229,7 @@ class UserController extends BaseController
                 return $this->render("admin/params/changeMdpForm.html.twig", ["passwordForm" => $form->createView()]);
             }
 
-            $this->entityManager->persist($user);
-            $this->entityManager->flush();
+            $this->userRepository->save($user);
             $this->addFlash("success", $translator->trans('backend.user.changed_password'));
             return $this->redirectToRoute("app_admin_index");
         }
@@ -195,4 +267,5 @@ class UserController extends BaseController
         $this->entityManager->flush();
         return $this->json(["message" => "success", "nb" => count($users)]);
     }
+
 }

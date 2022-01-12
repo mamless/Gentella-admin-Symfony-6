@@ -6,13 +6,14 @@
 parameters:
     locale: 'en'
     app_locales: en|fr
-
+    sf.user.class: App\Services\UserService
+    # Entities Class
+    sf.entity.user.class: App\Entity\User
 services:
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
-
         bind:
             $projectDir: '%kernel.project_dir%'
             $uploadPath: '%kernel.project_dir%/public/images'
@@ -35,3 +36,11 @@ services:
 
     App\EventSubscriber\RedirectToLocaleSubscriber:
         arguments: ['@router', '%app_locales%', '%locale%']
+    sf.user:
+        public: true
+        class: "%sf.user.class%"
+        calls:
+            - setEntityManager: [ "@doctrine.orm.entity_manager" ]
+            - getRepository: ["%sf.entity.user.class%" ]
+            - setLogger: ['@logger']
+            - setContainer: ["@service_container"  ]
