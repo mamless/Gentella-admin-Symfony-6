@@ -1,0 +1,75 @@
+{
+  "_from": "datatables.net-zf",
+  "_id": "datatables.net-zf@1.11.4",
+  "_inBundle": false,
+  "_integrity": "sha512-F4zstEF/7ctGLwYrqgk0AJWDoL4a3Hv6CTNuADDJ7pSZNrheVsInimxohiY/wcI91TTP79yCTh+6SDQjyWowvQ==",
+  "_location": "/datatables.net-zf",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "datatables.net-zf",
+    "name": "datatables.net-zf",
+    "escapedName": "datatables.net-zf",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/datatables.net-zf/-/datatables.net-zf-1.11.4.tgz",
+  "_shasum": "34d9c254909c1042dd4bf133420ca841ba810450",
+  "_spec": "datatables.net-zf",
+  "_where": "C:\\laragon\\www\\Gentella-admin-Symfony-5\\public",
+  "author": {
+    "name": "SpryMedia Ltd",
+    "url": "http://datatables.net"
+  },
+  "bugs": {
+    "url": "https://datatables.net/forums"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "datatables.net": ">=1.11.3",
+    "jquery": ">=1.7"
+  },
+  "deprecated": false,
+  "description": "DataTables for jQuery with styling for [Foundation](https://get.foundation/)",
+  "files": [
+    "css/**/*.css",
+    "js/**/*.js",
+    "types/**/*.d.ts",
+    "images/*"
+  ],
+  "homepage": "https://datatables.net",
+  "ignore": [
+    "composer.json",
+    "datatables.json",
+    "package.json"
+  ],
+  "keywords": [
+    "Foundation",
+    "Datatables",
+    "jQuery",
+    "table",
+    "filter",
+    "sort"
+  ],
+  "license": "MIT",
+  "main": "js/dataTables.foundation.js",
+  "moduleType": [
+    "globals",
+    "amd",
+    "node"
+  ],
+  "name": "datatables.net-zf",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DataTables/Dist-DataTables-Foundation.git"
+  },
+  "style": "css/dataTables.foundation.css",
+  "types": "./types/dataTables.foundation.d.ts",
+  "version": "1.11.4"
+}

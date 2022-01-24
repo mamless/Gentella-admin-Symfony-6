@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Permission;
 use App\Entity\Role;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -34,7 +35,7 @@ class AppFixtures extends Fixture
         ];
 
         foreach ($roles as $key => $value) {
-            if (!$manager->getRepository(Role::class)->findByRoleName([$key])) {
+            if (!$manager->getRepository(Role::class)->findOneBy(['roleName'=>$key])) {
                 $role = new Role();
                 $role->setRoleName($key);
                 $role->setLibelle($value);
@@ -55,7 +56,10 @@ class AppFixtures extends Fixture
             $user->setAdmin(true);
             $manager->persist($user);
 
-            $manager->flush();
+
         }
+
+        $manager->flush();
+        return true;
     }
 }

@@ -6,13 +6,20 @@
 parameters:
     locale: 'en'
     app_locales: en|fr
-
+    sf.user.class: App\Services\UserService
+    sf.permission.class: App\Services\PermissionService
+    # Entities Class
+    sf.entity.user.class: App\Entity\User
+    sf.role.class: App\Services\RoleService
+    sf.query.class: App\Tools\Query
+    sf.user.repository.interface: App\Repository\Interfaces\UserRepositoryInterface
+    # Entities Class
+    sf.entity.role.class: App\Entity\Role
 services:
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
-
         bind:
             $projectDir: '%kernel.project_dir%'
             $uploadPath: '%kernel.project_dir%/public/images'
@@ -35,3 +42,33 @@ services:
 
     App\EventSubscriber\RedirectToLocaleSubscriber:
         arguments: ['@router', '%app_locales%', '%locale%']
+    sf.user:
+        public: true
+        class: "%sf.user.class%"
+        calls:
+            - setEntityManager: [ "@doctrine.orm.entity_manager" ]
+            - setLogger: ['@logger']
+            - setContainer: ["@service_container"  ]
+    sf.role:
+        public: true
+        class: "%sf.role.class%"
+        calls:
+            - setEntityManager: [ "@doctrine.orm.entity_manager" ]
+            - setLogger: ['@logger']
+            - setContainer: ["@service_container"  ]
+    sf.permission:
+        public: true
+        class: "%sf.permission.class%"
+        calls:
+            - setEntityManager: [ "@doctrine.orm.entity_manager" ]
+            - setLogger: ['@logger']
+            - setContainer: ["@service_container"  ]
+    sf.query:
+        public: true
+        class: "%sf.query.class%"
+        arguments: ["@doctrine.orm.entity_manager"]
+    App\Command\GeneratePermissionsCommand:
+        public: true
+        class: App\Command\GeneratePermissions
+        arguments:
+            $container: "@service_container"

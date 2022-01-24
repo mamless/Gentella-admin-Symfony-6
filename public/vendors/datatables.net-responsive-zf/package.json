@@ -1,0 +1,75 @@
+{
+  "_from": "datatables.net-responsive-zf",
+  "_id": "datatables.net-responsive-zf@2.2.9",
+  "_inBundle": false,
+  "_integrity": "sha512-h4doe/It5EdNCcAe4oAlhqRQJc3oDwcwRb1ttI8y28uGz+EnjVkhOF5uoLQIdFhTFhriWc3pSzX4D2fV3glWzw==",
+  "_location": "/datatables.net-responsive-zf",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "datatables.net-responsive-zf",
+    "name": "datatables.net-responsive-zf",
+    "escapedName": "datatables.net-responsive-zf",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/datatables.net-responsive-zf/-/datatables.net-responsive-zf-2.2.9.tgz",
+  "_shasum": "3ca569f3b512b09ca73f8cd99c641784f729d0d1",
+  "_spec": "datatables.net-responsive-zf",
+  "_where": "C:\\laragon\\www\\Gentella-admin-Symfony-5\\public",
+  "author": {
+    "name": "SpryMedia Ltd",
+    "url": "http://datatables.net"
+  },
+  "bugs": {
+    "url": "https://datatables.net/forums"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "datatables.net-responsive": "2.2.9",
+    "datatables.net-zf": "^1.10.15",
+    "jquery": ">=1.7"
+  },
+  "deprecated": false,
+  "description": "Responsive for DataTables with styling for [Foundation](https://get.foundation/)",
+  "files": [
+    "css/**/*.css",
+    "js/**/*.js"
+  ],
+  "homepage": "https://datatables.net",
+  "ignore": [
+    "composer.json",
+    "datatables.json",
+    "package.json"
+  ],
+  "keywords": [
+    "Responsive",
+    "Foundation",
+    "Datatables",
+    "jQuery",
+    "table",
+    "filter",
+    "sort"
+  ],
+  "license": "MIT",
+  "main": "js/responsive.foundation.js",
+  "moduleType": [
+    "globals",
+    "amd",
+    "node"
+  ],
+  "name": "datatables.net-responsive-zf",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DataTables/Dist-DataTables-Responsive-Foundation.git"
+  },
+  "style": "css/responsive.foundation.css",
+  "types": "./types/responsive.foundation.d.ts",
+  "version": "2.2.9"
+}
