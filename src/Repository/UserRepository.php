@@ -42,16 +42,6 @@ final class UserRepository extends BaseRepository implements UserRepositoryInter
         return $user;
     }
 
-    /**
-     * @param User $user
-     * @return User|mixed|void
-     */
-    public function deleteSafe(User $user)
-    {
-        $user->setDeleted(true);
-        $this->save($user);
-        return $user;
-    }
 
     public function search($data, $page = 0, $max = null)
     {
@@ -86,7 +76,8 @@ final class UserRepository extends BaseRepository implements UserRepositoryInter
      * @param $id
      * @return object|null
      */
-    public function find($id){
+    public function find($id)
+    {
         return $this->userRepository->find($id);
     }
 
@@ -94,14 +85,16 @@ final class UserRepository extends BaseRepository implements UserRepositoryInter
      * @param array $criteria
      * @return object|null
      */
-    public function findOneBy(array $criteria){
+    public function findOneBy(array $criteria)
+    {
         return $this->userRepository->findOneBy($criteria);
     }
 
     /**
      * @return object[]
      */
-    public function findAll(){
+    public function findAll()
+    {
         return $this->userRepository->findAll();
     }
 
@@ -112,7 +105,8 @@ final class UserRepository extends BaseRepository implements UserRepositoryInter
      * @param null $offset
      * @return object[]
      */
-    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null){
+    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+    {
         return $this->userRepository->findBy($criteria, $orderBy, $limit, $offset);
     }
 
@@ -120,7 +114,25 @@ final class UserRepository extends BaseRepository implements UserRepositoryInter
      * @param array $criteria
      * @return mixed
      */
-    public function count(array $criteria){
+    public function count(array $criteria)
+    {
         return $this->userRepository->count($criteria);
+    }
+
+    /**
+     * @param User $user
+     * @param $role
+     * @param $encodedPassword
+     * @return User|mixed
+     */
+    public function createOrUpdate(User $user, $role, $encodedPassword)
+    {
+        $user->setValid(true)
+            ->setDeleted(false)
+            ->setAdmin(true)
+            ->setPassword($encodedPassword)
+            ->setRoles([$role->getRoleName()]);
+        $this->save($user);
+        return $user;
     }
 }

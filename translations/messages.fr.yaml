@@ -16,12 +16,39 @@ backend:
   menu:
     home: Accueil
     user: Utilisateur
+    role: Role
     manage: Gérer
+    roles: Roles
+    users: Utilisateurs
+    permissions: Permissions
     categories: Categorie
     blog: Blog
     history: Historique
   role:
-    choice_role: Choisissez un role
+    choice_role: Choose a role
+    listing: Listing
+    role_listing: Liste des roles
+    delete: Suprimer
+    name: Nom de role
+    permissions: Permissions
+    actions: actions
+    choice_permissions: Choisir les permissions
+    libelle: libellé
+    add_role: Role ajouté
+    add_role_error: Quelque chose a mal tourné lors de l'ajout du role
+    modify_role: Role modifié
+  permission:
+    choice_permission: Choose a permission
+    listing: Listing
+    permission_listing: Liste des permissions
+    delete: Suprimer
+    name: Nom de permission
+    permissions: Permissions
+    actions: actions
+    choice_permissions: Choisir les permissions
+    add_permission: Permission ajouté
+    add_permission_error: Quelque chose a mal tourné lors de l'ajout du permission
+    modify_permission: Permission modifié
   user:
     listing: Listing
     user_listing: Liste des ustilisateurs
@@ -47,4 +74,5 @@ backend:
     new_passwod_must_be: Les nouveaux mot de passe doivent être identique.
     changed_password: Mot de passe modifié
     add_user: Utilisateur ajouté
+    add_user_error: Quelque chose a mal tourné lors de l'ajout de l'utilisateur
     modify_user: Utilisateur modifié

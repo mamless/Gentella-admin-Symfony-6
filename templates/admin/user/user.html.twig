@@ -76,12 +76,4 @@
     </div>
 {% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script>
-        $(function() {
-            App.setPageConfig('index_users', "{{ path('app_admin_users') }}");
-        });
-    </script>
-    <script src="{{ asset('src/js/datatables.scripts.js') }}"></script>
-{% endblock %}
+

@@ -7,6 +7,7 @@ backend:
     logout: Logout
     error: Error
     success: Success
+    actions: Actions
     an_unexpected_error: An unexpected error has occurred
     must_not_be_empty: Must not be empty
     please_confirm: Please confirm your action?
@@ -15,12 +16,37 @@ backend:
   menu:
     home: Home
     user: User
+    role: Role
     manage: Manage
+    roles: roles
+    users: users
+    permissions: permissions
     categories: Categories
     blog: Blog
     history: History
   role:
     choice_role: Choose a role
+    listing: Listing
+    role_listing: List of roles
+    delete: Delete
+    name: Role Name
+    permissions: Permissions
+    choice_permissions: Choose permissions
+    libelle: libelle
+    add_role: Added role
+    add_role_error: Something went wrong when adding role
+    modify_role: Modified role
+  permission:
+    choice_permission: Choose a permission
+    listing: Listing
+    permission_listing: List of permissions
+    delete: Delete
+    name: permission Name
+    permissions: Permissions
+    choice_permissions: Choose permissions
+    add_permission: Added permission
+    add_permission_error: Something went wrong when adding permission
+    modify_permission: Modified permission
   user:
     listing: Listing
     user_listing: List of users
@@ -45,6 +71,7 @@ backend:
     new_passwod_must_be: The new passwords must be identical.
     changed_password: Changed password
     add_user: Added user
+    add_user_error: Something went wrong when adding user
     modify_user: Modified user
   login:
     new_site: New to site?

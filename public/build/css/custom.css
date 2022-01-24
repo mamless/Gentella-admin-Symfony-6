@@ -4972,3 +4972,6 @@ div.dataTables_wrapper div.dataTables_filter {
   text-align: right;
   display: none;
 }
+div.dt-buttons {
+  width: 100%;
+}

@@ -1,19 +1,11 @@
 <?php
 
+
 namespace App\Repository\Interfaces;
 
 
-use App\Entity\User;
-
-interface UserRepositoryInterface extends BaseRepositoryInterface
+interface RoleRepositoryInterface extends BaseRepositoryInterface
 {
-
-    /**
-     * @param User $user
-     * @return mixed
-     */
-    public function changeValidity(User $user);
-
     /**
      * @param $data
      * @param int $page
@@ -50,10 +42,9 @@ interface UserRepositoryInterface extends BaseRepositoryInterface
     public function count(array $criteria);
 
     /**
-     * @param User $user
-     * @param $role
-     * @param $encodedPassword
+     * @param \App\Entity\Role $role
+     * @param $data
      * @return mixed
      */
-    public function createOrUpdate(User $user, $role,  $encodedPassword);
+    public function createOrUpdate(\App\Entity\Role $role, $data);
 }

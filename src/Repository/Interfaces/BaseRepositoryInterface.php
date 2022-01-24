@@ -19,6 +19,11 @@ interface BaseRepositoryInterface
      */
     public function delete($entity);
     /**
+     * @param $entity
+     * @return mixed
+     */
+    public function deleteSafe($entity);
+    /**
      * @param QueryBuilder $queryBuilder
      * @param $page
      * @param $max

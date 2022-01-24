@@ -2,13 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\RoleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=RoleRepository::class)
+ * Class Role
+ * @ORM\Entity()
  */
-class Role
+class Role extends Core
 {
     /**
      * @ORM\Id()
@@ -26,6 +28,17 @@ class Role
      * @ORM\Column(type="string", length=100)
      */
     private $libelle;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Permission::class, mappedBy="roles")
+     */
+    private $permissions;
+
+    public function __construct()
+    {
+        $this->permissions = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -61,5 +74,31 @@ class Role
         return $this->libelle;
     }
 
+    /**
+     * @return Collection|Permission[]
+     */
+    public function getPermissions(): Collection
+    {
+        return $this->permissions;
+    }
+
+    public function addPermission(Permission $permission): self
+    {
+        if (!$this->permissions->contains($permission)) {
+            $this->permissions[] = $permission;
+            $permission->addRole($this);
+        }
+
+        return $this;
+    }
+
+    public function removePermission(Permission $permission): self
+    {
+        if ($this->permissions->removeElement($permission)) {
+            $permission->removeRole($this);
+        }
+
+        return $this;
+    }
 
 }

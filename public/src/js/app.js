@@ -94,3 +94,105 @@ function exportList(url, format , allVisiblecolumns, lastDraw) {
         }
     });
 }
+
+$('.custom-file-input').on('change', function(event) {
+    var inputFile = event.currentTarget;
+    $(inputFile).parent()
+        .find('.custom-file-label')
+        .html(inputFile.files[0].name);
+});
+$(document).on("click",".activate-link",function (e) {
+    /*$(".activate-link").click(function(e) {*/
+    e.preventDefault();
+    var btn = $(this);
+    var link = $(this).attr("href");
+    $.ajax({
+        url: link,
+        method: 'POST',
+        success: function(data){
+            if(data.message=="success"){
+                if(data.value===true){
+                    btn.removeClass("btn-success");
+                    btn.removeClass("btn-warning");
+                    btn.addClass("btn-success");
+                    btn.html("<i class=\"fa fa-check\"></i>");
+                    notif("success","Reussi","Activée");
+                }else if(data.value===false) {
+                    btn.removeClass("btn-success");
+                    btn.removeClass("btn-warning");
+                    btn.addClass("btn-warning");
+                    btn.html("<i class=\"fa fa-times\"></i>");
+                    notif("warning","Reussi","Desactivée");
+                }
+
+
+            }else {
+                notif("error","Erreur","Une erreur innatendue est survenue.");
+            }
+        },
+        error: function(xhr){
+            notif("error","Erreur","Une erreur innatendue est survenue");
+        }
+    });
+});
+
+$(document).on("click",".del-link",function (e) {
+    /*$(".activate-link").click(function(e) {*/
+    e.preventDefault();
+    if(confirm("Voulez vous vraiment supprimer ?")){
+        var btn = $(this);
+        var link = $(this).attr("href");
+        $.ajax({
+            url: link,
+            method: 'POST',
+            success: function(data){
+                if(data.message=="success"){
+                    if(data.value===true){
+                        notif("success","Reussi","Suprimmé");
+                        // Get the position of the current data from the node
+                        var aPos = dataminetables.fnGetPosition( btn.closest('tr').get(0) );
+                        // Delete the row
+                        dataminetables.fnDeleteRow(aPos);
+                    }else if(data.value===false) {
+                        notif("warning",App.getPageConfig("global_error"), App.getPageConfig("an_unexpected_error"));
+                    }
+
+
+                }else {
+                    notif("error",App.getPageConfig("global_error"), App.getPageConfig("an_unexpected_error"));
+                }
+            },
+            error: function(xhr){
+                notif("error",App.getPageConfig("global_error"), App.getPageConfig("an_unexpected_error"));
+            }
+        });
+    }
+});
+
+
+function notif(type,titre,text) {
+    new PNotify({
+        title: titre,
+        text: text,
+        type: type,
+        styling: 'bootstrap3'
+    });
+}
+// transform all select
+$('select').selectpicker();
+
+$('#select_all').click(function() {
+    if ($(this).is(':checked')) {
+        $('.chkgrp').prop('checked', true);
+    } else {
+        $('.chkgrp').prop('checked', false);
+    }
+});
+
+
+$("body").on('DOMSubtreeModified', ".dataTables_info", function () {
+
+    if ($("#select_all").is(':checked')) {
+        $('#select_all').prop('checked', false);
+    }
+});

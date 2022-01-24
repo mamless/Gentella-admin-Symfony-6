@@ -4,14 +4,14 @@
 namespace App\Controller;
 
 
+use App\Entity\Permission;
 use App\Entity\Role;
 use App\Entity\User;
 use App\Factory\ServiceFactory;
 use App\Form\ChangePwsdFormType;
 use App\Form\UserFormType;
+use App\Repository\Interfaces\RoleRepositoryInterface;
 use App\Repository\Interfaces\UserRepositoryInterface;
-use App\Repository\RoleRepository;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,7 +29,7 @@ class UserController extends BaseController
     private $entityManager;
     private $roleRepository;
 
-    public function __construct(ServiceFactory $serviceFactory, UserRepositoryInterface $userRepository, RoleRepository $roleRepository, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $entityManager)
+    public function __construct(ServiceFactory $serviceFactory, UserRepositoryInterface $userRepository, RoleRepositoryInterface $roleRepository, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $entityManager)
     {
         $this->userRepository = $userRepository;
         $this->passwordEncoder = $passwordEncoder;
@@ -102,7 +102,7 @@ class UserController extends BaseController
 														<i class="fa fa-check"></i>
 													</a>';
                 }else{
-                    $status='<a class="btn btn-warning activate-link" href="{{ path(\'app_admin_changevalidite_user\', {\'id\': user.id}) }}">
+                    $status='<a class="btn btn-warning activate-link" href="'.$this->generateUrl('app_admin_changevalidite_user', ['id' => $user->getId()]).'">
 														<i class="fa fa-times"></i>
 													</a>';
                 }
@@ -143,16 +143,14 @@ class UserController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var  User $user */
             $user = $form->getData();
-            /** @var Role $role */
             $password = $form["justpassword"]->getData();
+            /** @var Role $role */
             $role = $form["role"]->getData();
-            $user->setValid(true)
-                ->setDeleted(false)
-                ->setAdmin(true)
-                ->setPassword($this->passwordEncoder->encodePassword($user, $password))
-                ->setRoles([$role->getRoleName()]);
-            $this->entityManager->persist($user);
-            $this->entityManager->flush();
+            $user=$this->userRepository->createOrUpdate($user, $role, $this->passwordEncoder->encodePassword($user, $password));
+            if(!$user || !$user->getId()){
+                $this->addFlash("error", $translator->trans('backend.user.add_user_error'));
+                return $this->redirectToRoute("app_admin_users_list");
+            }
             $this->addFlash("success", $translator->trans('backend.user.add_user'));
             return $this->redirectToRoute("app_admin_users_list");
         }
@@ -166,20 +164,18 @@ class UserController extends BaseController
     public function editUser(User $user, Request $request, TranslatorInterface $translator)
     {
         $form = $this->createForm(UserFormType::class, $user, ["translator" => $translator]);
-        $form->get('justpassword')->setData($user->getPassword());
-        $therole = $this->roleRepository->findOneBy(["roleName" => $user->getRoles()[0]]);
-        $form->get('role')->setData($therole);
+        $role = $this->roleRepository->findOneBy(["roleName" => $user->getRoles()[0]]);
+        $form->get('role')->setData($role);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var Role $role */
             $role = $form["role"]->getData();
             $password = $form["justpassword"]->getData();
-            $user->setRoles([$role->getRoleName()]);
-            if ($user->getPassword() != $password) {
-                $user->setPassword($this->passwordEncoder->encodePassword($user, $password));
+            $encodedPassword=$this->passwordEncoder->encodePassword($user, $password);
+            if(empty($password)){
+                $encodedPassword=$user->getPassword();
             }
-            $this->entityManager->persist($user);
-            $this->entityManager->flush();
+            $this->userRepository->createOrUpdate($user, $role, $encodedPassword);
             $this->addFlash("success", $translator->trans('backend.user.modify_user'));
             return $this->redirectToRoute("app_admin_users_list");
         }
@@ -202,7 +198,7 @@ class UserController extends BaseController
      */
     public function delete(User $user)
     {
-        $user = $this->userRepository->delete($user);
+        $user = $this->userRepository->deleteSafe($user);
         /*$this->addFlash("success","Utilisateur supprimé");
         return $this->redirectToRoute('app_admin_users');*/
         return $this->json(["message" => "success", "value" => $user->isDeleted()]);

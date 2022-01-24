@@ -1,0 +1,65 @@
+{% extends "admin/bars.html.twig" %}
+
+{% block contenpage %}
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h5>
+                    {{ "backend.permission.listing"|trans }}
+                </h5>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="x_panel">
+{#                    <div class="x_title">#}
+{#                        <h2>#}
+{#                            {{ "backend.permission.permission_listing"|trans }}</h2>#}
+{#                        <ul class="nav navbar-right panel_toolbox">#}
+{#                            <li>#}
+{#                                <a href="{{ path('app_admin_new_permission') }}" class="btn btn-success">NEW</a>#}
+{#                            </li>#}
+{#                        </ul>#}
+{#                        <div class="clearfix"></div>#}
+{#                    </div>#}
+                    <div class="x_content">
+                        <div class="row">
+{#                            <form action="{{ path('app_admin_groupaction_permission') }}" id="grpaction" method="post"#}
+{#                                  name="grpaction">#}
+{#                                <div class="form-group form-inline">#}
+{#                                    <select class="form-control" name="action" required id="action_select">#}
+{#                                        <option value="{{ "backend.permission.delete"|trans }}">#}
+{#                                            {{ "backend.permission.delete"|trans }}</option>#}
+{#                                    </select>#}
+{#                                    <button class="btn btn-primary" type="submit">Go!!</button>#}
+{#                                </div>#}
+
+{#                            </form>#}
+                            <table id="permissions-table" class="display table table-striped table-bordered dataminetables">
+                                <thead>
+                                <tr>
+                                    <th><input type="checkbox" id="select_all" name="select_all"></th>
+                                    <th>{{ "backend.permission.id"|trans }}</th>
+                                    <th>{{ "backend.permission.name"|trans }}</th>
+                                    <th>{{ "backend.permission.actions"|trans }}</th>
+                                </tr>
+                                <tr class="ignore">
+                                    <th class="filter-head checkAll"></th>
+                                    <th class="filter-head">{{ "backend.permission.id"|trans }}</th>
+                                    <th class="filter-head">{{ "backend.permission.name"|trans }}</th>
+                                    <th class="filter-head no-search"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

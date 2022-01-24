@@ -39,6 +39,17 @@ abstract class BaseRepository implements BaseRepositoryInterface
     }
 
     /**
+     * @param $entity
+     * @return mixed
+     */
+    public function deleteSafe($entity)
+    {
+        $entity->setDeleted(true);
+        $this->save($entity);
+        return $entity;
+    }
+
+    /**
      * @param QueryBuilder $queryBuilder
      * @param $page
      * @param $max

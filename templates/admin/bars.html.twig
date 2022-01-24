@@ -33,7 +33,9 @@
                         {% if is_granted("ROLE_SUPERUSER") %}
                         <li><a><i class="fa fa-user"></i> {{ "backend.menu.user"|trans }} <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
-                                <li><a href="{{ path('app_admin_users_list') }}">{{ "backend.menu.manage"|trans }}</a></li>
+                                <li><a href="{{ path('app_admin_users_list') }}">{{ "backend.menu.users"|trans }}</a></li>
+                                <li><a href="{{ path('app_admin_roles_list') }}">{{ "backend.menu.roles"|trans }}</a></li>
+                                <li><a href="{{ path('app_admin_permissions_list') }}">{{ "backend.menu.permissions"|trans }}</a></li>
                             </ul>
                         </li>
                         {% endif %}

@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @UniqueEntity(fields={"username"})
  * @UniqueEntity(fields={"email"})
  */
-class User implements UserInterface, EquatableInterface
+class User extends Core implements UserInterface, EquatableInterface
 {
     /**
      * @ORM\Id()
@@ -55,10 +55,6 @@ class User implements UserInterface, EquatableInterface
      */
     private $valid;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $deleted;
 
     /**
      * @ORM\Column(type="string", length=255))
@@ -85,12 +81,17 @@ class User implements UserInterface, EquatableInterface
      */
     private $historiques;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Permission::class, mappedBy="users")
+     */
+    private $permissions;
 
     public function __construct()
     {
         $this->blogPosts = new ArrayCollection();
         $this->blogPostsCreated = new ArrayCollection();
         $this->historiques = new ArrayCollection();
+        $this->permissions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -130,7 +131,6 @@ class User implements UserInterface, EquatableInterface
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
-
         return $this;
     }
 
@@ -191,18 +191,6 @@ class User implements UserInterface, EquatableInterface
     public function setValid(bool $valid): self
     {
         $this->valid = $valid;
-
-        return $this;
-    }
-
-    public function isDeleted(): ?bool
-    {
-        return $this->deleted;
-    }
-
-    public function setDeleted(bool $deleted): self
-    {
-        $this->deleted = $deleted;
 
         return $this;
     }
@@ -355,4 +343,34 @@ class User implements UserInterface, EquatableInterface
         return $this->isValid() && !$this->isDeleted() && $this->getPassword() == $user->getPassword() && $this->getUsername() == $user->getUsername()
             && $this->getEmail() == $user->getEmail() ;
     }
+
+    /**
+     * @return Collection|Permission[]
+     */
+    public function getPermissions(): Collection
+    {
+        return $this->permissions;
+    }
+
+    public function addPermission(Permission $permission): self
+    {
+        if (!$this->permissions->contains($permission)) {
+            $this->permissions[] = $permission;
+            $permission->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePermission(Permission $permission): self
+    {
+        if ($this->permissions->removeElement($permission)) {
+            $permission->removeUser($this);
+        }
+
+        return $this;
+    }
+
+
+
 }

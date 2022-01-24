@@ -9,6 +9,9 @@ parameters:
     sf.user.class: App\Services\UserService
     # Entities Class
     sf.entity.user.class: App\Entity\User
+    sf.role.class: App\Services\RoleService
+    # Entities Class
+    sf.entity.role.class: App\Entity\Role
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -42,5 +45,13 @@ services:
         calls:
             - setEntityManager: [ "@doctrine.orm.entity_manager" ]
             - getRepository: ["%sf.entity.user.class%" ]
+            - setLogger: ['@logger']
+            - setContainer: ["@service_container"  ]
+    sf.role:
+        public: true
+        class: "%sf.role.class%"
+        calls:
+            - setEntityManager: [ "@doctrine.orm.entity_manager" ]
+            - getRepository: ["%sf.entity.role.class%" ]
             - setLogger: ['@logger']
             - setContainer: ["@service_container"  ]
