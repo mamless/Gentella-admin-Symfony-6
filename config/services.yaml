@@ -10,6 +10,7 @@ parameters:
     # Entities Class
     sf.entity.user.class: App\Entity\User
     sf.role.class: App\Services\RoleService
+    sf.query.class: App\Tools\Query
     # Entities Class
     sf.entity.role.class: App\Entity\Role
 services:
@@ -55,3 +56,12 @@ services:
             - getRepository: ["%sf.entity.role.class%" ]
             - setLogger: ['@logger']
             - setContainer: ["@service_container"  ]
+    sf.query:
+        public: true
+        class: "%sf.query.class%"
+        arguments: ["@doctrine.orm.entity_manager"]
+    App\Command\GeneratePermissionsCommand:
+        public: true
+        class: App\Command\GeneratePermissions
+        arguments:
+            $container: "@service_container"

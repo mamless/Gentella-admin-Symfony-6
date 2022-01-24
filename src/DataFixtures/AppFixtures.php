@@ -58,25 +58,7 @@ class AppFixtures extends Fixture
 
 
         }
-        $metas=$manager->getMetadataFactory()->getAllMetadata();
-        $actions=['index', 'edit', 'delete'];
 
-        foreach ($metas as $meta) {
-            $entity = strtolower(str_replace("App\Entity".DIRECTORY_SEPARATOR,'', $meta->getName()));
-            foreach ($actions as $action){
-                $permission= new Permission();
-                $permission->setName($entity.'.'.$action);
-
-                $manager->persist($permission);
-                $manager->flush();
-                dump($permission->getId());
-                exit;
-                $user=$manager->getRepository(User::class)->findOneBy(['email'=>'admin@example.com']);
-                $user->addPermission($permission);
-                $manager->persist($user);
-                $manager->flush();
-            }
-        }
 
         dump($actions);
         exit;

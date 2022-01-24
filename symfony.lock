@@ -353,6 +353,18 @@
     "symfony/intl": {
         "version": "v5.1.3"
     },
+    "symfony/lock": {
+        "version": "5.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.4",
+            "ref": "e13a79427495e670ef7a19f0e25fd13fbdd909d4"
+        },
+        "files": [
+            "./config/packages/lock.yaml"
+        ]
+    },
     "symfony/mailer": {
         "version": "4.3",
         "recipe": {
