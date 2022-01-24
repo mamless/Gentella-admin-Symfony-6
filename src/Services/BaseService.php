@@ -27,6 +27,10 @@ abstract class BaseService
      */
     protected $container;
     protected $header=[];
+    /**
+     * @var \Doctrine\ORM\EntityRepository|\Doctrine\Persistence\ObjectRepository
+     */
+    protected $repository;
 
     /**
      * Getter of the Entity Manager
@@ -49,13 +53,11 @@ abstract class BaseService
     }
 
     /**
-     * @param $key
-     * @param $class
      * @return \Doctrine\ORM\EntityRepository|\Doctrine\Persistence\ObjectRepository
      */
-    public function getRepository($class)
+    public function getRepository()
     {
-        return $this->em->getRepository($class);
+        return $this->repository;
     }
 
     /**

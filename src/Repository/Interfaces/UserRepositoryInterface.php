@@ -56,4 +56,10 @@ interface UserRepositoryInterface extends BaseRepositoryInterface
      * @return mixed
      */
     public function createOrUpdate(User $user, $role,  $encodedPassword);
+
+    /**
+     * @param $role
+     * @return mixed
+     */
+    public function getUserByRole($role);
 }

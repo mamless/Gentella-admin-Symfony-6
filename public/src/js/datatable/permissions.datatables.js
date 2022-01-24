@@ -63,7 +63,6 @@ $(document).ready(function () {
                         text: 'Excel',
                         className: 'btn default',
                         action: function ( e, dt, node, config ) {
-                            dt.column( -2 ).visible( ! dt.column( -2 ).visible() );
                             var lastDraw = permissions_table.ajax.params();
                             var allVisiblecolumns_excel = get_visible_columns(permissions_table);
                             exportList(App.getPageConfig('index_permissions'),'xls',  allVisiblecolumns_excel, lastDraw);

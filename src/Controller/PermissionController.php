@@ -139,7 +139,7 @@ class PermissionController extends BaseController
             $this->addFlash("success", $translator->trans('backend.permission.modify_permission'));
             return $this->redirectToRoute("app_admin_permissions_list");
         }
-        return $this->render("admin/role/permissionform.html.twig", ["permissionForm" => $form->createView()]);
+        return $this->render("admin/permission/permissionform.html.twig", ["permissionForm" => $form->createView()]);
     }
     /**
      * @Route("/admin/permission/delete/{id}",name="app_admin_delete_permission")
@@ -148,27 +148,27 @@ class PermissionController extends BaseController
     public function delete(Permission $permission)
     {
         $this->permissionRepository->delete($permission);
-        return $this->json(["message" => "success"]);
+        return $this->json(["message" => "success", 'value'=>true]);
     }
     /**
-     * @Route("/admin/role/groupaction",name="app_admin_groupaction_role")
+     * @Route("/admin/permission/groupaction",name="app_admin_groupaction_permission")
      * @IsGranted("ROLE_SUPERUSER")
      */
     public function groupAction(Request $request, TranslatorInterface $translator)
     {
         $action = $request->get("action");
         $ids = $request->get("ids");
+
         $permissions = $this->permissionRepository->findBy(["id" => $ids]);
 
         if ($action == $translator->trans('backend.user.delete')) {
             foreach ($permissions as $permission) {
                 $this->permissionRepository->delete($permission);
-                $this->permissionRepository->save($permission);
             }
         } else {
             return $this->json(["message" => "error"]);
         }
-        return $this->json(["message" => "success", "nb" => count($permissions)]);
+        return $this->json(["message" => "success", "nb" => count($ids)]);
     }
 
 }

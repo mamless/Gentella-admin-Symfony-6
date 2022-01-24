@@ -1,7 +1,7 @@
 <?php
 namespace App\Services;
 
-use App\Repository\UserRepository;
+use App\Repository\Interfaces\RoleRepositoryInterface;
 
 class RoleService extends BaseService
 {
@@ -11,5 +11,9 @@ class RoleService extends BaseService
         'libelle' => 'Libelle',
         'permissions' => 'Permissions',
     ];
+    public function __construct(RoleRepositoryInterface $roleRepository)
+    {
+        $this->repository=$roleRepository;
+    }
 
 }

@@ -64,7 +64,6 @@ $(document).ready(function () {
                         text: 'Excel',
                         className: 'btn default',
                         action: function ( e, dt, node, config ) {
-                            dt.column( -2 ).visible( ! dt.column( -2 ).visible() );
                             var lastDraw = roles_table.ajax.params();
                             var allVisiblecolumns_excel = get_visible_columns(roles_table);
                             exportList(App.getPageConfig('index_roles'),'xls',  allVisiblecolumns_excel, lastDraw);

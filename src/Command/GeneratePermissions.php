@@ -48,6 +48,8 @@ class GeneratePermissions extends Command
 
         $queryHelper=$this->container->get('sf.query');
         $em=$this->container->get('doctrine.orm.entity_manager');
+        $roleService=$this->container->get('sf.role');
+        $permissionService=$this->container->get('sf.permission');
         $metas=$em->getMetadataFactory()->getAllMetadata();
         $actions=['index', 'edit', 'delete'];
 
@@ -61,6 +63,14 @@ class GeneratePermissions extends Command
             }
         }
 
+        $supperUserRole=$roleService->getRepository()->findOneBy(['roleName'=>'ROLE_SUPERUSER']);
+        $permissions=$permissionService->getRepository()->findAll();
+        if(!empty($permissions)){
+            foreach ($permissions as $permission){
+                $permission->addRole($supperUserRole);
+                $permissionService->getRepository()->save($permission);
+            }
+        }
         $output->writeln(['END', '============', '']);
         $this->release();
         return Command::SUCCESS;

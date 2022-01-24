@@ -190,6 +190,9 @@
     "psr/simple-cache": {
         "version": "1.0.1"
     },
+    "scienta/doctrine-json-functions": {
+        "version": "4.5.0"
+    },
     "sensio/framework-extra-bundle": {
         "version": "5.2",
         "recipe": {

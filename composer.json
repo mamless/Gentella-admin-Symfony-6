@@ -14,6 +14,7 @@
         "knplabs/knp-paginator-bundle": "^5.2",
         "liip/imagine-bundle": "^2.3",
         "phpoffice/phpspreadsheet": "^1.19",
+        "scienta/doctrine-json-functions": "^4.5",
         "sensio/framework-extra-bundle": "^5.5",
         "sensiolabs/security-checker": "^6.0",
         "stof/doctrine-extensions-bundle": "^1.4",

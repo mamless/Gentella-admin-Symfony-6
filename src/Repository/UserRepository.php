@@ -135,4 +135,16 @@ final class UserRepository extends BaseRepository implements UserRepositoryInter
         $this->save($user);
         return $user;
     }
+
+    /**
+     * @param $role
+     * @return mixed
+     */
+    public function getUserByRole($role){
+     return $this->userRepository->createQueryBuilder('u')
+            ->andWhere('JSON_CONTAINS(u.roles, :role) = 1')
+            ->setParameter('role', '"ROLE_' . $role . '"')
+            ->getQuery()
+            ->getResult();
+    }
 }

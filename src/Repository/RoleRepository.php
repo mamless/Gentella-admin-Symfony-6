@@ -129,4 +129,5 @@ final class RoleRepository extends BaseRepository implements RoleRepositoryInter
         return $role;
     }
 
+
 }

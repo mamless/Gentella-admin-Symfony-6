@@ -42,7 +42,7 @@ function preload(identifier, table){
             }
         } );
     });
-    $("#grpaction").submit(function (e) {
+    $(identifier).closest('.x_content').find("#grpaction").submit(function (e) {
         e.preventDefault();
         var ids = [];
         var action = $("#action_select").val();

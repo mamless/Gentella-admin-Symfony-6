@@ -17,6 +17,7 @@ backend:
     home: Home
     user: User
     role: Role
+    permission: Permission
     manage: Manage
     roles: roles
     users: users
