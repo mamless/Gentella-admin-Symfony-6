@@ -6,6 +6,7 @@ $(document).ready(function () {
         "serverSide": true,
         orderCellsTop: true,
         fixedHeader: true,
+        responsive: true,
         // Ajax call
         ajax: {
             url: App.getPageConfig('index_roles'),

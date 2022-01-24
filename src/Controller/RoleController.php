@@ -97,12 +97,13 @@ class RoleController extends BaseController
                     'select_item' => '<input type="checkbox" class="checkboxes" value="' . $role->getId() . '" name="roles_id[]"  />',
                     'id' => $role->getId(),
                     'roleName' => $role->getRoleName(),
-                    'permissions' => implode(',', $permissions),
+                    'permissions' => implode(",\n", $permissions),
                     'actions' => $action,
                 ];
                 $output['data'][] = $d;
             }
         }
+
         if(!$format){
             return new JsonResponse($output);
         }
