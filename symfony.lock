@@ -90,9 +90,6 @@
     "doctrine/persistence": {
         "version": "1.3.7"
     },
-    "doctrine/reflection": {
-        "version": "1.2.1"
-    },
     "doctrine/sql-formatter": {
         "version": "1.1.0"
     },
@@ -113,12 +110,6 @@
     },
     "laminas/laminas-code": {
         "version": "3.4.1"
-    },
-    "laminas/laminas-eventmanager": {
-        "version": "3.2.1"
-    },
-    "laminas/laminas-zendframework-bridge": {
-        "version": "1.0.4"
     },
     "liip/imagine-bundle": {
         "version": "1.8",
@@ -170,18 +161,6 @@
         },
         "files": [
             "./config/packages/sensio_framework_extra.yaml"
-        ]
-    },
-    "sensiolabs/security-checker": {
-        "version": "4.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "4.0",
-            "ref": "160c9b600564faa1224e8f387d49ef13ceb8b793"
-        },
-        "files": [
-            "./config/packages/security_checker.yaml"
         ]
     },
     "stof/doctrine-extensions-bundle": {
@@ -244,9 +223,6 @@
             "./config/packages/dev/debug.yaml"
         ]
     },
-    "symfony/debug-pack": {
-        "version": "v1.0.8"
-    },
     "symfony/dependency-injection": {
         "version": "v5.1.0"
     },
@@ -308,12 +284,6 @@
             "./src/Kernel.php"
         ]
     },
-    "symfony/http-client": {
-        "version": "v5.1.0"
-    },
-    "symfony/http-client-contracts": {
-        "version": "v2.1.2"
-    },
     "symfony/http-foundation": {
         "version": "v5.1.0"
     },
@@ -322,9 +292,6 @@
     },
     "symfony/inflector": {
         "version": "v5.1.0"
-    },
-    "symfony/intl": {
-        "version": "v5.1.3"
     },
     "symfony/mailer": {
         "version": "4.3",
@@ -371,9 +338,6 @@
     "symfony/options-resolver": {
         "version": "v5.1.1"
     },
-    "symfony/orm-pack": {
-        "version": "v1.0.8"
-    },
     "symfony/polyfill-intl-grapheme": {
         "version": "v1.17.0"
     },
@@ -397,9 +361,6 @@
     },
     "symfony/process": {
         "version": "v5.1.1"
-    },
-    "symfony/profiler-pack": {
-        "version": "v1.0.4"
     },
     "symfony/property-access": {
         "version": "v5.1.0"
@@ -457,9 +418,6 @@
     "symfony/string": {
         "version": "v5.1.0"
     },
-    "symfony/templating": {
-        "version": "v5.1.1"
-    },
     "symfony/translation": {
         "version": "3.3",
         "recipe": {
@@ -492,9 +450,6 @@
             "./config/packages/twig.yaml",
             "./templates/base.html.twig"
         ]
-    },
-    "symfony/twig-pack": {
-        "version": "v1.0.0"
     },
     "symfony/validator": {
         "version": "4.3",

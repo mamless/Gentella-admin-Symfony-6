@@ -22,7 +22,7 @@ Gentelella A skeleton application with user account functionality on the foundat
 
 # **Requirements**
 - PHP >= 7.4
-- Symfony >5.*
+- Symfony >5.4.*
 - MySQL
 
 # **Credits**
@@ -64,3 +64,13 @@ And use the next credentials to login.
 - Password : "admin"
 
 **ENJOY**
+
+**Update scheduled**
+- removed sec check : **OK**
+- upgraded to symfony 5.4 : **OK**
+- next remove depreciations : **Next**
+- redirection issues fix
+- categorie parent
+- data fixtures
+- symfony security
+- go to symfony 6

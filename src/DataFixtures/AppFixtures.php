@@ -5,7 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Role;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+//use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
@@ -24,7 +24,7 @@ class AppFixtures extends Fixture
         $this->encoder = $userPasswordEncoder;
     }
 
-    public function load(ObjectManager $manager)
+    /*public function load(ObjectManager $manager)
     {
         $roles = [
             "ROLE_SUPERUSER" => "Super Admin",
@@ -57,5 +57,9 @@ class AppFixtures extends Fixture
 
             $manager->flush();
         }
+    }*/
+    public function load(\Doctrine\Persistence\ObjectManager $manager)
+    {
+        // TODO: Implement load() method.
     }
 }
