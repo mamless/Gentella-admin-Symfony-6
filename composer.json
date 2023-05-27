@@ -37,6 +37,7 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.3",
+        "rector/rector": "^0.16.0",
         "symfony/maker-bundle": "^1.19"
     },
     "config": {

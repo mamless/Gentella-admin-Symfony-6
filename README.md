@@ -70,7 +70,7 @@ And use the next credentials to login.
 - upgraded to symfony 5.4 : **OK**
 - next remove depreciations : **Next**
 - redirection issues fix
-- categorie parent
-- data fixtures
+- categories issues
+- fix data fixtures (commented for now )
 - symfony security
 - go to symfony 6
