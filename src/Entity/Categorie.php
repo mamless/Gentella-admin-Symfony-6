@@ -11,19 +11,23 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CategorieRepository::class)
+ *
  * @UniqueEntity(fields={"libelle"})
  */
 class Categorie
 {
     /**
      * @ORM\Id()
+     *
      * @ORM\GeneratedValue()
+     *
      * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
      * @Assert\NotBlank()
      */
     private $libelle;
@@ -175,6 +179,4 @@ class Categorie
 
         return $this;
     }
-
-
 }

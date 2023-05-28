@@ -11,7 +11,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CategorieFormType extends AbstractType
 {
-
     public function __construct()
     {
     }
@@ -20,14 +19,14 @@ class CategorieFormType extends AbstractType
     {
         $builder
             ->add('libelle')
-            ->add('CategorieParente',EntityType::class,[
-                "class"=>Categorie::class,
-                "query_builder"=>function(CategorieRepository $categorieRepository){
+            ->add('CategorieParente', EntityType::class, [
+                'class' => Categorie::class,
+                'query_builder' => function (CategorieRepository $categorieRepository) {
                     return $categorieRepository->createQueryBuilder('c')
                         ->orderBy('c.libelle', 'ASC')
-                        ->andWhere("c.deleted = false");
+                        ->andWhere('c.deleted = false');
                 },
-                "required"=>false
+                'required' => false,
             ])
         ;
     }
@@ -39,5 +38,4 @@ class CategorieFormType extends AbstractType
         ]);
     }
     // TODO: Find a way to remove the edited cat. from the select
-
 }

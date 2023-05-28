@@ -13,17 +13,19 @@ class Historique
 {
     /**
      * @ORM\Id()
+     *
      * @ORM\GeneratedValue()
+     *
      * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="historiques")
+     *
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
-
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -32,12 +34,14 @@ class Historique
 
     /**
      * @ORM\Column(type="datetime")
+     *
      * @Gedmo\Timestampable()
      */
     private $actionDate;
 
     /**
      * @ORM\ManyToOne(targetEntity=BlogPost::class, inversedBy="historiques")
+     *
      * @ORM\JoinColumn(nullable=false)
      */
     private $blogPost;
@@ -47,14 +51,10 @@ class Historique
      */
     private $oldPost;
 
-    /**
-     * @return mixed
-     */
     public function getId()
     {
         return $this->id;
     }
-
 
     public function getUser(): ?User
     {
@@ -67,7 +67,6 @@ class Historique
 
         return $this;
     }
-
 
     public function getAction(): ?string
     {
@@ -116,5 +115,4 @@ class Historique
 
         return $this;
     }
-
 }

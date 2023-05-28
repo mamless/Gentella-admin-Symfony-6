@@ -67,6 +67,7 @@ class RedirectToLocaleSubscriber implements EventSubscriberInterface
         array_unshift($this->locales, $this->defaultLocale);
         $this->locales = array_unique($this->locales);
     }
+
     public static function getSubscribedEvents(): array
     {
         return [

@@ -12,48 +12,48 @@ class OldPostFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('createdAt',null,[
-                "attr"=>[
-                    "readonly"=>true
+            ->add('createdAt', null, [
+                'attr' => [
+                    'readonly' => true,
                 ],
-                "widget"=>"single_text"
+                'widget' => 'single_text',
             ])
-            ->add('publishedAt',null,[
-                "attr"=>[
-                    "readonly"=>true
+            ->add('publishedAt', null, [
+                'attr' => [
+                    'readonly' => true,
                 ],
-                "widget"=>"single_text"
+                'widget' => 'single_text',
             ])
-            ->add('titre',null,[
-                "attr"=>[
-                    "readonly"=>true
-                ]
+            ->add('titre', null, [
+                'attr' => [
+                    'readonly' => true,
+                ],
             ])
-            ->add('content',null,[
-                "attr"=>[
-                    "readonly"=>true,
-                    "class"=>"summernote"
-                ]
+            ->add('content', null, [
+                'attr' => [
+                    'readonly' => true,
+                    'class' => 'summernote',
+                ],
             ])
-            ->add('image',null,[
-                "attr"=>[
-                    "readonly"=>true
-                ]
+            ->add('image', null, [
+                'attr' => [
+                    'readonly' => true,
+                ],
             ])
-            ->add('categories',null,[
-                "attr"=>[
-                    "disabled"=>""
-                ]
+            ->add('categories', null, [
+                'attr' => [
+                    'disabled' => '',
+                ],
             ])
-            ->add('createdBy',null,[
-                "attr"=>[
-                    "disabled"=>""
-                ]
+            ->add('createdBy', null, [
+                'attr' => [
+                    'disabled' => '',
+                ],
             ])
-            ->add('author',null,[
-                "attr"=>[
-                    "disabled"=>""
-                ]
+            ->add('author', null, [
+                'attr' => [
+                    'disabled' => '',
+                ],
             ])
         ;
     }

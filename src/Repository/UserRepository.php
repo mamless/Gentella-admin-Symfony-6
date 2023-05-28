@@ -15,7 +15,6 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class UserRepository extends ServiceEntityRepository
 {
-
     private $entityManager;
 
     public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager)
@@ -24,10 +23,11 @@ class UserRepository extends ServiceEntityRepository
         $this->entityManager = $entityManager;
     }
 
-    public function saveUser($user):User
+    public function saveUser($user): User
     {
         $this->entityManager->persist($user);
         $this->entityManager->flush();
+
         return $user;
     }
 
@@ -68,20 +68,25 @@ class UserRepository extends ServiceEntityRepository
         ;
     }
     */
-    public function changeValidite(User $user){
-        if ($user->isValid())
+    public function changeValidite(User $user)
+    {
+        if ($user->isValid()) {
             $user->setValid(false);
-        else
+        } else {
             $user->setValid(true);
+        }
         $this->entityManager->persist($user);
         $this->entityManager->flush();
+
         return $user;
     }
 
-    public function delete(User $user){
+    public function delete(User $user)
+    {
         $user->setDeleted(true);
         $this->entityManager->persist($user);
         $this->entityManager->flush();
+
         return $user;
     }
 }

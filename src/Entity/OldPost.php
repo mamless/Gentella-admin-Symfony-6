@@ -14,7 +14,9 @@ class OldPost
 {
     /**
      * @ORM\Id()
+     *
      * @ORM\GeneratedValue()
+     *
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -31,12 +33,14 @@ class OldPost
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class)
+     *
      * @ORM\JoinColumn(nullable=false)
      */
     private $createdBy;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class)
+     *
      * @ORM\JoinColumn(nullable=false)
      */
     private $author;
@@ -96,12 +100,10 @@ class OldPost
     /**
      * @param Categorie[] $categories
      */
-    public function setCategories( $categories): void
+    public function setCategories($categories): void
     {
         $this->categories = $categories;
     }
-
-
 
     public function removeCategory(Categorie $category): self
     {

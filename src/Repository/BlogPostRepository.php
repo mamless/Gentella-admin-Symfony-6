@@ -26,20 +26,25 @@ class BlogPostRepository extends ServiceEntityRepository
         $this->entityManager = $entityManager;
     }
 
-    public function changeValidite(BlogPost $blogPost){
-        if ($blogPost->getValid())
+    public function changeValidite(BlogPost $blogPost)
+    {
+        if ($blogPost->getValid()) {
             $blogPost->setValid(false);
-        else
+        } else {
             $blogPost->setValid(true);
+        }
         $this->entityManager->persist($blogPost);
         $this->entityManager->flush();
+
         return $blogPost;
     }
 
-    public function delete(BlogPost $blogPost){
+    public function delete(BlogPost $blogPost)
+    {
         $blogPost->setDeleted(true);
         $this->entityManager->persist($blogPost);
         $this->entityManager->flush();
+
         return $blogPost;
     }
 

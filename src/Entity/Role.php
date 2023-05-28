@@ -12,7 +12,9 @@ class Role
 {
     /**
      * @ORM\Id()
+     *
      * @ORM\GeneratedValue()
+     *
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -60,6 +62,4 @@ class Role
     {
         return $this->libelle;
     }
-
-
 }

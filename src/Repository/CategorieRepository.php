@@ -15,9 +15,6 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CategorieRepository extends ServiceEntityRepository
 {
-
-
-
     private $entityManager;
 
     public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager)
@@ -55,21 +52,25 @@ class CategorieRepository extends ServiceEntityRepository
     }
     */
 
-    public function changeValidite(Categorie $categorie){
-        if ($categorie->getValid())
+    public function changeValidite(Categorie $categorie)
+    {
+        if ($categorie->getValid()) {
             $categorie->setValid(false);
-        else
+        } else {
             $categorie->setValid(true);
+        }
         $this->entityManager->persist($categorie);
         $this->entityManager->flush();
+
         return $categorie;
     }
 
-    public function delete(Categorie $categorie){
+    public function delete(Categorie $categorie)
+    {
         $categorie->setDeleted(true);
         $this->entityManager->persist($categorie);
         $this->entityManager->flush();
+
         return $categorie;
     }
-
 }

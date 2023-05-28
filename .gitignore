@@ -14,3 +14,6 @@
 ###< liip/imagine-bundle ###
 ###> phpstorm project files
 /.idea/
+/tools/php-cs-fixer/vendor/
+/.php-cs-fixer.cache
+.php-cs-fixer.php
