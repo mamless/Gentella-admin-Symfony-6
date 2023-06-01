@@ -21,8 +21,8 @@ use Symfony\Component\Security\Http\Util\TargetPathTrait;
 class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 {
     use TargetPathTrait;
-    private $login_route;
 
+    private $login_route;
 
     public function __construct(private UserRepository $userRepository, private RouterInterface $router, private UserPasswordHasherInterface $passwordHasher, private CsrfTokenManagerInterface $csrfTokenManager)
     {
@@ -68,8 +68,6 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     {
         return $this->passwordHasher->isPasswordValid($user, $credentials['password']);
     }
-
-
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {

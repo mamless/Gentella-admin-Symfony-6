@@ -5,21 +5,19 @@ namespace App\DataFixtures;
 use App\Entity\Role;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
-
     /**
      * AppFixtures constructor.
      */
     public function __construct(private UserPasswordHasherInterface $userPasswordHasher)
     {
     }
-    public function load(ObjectManager $manager): void
 
+    public function load(ObjectManager $manager): void
     {
         $roles = [
             'ROLE_SUPERUSER' => 'Super Admin',
@@ -53,5 +51,4 @@ class AppFixtures extends Fixture
             $manager->flush();
         }
     }
-
 }

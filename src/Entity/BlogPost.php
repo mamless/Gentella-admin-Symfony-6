@@ -3,100 +3,68 @@
 namespace App\Entity;
 
 use App\Repository\BlogPostRepository;
+use DateTime;
+use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\PersistentCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-/**
- * @ORM\Entity(repositoryClass=BlogPostRepository::class)
- *
- * @UniqueEntity(fields={"titre"})
- */
+#[ORM\Entity(repositoryClass: BlogPostRepository::class)]
+#[UniqueEntity(fields: ['titre'])]
 class BlogPost
 {
-    /**
-     * @ORM\Id()
-     *
-     * @ORM\GeneratedValue()
-     *
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="text")
-     */
+    #[ORM\Column(type: 'text')]
     private ?string $content = null;
 
-    /**
-     * @ORM\Column(type="string", length=255,unique=true)
-     *
-     * @Gedmo\Slug(fields={"titre"})
-     */
+
+    #[Gedmo\Slug(fields: ["titre"])]
+    #[ORM\Column(unique: true)]
     private ?string $slug = null;
 
-    /**
-     * @ORM\Column(type="string", length=255,unique=true)
-     */
+    #[ORM\Column(unique: true)]
     private ?string $titre = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column]
     private ?string $blogImage = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private ?\DateTimeInterface $plubishedAt = null;
+    #[ORM\Column( nullable: true)]
+    private ?DateTime $plubishedAt = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column]
     private ?bool $deleted = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column]
     private ?bool $valid = null;
 
-    /**
-     * @ORM\Column(type="datetime")
-     *
-     * @Gedmo\Timestampable(on="create")
-     */
-    private ?\DateTimeInterface $createdAt = null;
+    #[Gedmo\Timestampable(on:'create')]
+    #[ORM\Column]
+    private ?DateTime $createdAt = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="blogPosts")
-     *
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(inversedBy: 'blogPosts')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?User $author = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="blogPostsCreated")
-     *
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(inversedBy: 'blogPostsCreated')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?User $creator = null;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Categorie::class, inversedBy="blogPosts")
-     */
-    private PersistentCollection|array $categories;
+    #[ORM\ManyToMany(targetEntity: Categorie::class, inversedBy: 'blogPosts')]
+    private Collection $categories;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Historique::class, mappedBy="blogPost")
-     */
-    private PersistentCollection|array $historiques;
+    #[ORM\OneToMany(mappedBy: 'blogPost', targetEntity: Historique::class)]
+    private Collection $historiques;
 
     public function __construct()
     {
-        $this->categories = new PersistentCollection();
-        $this->historiques = new PersistentCollection();
+        $this->categories = new ArrayCollection();
+        $this->historiques = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -152,12 +120,12 @@ class BlogPost
         return $this;
     }
 
-    public function getPlubishedAt(): ?\DateTimeInterface
+    public function getPlubishedAt(): ?DateTimeInterface
     {
         return $this->plubishedAt;
     }
 
-    public function setPlubishedAt(?\DateTimeInterface $plubishedAt): self
+    public function setPlubishedAt(?DateTimeInterface $plubishedAt): self
     {
         $this->plubishedAt = $plubishedAt;
 
@@ -188,12 +156,12 @@ class BlogPost
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setCreatedAt(DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -225,7 +193,7 @@ class BlogPost
     }
 
     /**
-     * @return Collection|Categorie[]
+     * @return Collection
      */
     public function getCategories(): Collection
     {
@@ -233,9 +201,9 @@ class BlogPost
     }
 
     /**
-     * @param Categorie[] $categories
+     * @param Collection $categories
      */
-    public function setCategories($categories): void
+    public function setCategories(Collection $categories): void
     {
         $this->categories = $categories;
     }
@@ -260,11 +228,11 @@ class BlogPost
 
     public function isPublished(): bool
     {
-        return $this->getValid() && $this->plubishedAt < new \DateTime() && $this->plubishedAt != null;
+        return $this->getValid() && $this->plubishedAt < new DateTime() && $this->plubishedAt != null;
     }
 
     /**
-     * @return Collection|Historique[]
+     * @return Collection
      */
     public function getHistoriques(): Collection
     {
@@ -294,7 +262,7 @@ class BlogPost
         return $this;
     }
 
-    public function oldify()
+    public function oldify(): void
     {
         $this->titre .= '-old-'.$this->id;
     }

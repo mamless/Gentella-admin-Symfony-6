@@ -21,7 +21,7 @@ class CategorieFormType extends AbstractType
             ->add('libelle')
             ->add('CategorieParente', EntityType::class, [
                 'class' => Categorie::class,
-                'query_builder' => fn(CategorieRepository $categorieRepository) => $categorieRepository->createQueryBuilder('c')
+                'query_builder' => fn (CategorieRepository $categorieRepository) => $categorieRepository->createQueryBuilder('c')
                     ->orderBy('c.libelle', 'ASC')
                     ->andWhere('c.deleted = false'),
                 'required' => false,

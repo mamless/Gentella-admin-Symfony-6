@@ -37,11 +37,8 @@ class UserController extends BaseController
         return $this->json(['id' => $user->getId(), 'password' => $user->getPassword(), 'decode' => $this->passwordHasher->isPasswordValid($user, 1)]);
     }
 
-    /**
-     * @Route("/admin/user",name="app_admin_users")
-     *
-     * @IsGranted("ROLE_SUPERUSER")
-     */
+    #[Route(path: '/admin/user', name: 'app_admin_users')]
+    #[IsGranted(['ROLE_SUPERUSER'])]
     public function users(): Response
     {
         $users = $this->userRepository->findAll();
@@ -49,11 +46,8 @@ class UserController extends BaseController
         return $this->render('admin/user/user.html.twig', ['users' => $users]);
     }
 
-    /**
-     * @Route("/admin/user/new",name="app_admin_new_user")
-     *
-     * @IsGranted("ROLE_SUPERUSER")
-     */
+    #[Route(path: '/admin/user/new', name: 'app_admin_new_user')]
+    #[IsGranted(['ROLE_SUPERUSER'])]
     public function newUser(Request $request, TranslatorInterface $translator)
     {
         $form = $this->createForm(UserFormType::class, null, ['translator' => $translator]);
@@ -79,11 +73,8 @@ class UserController extends BaseController
         return $this->render('admin/user/userform.html.twig', ['userForm' => $form->createView()]);
     }
 
-    /**
-     * @Route("/admin/user/edit/{id}",name="app_admin_edit_user")
-     *
-     * @IsGranted("ROLE_SUPERUSER")
-     */
+    #[Route(path: '/admin/user/edit/{id}', name: 'app_admin_edit_user')]
+    #[IsGranted(['ROLE_SUPERUSER'])]
     public function editUser(User $user, Request $request, TranslatorInterface $translator)
     {
         $form = $this->createForm(UserFormType::class, $user, ['translator' => $translator]);
@@ -109,11 +100,8 @@ class UserController extends BaseController
         return $this->render('admin/user/userform.html.twig', ['userForm' => $form->createView()]);
     }
 
-    /**
-     * @Route("/admin/user/changevalidite/{id}",name="app_admin_changevalidite_user",methods={"post"})
-     *
-     * @IsGranted("ROLE_SUPERUSER")
-     */
+    #[Route(path: '/admin/user/changevalidite/{id}', name: 'app_admin_changevalidite_user', methods: ['post'])]
+    #[IsGranted(['ROLE_SUPERUSER'])]
     public function activate(User $user): \Symfony\Component\HttpFoundation\JsonResponse
     {
         $user = $this->userRepository->changeValidite($user);
@@ -121,11 +109,8 @@ class UserController extends BaseController
         return $this->json(['message' => 'success', 'value' => $user->isValid()]);
     }
 
-    /**
-     * @Route("/admin/user/delete/{id}",name="app_admin_delete_user")
-     *
-     * @IsGranted("ROLE_SUPERUSER")
-     */
+    #[Route(path: '/admin/user/delete/{id}', name: 'app_admin_delete_user')]
+    #[IsGranted(['ROLE_SUPERUSER'])]
     public function delete(User $user): \Symfony\Component\HttpFoundation\JsonResponse
     {
         $user = $this->userRepository->delete($user);
@@ -134,11 +119,8 @@ class UserController extends BaseController
         return $this->json(['message' => 'success', 'value' => $user->isDeleted()]);
     }
 
-    /**
-     * @Route("/admin/user/changePassword",name="app_admin_changepswd")
-     *
-     * @IsGranted("ROLE_SUPERUSER")
-     */
+    #[Route(path: '/admin/user/changePassword', name: 'app_admin_changepswd')]
+    #[IsGranted(['ROLE_SUPERUSER'])]
     public function changePswd(Request $request, TranslatorInterface $translator)
     {
         $user = $this->getUser();
@@ -166,11 +148,8 @@ class UserController extends BaseController
         return $this->render('admin/params/changeMdpForm.html.twig', ['passwordForm' => $form->createView()]);
     }
 
-    /**
-     * @Route("/admin/user/groupaction",name="app_admin_groupaction_user")
-     *
-     * @IsGranted("ROLE_SUPERUSER")
-     */
+    #[Route(path: '/admin/user/groupaction', name: 'app_admin_groupaction_user')]
+    #[IsGranted(['ROLE_SUPERUSER'])]
     public function groupAction(Request $request, TranslatorInterface $translator): \Symfony\Component\HttpFoundation\JsonResponse
     {
         $action = $request->get('action');

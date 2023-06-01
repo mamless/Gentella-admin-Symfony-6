@@ -13,85 +13,52 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-/**
- * @ORM\Entity(repositoryClass=UserRepository::class)
- *
- * @UniqueEntity(fields={"username"})
- * @UniqueEntity(fields={"email"})
- */
+#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[UniqueEntity(fields: ['username'])]
+#[UniqueEntity(fields: ['email'])]
 class User implements UserInterface, EquatableInterface, PasswordAuthenticatedUserInterface
 {
-    /**
-     * @ORM\Id()
-     *
-     * @ORM\GeneratedValue()
-     *
-     * @ORM\Column(type="integer")
-     */
-    private ?int $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=180, unique=true)
-     *
-     * @Assert\NotBlank( message="Ne doit pas être vide")
-     */
-    private $username;
+    #[ORM\Column(length: 180, unique: true)]
+    #[Assert\NotBlank(message: 'Ne doit pas être vide')]
+    private ?string $username;
 
-    /**
-     * @ORM\Column(type="json")
-     */
+    #[ORM\Column(type: 'json')]
     private array $roles = [];
 
-    /**
-     * @ORM\Column(type="string", length=50)
-     *
-     * @Assert\NotBlank(message="Ne doit pas être vide")
-     */
-    private $nomComplet;
+    #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: 'Ne doit pas être vide')]
+    private ?string $nomComplet= null;
 
-    /**
-     * @ORM\Column(type="string", length=100, unique=true)
-     *
-     * @Assert\NotBlank(message="Ne doit pas être vide")
-     *
-     * @Assert\Email(message="Email invalide")
-     */
-    private $email;
+    #[ORM\Column( length: 100, unique: true)]
+    #[Assert\NotBlank(message: 'Ne doit pas être vide')]
+    #[Assert\Email(message: 'Email invalide')]
+    private ?string $email= null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column]
     private ?bool $valid = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column]
     private ?bool $deleted = null;
 
-    /**
-     * @ORM\Column(type="string", length=255))
-     */
-    private $password;
+    #[ORM\Column( length: 255)]
+    private ?string $password = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity=BlogPost::class, mappedBy="author")
-     */
-    private  $blogPosts;
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: BlogPost::class)]
+    private Collection $blogPosts;
 
-    /**
-     * @ORM\OneToMany(targetEntity=BlogPost::class, mappedBy="creator")
-     */
-    private  $blogPostsCreated;
+    #[ORM\OneToMany(mappedBy: 'creator', targetEntity: BlogPost::class)]
+    private Collection $blogPostsCreated;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private ?bool $admin = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Historique::class, mappedBy="user")
-     */
-    private  $historiques;
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Historique::class)]
+    private Collection $historiques;
 
     public function __construct()
     {
@@ -221,12 +188,12 @@ class User implements UserInterface, EquatableInterface, PasswordAuthenticatedUs
         return $this;
     }
 
-    public function getAvatarUrl($size)
+    public function getAvatarUrl($size): string
     {
         return "https://api.adorable.io/avatars/$size/".$this->username;
     }
 
-    public function getColorCode()
+    public function getColorCode(): string
     {
         $code = dechex(crc32($this->getUsername()));
         $code = substr($code, 0, 6);
@@ -234,9 +201,7 @@ class User implements UserInterface, EquatableInterface, PasswordAuthenticatedUs
         return '#'.$code;
     }
 
-    /**
-     * @Assert\Callback
-     */
+    #[Assert\Callback]
     public function validate(ExecutionContextInterface $context, $payload)
     {
         /*if (strlen($this->password)< 3){
@@ -247,7 +212,7 @@ class User implements UserInterface, EquatableInterface, PasswordAuthenticatedUs
     }
 
     /**
-     * @return Collection|BlogPost[]
+     * @return Collection
      */
     public function getBlogPosts(): Collection
     {
@@ -278,7 +243,7 @@ class User implements UserInterface, EquatableInterface, PasswordAuthenticatedUs
     }
 
     /**
-     * @return Collection|BlogPost[]
+     * @return Collection
      */
     public function getBlogPostsCreated(): Collection
     {
@@ -310,7 +275,7 @@ class User implements UserInterface, EquatableInterface, PasswordAuthenticatedUs
 
     public function __toString(): string
     {
-        return (string) "$this->nomComplet ($this->id)";
+        return "$this->nomComplet ($this->id)";
     }
 
     public function isAdmin(): ?bool
@@ -326,7 +291,7 @@ class User implements UserInterface, EquatableInterface, PasswordAuthenticatedUs
     }
 
     /**
-     * @return Collection|Historique[]
+     * @return Collection
      */
     public function getHistoriques(): Collection
     {
@@ -356,12 +321,13 @@ class User implements UserInterface, EquatableInterface, PasswordAuthenticatedUs
         return $this;
     }
 
-    public function isEqualTo(UserInterface $user)
+    public function isEqualTo(UserInterface $user): bool
     {
         if ($user instanceof User) {
             return $this->isValid() && !$this->isDeleted() && $this->getPassword() == $user->getPassword() && $this->getUsername() == $user->getUsername()
                 && $this->getEmail() == $user->getEmail();
         }
+
         return false;
     }
 }

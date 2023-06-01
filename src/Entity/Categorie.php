@@ -3,64 +3,44 @@
 namespace App\Entity;
 
 use App\Repository\CategorieRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\PersistentCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass=CategorieRepository::class)
- *
- * @UniqueEntity(fields={"libelle"})
- */
+#[ORM\Entity(repositoryClass: CategorieRepository::class)]
+#[UniqueEntity(fields: ['libelle'])]
 class Categorie
 {
-    /**
-     * @ORM\Id()
-     *
-     * @ORM\GeneratedValue()
-     *
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     *
-     * @Assert\NotBlank()
-     */
+    #[ORM\Column]
+    #[Assert\NotBlank]
     private ?string $libelle = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Categorie::class, inversedBy="categories")
-     */
+    #[ORM\ManyToOne( inversedBy: 'categories')]
     private ?Categorie $CategorieParente = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Categorie::class, mappedBy="CategorieParente")
-     */
-    private PersistentCollection|array $categories;
+    #[ORM\OneToMany(mappedBy: 'CategorieParente', targetEntity: Categorie::class)]
+    private Collection $categories;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private ?bool $valid = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private ?bool $deleted = null;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=BlogPost::class, mappedBy="categories")
-     */
-    private PersistentCollection|array $blogPosts;
+    #[ORM\ManyToMany(targetEntity: BlogPost::class, mappedBy: 'categories')]
+    private Collection $blogPosts;
 
     public function __construct()
     {
-        $this->categories = new PersistentCollection();
-        $this->blogPosts = new PersistentCollection();
+        $this->categories = new ArrayCollection();
+        $this->blogPosts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -93,7 +73,7 @@ class Categorie
     }
 
     /**
-     * @return Collection|self[]
+     * @return Collection
      */
     public function getCategories(): Collection
     {

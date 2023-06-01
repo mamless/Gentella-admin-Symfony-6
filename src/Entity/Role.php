@@ -4,30 +4,19 @@ namespace App\Entity;
 
 use App\Repository\RoleRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Stringable;
 
-/**
- * @ORM\Entity(repositoryClass=RoleRepository::class)
- */
-class Role implements Stringable
+#[ORM\Entity(repositoryClass: RoleRepository::class)]
+class Role
 {
-    /**
-     * @ORM\Id()
-     *
-     * @ORM\GeneratedValue()
-     *
-     * @ORM\Column(type="integer")
-     */
-    private ?int $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
+    #[ORM\Column( length: 100)]
     private ?string $roleName = null;
 
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
+    #[ORM\Column(length: 100)]
     private ?string $libelle = null;
 
     public function getId(): ?int

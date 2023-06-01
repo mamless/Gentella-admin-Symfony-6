@@ -8,6 +8,7 @@ use App\Repository\CategorieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CategorieController extends BaseController
@@ -16,23 +17,17 @@ class CategorieController extends BaseController
     {
     }
 
-    /**
-     * @Route("/admin/categorie",name="app_admin_categories")
-     *
-     * @IsGranted("ROLE_WRITER")
-     */
-    public function users(): \Symfony\Component\HttpFoundation\Response
+    #[Route(path: '/admin/categorie', name: 'app_admin_categories')]
+    #[IsGranted(['ROLE_WRITER'])]
+    public function users(): Response
     {
         $categories = $this->categorieRepository->findAll();
 
         return $this->render('admin/categorie/categorie.html.twig', ['categories' => $categories]);
     }
 
-    /**
-     * @Route("/admin/categorie/new",name="app_admin_new_categorie")
-     *
-     * @IsGranted("ROLE_WRITER")
-     */
+    #[Route(path: '/admin/categorie/new', name: 'app_admin_new_categorie')]
+    #[IsGranted(['ROLE_WRITER'])]
     public function newCategorie(Request $request)
     {
         $form = $this->createForm(CategorieFormType::class);
@@ -52,11 +47,8 @@ class CategorieController extends BaseController
         return $this->render('admin/categorie/categorieform.html.twig', ['categorieForm' => $form->createView()]);
     }
 
-    /**
-     * @Route("/admin/categorie/edit/{id}",name="app_admin_edit_categorie")
-     *
-     * @IsGranted("ROLE_WRITER")
-     */
+    #[Route(path: '/admin/categorie/edit/{id}', name: 'app_admin_edit_categorie')]
+    #[IsGranted(['ROLE_WRITER'])]
     public function editCategorie(Categorie $categorie, Request $request)
     {
         $form = $this->createForm(CategorieFormType::class, $categorie);
@@ -74,11 +66,8 @@ class CategorieController extends BaseController
         return $this->render('admin/categorie/categorieform.html.twig', ['categorieForm' => $form->createView()]);
     }
 
-    /**
-     * @Route("/admin/categorie/changevalidite/{id}",name="app_admin_changevalidite_categorie",methods={"post"})
-     *
-     * @IsGranted("ROLE_WRITER")
-     */
+    #[Route(path: '/admin/categorie/changevalidite/{id}', name: 'app_admin_changevalidite_categorie', methods: ['post'])]
+    #[IsGranted(['ROLE_WRITER'])]
     public function activate(Categorie $categorie): \Symfony\Component\HttpFoundation\JsonResponse
     {
         $categorie = $this->categorieRepository->changeValidite($categorie);
@@ -86,11 +75,8 @@ class CategorieController extends BaseController
         return $this->json(['message' => 'success', 'value' => $categorie->getValid()]);
     }
 
-    /**
-     * @Route("/admin/categorie/delete/{id}",name="app_admin_delete_categorie")
-     *
-     * @IsGranted("ROLE_EDITORIAL")
-     */
+    #[Route(path: '/admin/categorie/delete/{id}', name: 'app_admin_delete_categorie')]
+    #[IsGranted(['ROLE_WRITER'])]
     public function delete(Categorie $categorie): \Symfony\Component\HttpFoundation\JsonResponse
     {
         $categorie = $this->categorieRepository->delete($categorie);
@@ -98,11 +84,8 @@ class CategorieController extends BaseController
         return $this->json(['message' => 'success', 'value' => $categorie->getDeleted()]);
     }
 
-    /**
-     * @Route("/admin/categorie/groupaction",name="app_admin_groupaction_categorie")
-     *
-     * @IsGranted("ROLE_WRITER")
-     */
+    #[Route(path: '/admin/categorie/groupaction', name: 'app_admin_groupaction_categorie')]
+    #[IsGranted(['ROLE_WRITER'])]
     public function groupAction(Request $request): \Symfony\Component\HttpFoundation\JsonResponse
     {
         $action = $request->get('action');

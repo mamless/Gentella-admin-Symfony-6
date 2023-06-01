@@ -13,7 +13,10 @@ use App\Repository\HistoriqueRepository;
 use App\Services\UploadHelper;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -23,23 +26,17 @@ class BlogController extends BaseController
     {
     }
 
-    /**
-     * @Route("/admin/blog",name="app_admin_blogPosts")
-     *
-     * @IsGranted("ROLE_WRITER")
-     */
-    public function blogPosts(): \Symfony\Component\HttpFoundation\Response
+    #[Route(path: '/admin/blog', name: 'app_admin_blogPosts')]
+    #[IsGranted(['ROLE_WRITER'])]
+    public function blogPosts(): Response
     {
         $blogPosts = $this->blogPostRepository->findAll();
 
         return $this->render('admin/blog/blog.html.twig', ['blogPosts' => $blogPosts]);
     }
 
-    /**
-     * @Route("/admin/blog/new",name="app_admin_new_blogPosts")
-     *
-     * @IsGranted("ROLE_WRITER")
-     */
+    #[Route(path: '/admin/blog/new', name: 'app_admin_new_blogPosts')]
+    #[IsGranted(['ROLE_WRITER'])]
     public function newBlogPost(Request $request)
     {
         $historique = new Historique();
@@ -77,11 +74,8 @@ class BlogController extends BaseController
         return $this->render('admin/blog/blogform.html.twig', ['blogForm' => $form->createView()]);
     }
 
-    /**
-     * @Route("/admin/blog/edit/{id}",name="app_admin_edit_blogPosts")
-     *
-     * @IsGranted("ROLE_WRITER")
-     */
+    #[Route(path: '/admin/blog/edit/{id}', name: 'app_admin_edit_blogPosts')]
+    #[IsGranted(['ROLE_WRITER'])]
     public function editBlogPost(BlogPost $blogPost, Request $request)
     {
         $oldPost = new OldPost();
@@ -123,12 +117,9 @@ class BlogController extends BaseController
         return $this->render('admin/blog/blogform.html.twig', ['blogForm' => $form->createView()]);
     }
 
-    /**
-     * @Route("/admin/blog/changevalidite/{id}",name="app_admin_changevalidite_blogPost",methods={"post"})
-     *
-     * @IsGranted("ROLE_EDITORIAL")
-     */
-    public function activate(BlogPost $blogPost): \Symfony\Component\HttpFoundation\JsonResponse
+    #[Route(path: '/admin/blog/changevalidite/{id}', name: 'app_admin_changevalidite_blogPost', methods: ['post'])]
+    #[IsGranted(['ROLE_EDITORIAL'])]
+    public function activate(BlogPost $blogPost): JsonResponse
     {
         if ($blogPost->getValid()) {
             $action = 'Desactiver';
@@ -147,12 +138,9 @@ class BlogController extends BaseController
         return $this->json(['message' => 'success', 'value' => $blogPost->getValid()]);
     }
 
-    /**
-     * @Route("/admin/blog/delete/{id}",name="app_admin_delete_blogPost")
-     *
-     * @IsGranted("ROLE_EDITORIAL")
-     */
-    public function delete(BlogPost $blogPost): \Symfony\Component\HttpFoundation\JsonResponse
+    #[Route(path: '/admin/blog/delete/{id}', name: 'app_admin_delete_blogPost')]
+    #[IsGranted(['ROLE_WRITER'])]
+    public function delete(BlogPost $blogPost): JsonResponse
     {
         $historique = new Historique();
         $historique->setUser($this->getUser())
@@ -167,12 +155,9 @@ class BlogController extends BaseController
         return $this->json(['message' => 'success', 'value' => $blogPost->getDeleted()]);
     }
 
-    /**
-     * @Route("/admin/blog/groupaction",name="app_admin_groupaction_blogPost")
-     *
-     * @IsGranted("ROLE_EDITORIAL ")
-     */
-    public function groupAction(Request $request): \Symfony\Component\HttpFoundation\JsonResponse
+    #[Route(path: '/admin/blog/groupaction', name: 'app_admin_groupaction_blogPost')]
+    #[IsGranted(['ROLE_EDITORIAL '])]
+    public function groupAction(Request $request): JsonResponse
     {
         $action = $request->get('action');
         $ids = $request->get('ids');
@@ -211,22 +196,16 @@ class BlogController extends BaseController
         return $this->json(['message' => 'success', 'nb' => count($bloPosts)]);
     }
 
-    /**
-     * @Route("/admin/blog/historique/{id}",name="app_admin_historique_blogPost")
-     *
-     * @IsGranted("ROLE_SUPERUSER")
-     */
-    public function historique(BlogPost $blogPost): \Symfony\Component\HttpFoundation\Response
+    #[Route(path: '/admin/blog/historique/{id}', name: 'app_admin_historique_blogPost')]
+    #[IsGranted([['ROLE_SUPERUSER']])]
+    public function historique(BlogPost $blogPost): Response
     {
         return $this->render('admin/blog/historique.html.twig', ['blogPost' => $blogPost]);
     }
 
-    /**
-     * @Route("/admin/blog/historique/undo/{id}",name="app_admin_historique_undo")
-     *
-     * @IsGranted("ROLE_SUPERUSER")
-     */
-    public function undo(Historique $historique): \Symfony\Component\HttpFoundation\RedirectResponse
+    #[Route(path: '/admin/blog/historique/undo/{id}', name: 'app_admin_historique_undo')]
+    #[IsGranted([['ROLE_SUPERUSER']])]
+    public function undo(Historique $historique): RedirectResponse
     {
         $blogPost = $historique->getBlogPost();
         $newHistorique = new Historique();
@@ -280,36 +259,26 @@ class BlogController extends BaseController
     }
 
     // TODO: add image upload support
-
-    /**
-     * @Route("/admin/blog/preview/{id}",name="app_admin_preview_blogpost")
-     *
-     * @IsGranted("ROLE_ADMIN")
-     */
-    public function preview(BlogPost $blogPost): \Symfony\Component\HttpFoundation\JsonResponse
+    #[Route(path: '/admin/blog/preview/{id}', name: 'app_admin_preview_blogpost')]
+    #[IsGranted(['ROLE_ADMIN'])]
+    public function preview(BlogPost $blogPost): JsonResponse
     {
         // TODO: preview page for admins
         return $this->json(['TODO']);
     }
 
-    /**
-     * @Route("/admin/blog/historique/oldpost/{id}",name="app_admin_oldpost_blogPosts")
-     *
-     * @IsGranted("ROLE_EDITORIAL")
-     */
-    public function oldPost(OldPost $oldPost): \Symfony\Component\HttpFoundation\Response
+    #[Route(path: '/admin/blog/historique/oldpost/{id}', name: 'app_admin_oldpost_blogPosts')]
+    #[IsGranted(['ROLE_WRITER'])]
+    public function oldPost(OldPost $oldPost): Response
     {
         $form = $this->createForm(OldPostFormType::class, $oldPost);
 
         return $this->render('admin/blog/oldpostform.html.twig', ['oldPostForm' => $form->createView()]);
     }
 
-    /**
-     * @Route("/admin/blog/historiques",name="app_admin_allhistorique_blogPosts")
-     *
-     * @IsGranted("ROLE_EDITORIAL")
-     */
-    public function historiques(): \Symfony\Component\HttpFoundation\Response
+    #[Route(path: '/admin/blog/historiques', name: 'app_admin_allhistorique_blogPosts')]
+    #[IsGranted(['ROLE_WRITER'])]
+    public function historiques(): Response
     {
         $historiques = $this->historiqueRepository->findAll();
 

@@ -3,77 +3,54 @@
 namespace App\Entity;
 
 use App\Repository\OldPostRepository;
+use DateTime;
 use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\PersistentCollection;
 
-/**
- * @ORM\Entity(repositoryClass=OldPostRepository::class)
- */
+
+
+#[ORM\Entity(repositoryClass: OldPostRepository::class)]
 class OldPost
 {
-    /**
-     * @ORM\Id()
-     *
-     * @ORM\GeneratedValue()
-     *
-     * @ORM\Column(type="integer")
-     */
-    private ?int $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id= null;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Categorie::class)
-     */
-    private PersistentCollection|array $categories;
+    #[ORM\ManyToMany(targetEntity: Categorie::class)]
+    private Collection $categories;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private ?DateTimeInterface $createdAt = null;
+    #[ORM\Column]
+    private ?DateTime $createdAt = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class)
-     *
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
     private ?User $createdBy = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class)
-     *
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
     private ?User $author = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private ?DateTimeInterface $publishedAt = null;
+    #[ORM\Column( nullable: true)]
+    private ?DateTime $publishedAt = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column]
     private ?string $titre = null;
 
-    /**
-     * @ORM\Column(type="text")
-     */
+    #[ORM\Column(type: 'text')]
     private ?string $content = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column]
     private ?string $image = null;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Historique::class, mappedBy="oldPost", cascade={"persist", "remove"})
-     */
+    #[ORM\OneToOne(mappedBy: 'oldPost', targetEntity: Historique::class, cascade: ['persist', 'remove'])]
     private ?Historique $historique = null;
 
     public function __construct()
     {
-        $this->categories = new PersistentCollection();
+        $this->categories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -81,9 +58,6 @@ class OldPost
         return $this->id;
     }
 
-    /**
-     * @return Collection
-     */
     public function getCategories(): Collection
     {
         return $this->categories;
@@ -99,11 +73,14 @@ class OldPost
     }
 
     /**
-     * @param Categorie[] $categories
+     * @param Collection $categories
+     * @return OldPost
      */
-    public function setCategories($categories): void
+    public function setCategories(Collection $categories): self
     {
         $this->categories = $categories;
+
+        return $this;
     }
 
     public function removeCategory(Categorie $category): self

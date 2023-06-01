@@ -9,7 +9,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class UploadHelper
 {
     private string $blogDir = '/Blog';
+
     private int $maxImgSize = 1000 * 1000 * 5;
+
     private array $authType = ['jpeg', 'jpg', 'png'];
 
     public function __construct(private string $uploadPath)

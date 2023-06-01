@@ -49,7 +49,7 @@ class BlogPostFormType extends AbstractType
             ->add('categories', EntityType::class, [
                 'multiple' => true,
                 'class' => Categorie::class,
-                'query_builder' => fn(CategorieRepository $categorieRepository) => $categorieRepository->createQueryBuilder('c')
+                'query_builder' => fn (CategorieRepository $categorieRepository) => $categorieRepository->createQueryBuilder('c')
                     ->orderBy('c.libelle', 'ASC')
                     ->andWhere('c.deleted = false'),
                 'required' => true,
@@ -57,7 +57,7 @@ class BlogPostFormType extends AbstractType
             ])
             ->add('author', EntityType::class, [
                 'class' => User::class,
-                'query_builder' => fn(UserRepository $userRepository) => $userRepository->createQueryBuilder('u')
+                'query_builder' => fn (UserRepository $userRepository) => $userRepository->createQueryBuilder('u')
                     ->andWhere('u.deleted = false')
                     ->andWhere('u.admin = true'),
                 'required' => true,
