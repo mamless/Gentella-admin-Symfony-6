@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>{% block title %}{{ "backend.global.welcome"|trans }}{% endblock %}</title>
-        {% block metas %}
-            <meta charset="UTF-8">
-        {% endblock %}
-        {% block stylesheets %}
-        {% endblock %}
-    </head>
-    <body {% block bodyclass %}class="" {% endblock %}>
+<head>
+    <title>{% block title %}{{ "backend.global.welcome"|trans }}{% endblock %}</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    {% block metas %}
+        <meta charset="UTF-8">
+    {% endblock %}
+    {% block stylesheets %}
+    {% endblock %}
+</head>
+<body {% block bodyclass %}class="" {% endblock %}>
 
-        {% block impersionate %}
-            {% if is_granted('IS_IMPERSONATOR') %}
-            <div class="alert alert-warning" style="margin-bottom: 0;">
-                {{ "backend.global.you_are_logged"|trans }} : {{ app.user.username }}
-                <a href="{{ path('app_admin_index',{'_switch_user':'_exit'}) }}">{{ "backend.global.leave_impersonate"|trans }}</a>
-            </div>
-            {% endif %}
-        {% endblock %}
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+{% block impersionate %}
+    {% if is_granted('IS_IMPERSONATOR') %}
+        <div class="alert alert-warning" style="margin-bottom: 0;">
+            {{ "backend.global.you_are_logged"|trans }} : {{ app.user.username }}
+            <a href="{{ path('app_admin_index',{'_switch_user':'_exit'}) }}">{{ "backend.global.leave_impersonate"|trans }}</a>
+        </div>
+    {% endif %}
+{% endblock %}
+{% block body %}{% endblock %}
+{% block javascripts %}{% endblock %}
+</body>
 </html>
