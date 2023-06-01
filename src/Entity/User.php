@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @UniqueEntity(fields={"username"})
  * @UniqueEntity(fields={"email"})
  */
-class User implements UserInterface, EquatableInterface
+class User implements UserInterface, EquatableInterface, \Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Id()
@@ -143,7 +143,7 @@ class User implements UserInterface, EquatableInterface
     /**
      * @see UserInterface
      */
-    public function getPassword()
+    public function getPassword(): ?string
     {
         return $this->password;
     }

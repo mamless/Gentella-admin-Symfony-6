@@ -5,24 +5,27 @@ namespace App\DataFixtures;
 use App\Entity\Role;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-//use Doctrine\Common\Persistence\ObjectManager;
+
+use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+
     /**
-     * @var \Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface
+     * @var UserPasswordHasherInterface
      */
-    private $encoder;
+    private $userPasswordHasher;
 
     /**
      * AppFixtures constructor.
      */
-    public function __construct(\Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface $userPasswordEncoder)
+    public function __construct(UserPasswordHasherInterface $userPasswordHasher)
     {
-        $this->encoder = $userPasswordEncoder;
+        $this->userPasswordHasher = $userPasswordHasher;
     }
+    public function load(ObjectManager $manager): void
 
-    /*public function load(ObjectManager $manager)
     {
         $roles = [
             'ROLE_SUPERUSER' => 'Super Admin',
@@ -45,7 +48,7 @@ class AppFixtures extends Fixture
         if (!$manager->find(User::class, 1)) {
             $user->setUsername('admin');
             $user->setRoles(['ROLE_SUPERUSER']);
-            $user->setPassword($this->encoder->encodePassword($user, 'admin'));
+            $user->setPassword($this->userPasswordHasher->hashPassword($user, 'admin'));
             $user->setNomComplet('Admin');
             $user->setEmail('admin@example.com');
             $user->setValid(true);
@@ -55,10 +58,6 @@ class AppFixtures extends Fixture
 
             $manager->flush();
         }
-    }*/
-
-    public function load(\Doctrine\Persistence\ObjectManager $manager)
-    {
-        // TODO: Implement load() method.
     }
+
 }
