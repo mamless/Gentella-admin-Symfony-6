@@ -8,15 +8,12 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UploadHelper
 {
-    private $blogDir = '/Blog';
-    private $maxImgSize = 1000 * 1000 * 5;
-    private $authType = ['jpeg', 'jpg', 'png'];
+    private string $blogDir = '/Blog';
+    private int $maxImgSize = 1000 * 1000 * 5;
+    private array $authType = ['jpeg', 'jpg', 'png'];
 
-    private $uploadPath;
-
-    public function __construct(string $uploadPath)
+    public function __construct(private string $uploadPath)
     {
-        $this->uploadPath = $uploadPath;
     }
 
     public function validateImg(UploadedFile $image)

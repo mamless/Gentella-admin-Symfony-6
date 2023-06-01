@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\EquatableInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -18,7 +19,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @UniqueEntity(fields={"username"})
  * @UniqueEntity(fields={"email"})
  */
-class User implements UserInterface, EquatableInterface, \Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface
+class User implements UserInterface, EquatableInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Id()
@@ -27,7 +28,7 @@ class User implements UserInterface, EquatableInterface, \Symfony\Component\Secu
      *
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
@@ -39,7 +40,7 @@ class User implements UserInterface, EquatableInterface, \Symfony\Component\Secu
     /**
      * @ORM\Column(type="json")
      */
-    private $roles = [];
+    private array $roles = [];
 
     /**
      * @ORM\Column(type="string", length=50)
@@ -60,12 +61,12 @@ class User implements UserInterface, EquatableInterface, \Symfony\Component\Secu
     /**
      * @ORM\Column(type="boolean")
      */
-    private $valid;
+    private ?bool $valid = null;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $deleted;
+    private ?bool $deleted = null;
 
     /**
      * @ORM\Column(type="string", length=255))
@@ -75,22 +76,22 @@ class User implements UserInterface, EquatableInterface, \Symfony\Component\Secu
     /**
      * @ORM\OneToMany(targetEntity=BlogPost::class, mappedBy="author")
      */
-    private $blogPosts;
+    private  $blogPosts;
 
     /**
      * @ORM\OneToMany(targetEntity=BlogPost::class, mappedBy="creator")
      */
-    private $blogPostsCreated;
+    private  $blogPostsCreated;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $admin;
+    private ?bool $admin = null;
 
     /**
      * @ORM\OneToMany(targetEntity=Historique::class, mappedBy="user")
      */
-    private $historiques;
+    private  $historiques;
 
     public function __construct()
     {
@@ -307,9 +308,9 @@ class User implements UserInterface, EquatableInterface, \Symfony\Component\Secu
         return $this;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
-        return "$this->nomComplet ($this->id)";
+        return (string) "$this->nomComplet ($this->id)";
     }
 
     public function isAdmin(): ?bool
@@ -361,5 +362,6 @@ class User implements UserInterface, EquatableInterface, \Symfony\Component\Secu
             return $this->isValid() && !$this->isDeleted() && $this->getPassword() == $user->getPassword() && $this->getUsername() == $user->getUsername()
                 && $this->getEmail() == $user->getEmail();
         }
+        return false;
     }
 }

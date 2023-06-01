@@ -3,6 +3,7 @@
 namespace App\Security;
 
 use App\Repository\UserRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -20,20 +21,11 @@ use Symfony\Component\Security\Http\Util\TargetPathTrait;
 class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 {
     use TargetPathTrait;
-
-    private $userRepository;
-    private $router;
-    private $csrfTokenManager;
-    private $passwordHasher;
     private $login_route;
 
 
-    public function __construct(UserRepository $userRepository, RouterInterface $router, UserPasswordHasherInterface $passwordHasher, CsrfTokenManagerInterface $csrfTokenManager)
+    public function __construct(private UserRepository $userRepository, private RouterInterface $router, private UserPasswordHasherInterface $passwordHasher, private CsrfTokenManagerInterface $csrfTokenManager)
     {
-        $this->userRepository = $userRepository;
-        $this->router = $router;
-        $this->csrfTokenManager = $csrfTokenManager;
-        $this->passwordHasher = $passwordHasher;
     }
 
     public function supports(Request $request)
@@ -59,6 +51,9 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         return $credentials;
     }
 
+    /**
+     * @throws NonUniqueResultException
+     */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
         $token = new CsrfToken('authenticate', $credentials['csrf_token']);

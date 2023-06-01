@@ -20,16 +20,10 @@ use Symfony\Component\Validator\Constraints\File;
 class BlogPostFormType extends AbstractType
 {
     /**
-     * @var Security
-     */
-    private $security;
-
-    /**
      * BlogPostFormType constructor.
      */
-    public function __construct(Security $security)
+    public function __construct(private Security $security)
     {
-        $this->security = $security;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -55,21 +49,17 @@ class BlogPostFormType extends AbstractType
             ->add('categories', EntityType::class, [
                 'multiple' => true,
                 'class' => Categorie::class,
-                'query_builder' => function (CategorieRepository $categorieRepository) {
-                    return $categorieRepository->createQueryBuilder('c')
-                        ->orderBy('c.libelle', 'ASC')
-                        ->andWhere('c.deleted = false');
-                },
+                'query_builder' => fn(CategorieRepository $categorieRepository) => $categorieRepository->createQueryBuilder('c')
+                    ->orderBy('c.libelle', 'ASC')
+                    ->andWhere('c.deleted = false'),
                 'required' => true,
                 'attr' => ['data-live-search' => 'true', 'data-size' => '3'],
             ])
             ->add('author', EntityType::class, [
                 'class' => User::class,
-                'query_builder' => function (UserRepository $userRepository) {
-                    return $userRepository->createQueryBuilder('u')
-                        ->andWhere('u.deleted = false')
-                        ->andWhere('u.admin = true');
-                },
+                'query_builder' => fn(UserRepository $userRepository) => $userRepository->createQueryBuilder('u')
+                    ->andWhere('u.deleted = false')
+                    ->andWhere('u.admin = true'),
                 'required' => true,
                 'attr' => ['data-live-search' => 'true', 'data-size' => '3'],
                 'label' => 'Auteur',

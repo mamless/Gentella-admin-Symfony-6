@@ -3,9 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\CategorieRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -30,37 +30,37 @@ class Categorie
      *
      * @Assert\NotBlank()
      */
-    private $libelle;
+    private ?string $libelle = null;
 
     /**
      * @ORM\ManyToOne(targetEntity=Categorie::class, inversedBy="categories")
      */
-    private $CategorieParente;
+    private ?Categorie $CategorieParente = null;
 
     /**
      * @ORM\OneToMany(targetEntity=Categorie::class, mappedBy="CategorieParente")
      */
-    private $categories;
+    private PersistentCollection|array $categories;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $valid;
+    private ?bool $valid = null;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $deleted;
+    private ?bool $deleted = null;
 
     /**
      * @ORM\ManyToMany(targetEntity=BlogPost::class, mappedBy="categories")
      */
-    private $blogPosts;
+    private PersistentCollection|array $blogPosts;
 
     public function __construct()
     {
-        $this->categories = new ArrayCollection();
-        $this->blogPosts = new ArrayCollection();
+        $this->categories = new PersistentCollection();
+        $this->blogPosts = new PersistentCollection();
     }
 
     public function getId(): ?int
@@ -147,9 +147,9 @@ class Categorie
         return $this;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->libelle;
+        return (string) $this->libelle;
     }
 
     /**

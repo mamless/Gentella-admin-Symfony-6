@@ -4,11 +4,12 @@ namespace App\Entity;
 
 use App\Repository\RoleRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Stringable;
 
 /**
  * @ORM\Entity(repositoryClass=RoleRepository::class)
  */
-class Role
+class Role implements Stringable
 {
     /**
      * @ORM\Id()
@@ -17,17 +18,17 @@ class Role
      *
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="string", length=100)
      */
-    private $roleName;
+    private ?string $roleName = null;
 
     /**
      * @ORM\Column(type="string", length=100)
      */
-    private $libelle;
+    private ?string $libelle = null;
 
     public function getId(): ?int
     {
@@ -58,8 +59,8 @@ class Role
         return $this;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->libelle;
+        return (string) $this->libelle;
     }
 }

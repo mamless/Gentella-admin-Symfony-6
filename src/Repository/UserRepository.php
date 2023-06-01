@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -15,12 +16,9 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class UserRepository extends ServiceEntityRepository
 {
-    private $entityManager;
-
-    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager)
+    public function __construct(ManagerRegistry $registry, private EntityManagerInterface $entityManager)
     {
         parent::__construct($registry, User::class);
-        $this->entityManager = $entityManager;
     }
 
     public function saveUser($user): User
@@ -31,6 +29,9 @@ class UserRepository extends ServiceEntityRepository
         return $user;
     }
 
+    /**
+     * @throws NonUniqueResultException
+     */
     public function findOneByUsernameOrEmail($value): ?User
     {
         return $this->createQueryBuilder('u')

@@ -18,18 +18,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UserController extends BaseController
 {
-    private $userRepository;
-    private $passwordHasher;
-
-    private $entityManager;
-    private $roleRepository;
-
-    public function __construct(UserRepository $userRepository, RoleRepository $roleRepository, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager)
+    public function __construct(private UserRepository $userRepository, private RoleRepository $roleRepository, private UserPasswordHasherInterface $passwordHasher, private EntityManagerInterface $entityManager)
     {
-        $this->userRepository = $userRepository;
-        $this->passwordHasher = $passwordHasher;
-        $this->entityManager = $entityManager;
-        $this->roleRepository = $roleRepository;
     }
 
     public function fakepswd(Request $request)

@@ -15,15 +15,9 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class BlogPostRepository extends ServiceEntityRepository
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
-
-    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager)
+    public function __construct(ManagerRegistry $registry, private EntityManagerInterface $entityManager)
     {
         parent::__construct($registry, BlogPost::class);
-        $this->entityManager = $entityManager;
     }
 
     public function changeValidite(BlogPost $blogPost)

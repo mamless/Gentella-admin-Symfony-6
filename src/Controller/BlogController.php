@@ -19,29 +19,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class BlogController extends BaseController
 {
-    /**
-     * @var BlogPostRepository
-     */
-    private $blogPostRepository;
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
-    /**
-     * @var HistoriqueRepository
-     */
-    private $historiqueRepository;
-    /**
-     * @var UploadHelper
-     */
-    private $uploadHelper;
-
-    public function __construct(BlogPostRepository $blogPostRepository, EntityManagerInterface $entityManager, HistoriqueRepository $historiqueRepository, UploadHelper $uploadHelper)
+    public function __construct(private BlogPostRepository $blogPostRepository, private EntityManagerInterface $entityManager, private HistoriqueRepository $historiqueRepository, private UploadHelper $uploadHelper)
     {
-        $this->blogPostRepository = $blogPostRepository;
-        $this->entityManager = $entityManager;
-        $this->historiqueRepository = $historiqueRepository;
-        $this->uploadHelper = $uploadHelper;
     }
 
     /**

@@ -12,13 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CategorieController extends BaseController
 {
-    private $categorieRepository;
-    private $entityManager;
-
-    public function __construct(CategorieRepository $categorieRepository, EntityManagerInterface $entityManager)
+    public function __construct(private CategorieRepository $categorieRepository, private EntityManagerInterface $entityManager)
     {
-        $this->categorieRepository = $categorieRepository;
-        $this->entityManager = $entityManager;
     }
 
     /**

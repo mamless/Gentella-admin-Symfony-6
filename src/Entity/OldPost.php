@@ -3,9 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\OldPostRepository;
-use Doctrine\Common\Collections\ArrayCollection;
+use DateTimeInterface;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 
 /**
  * @ORM\Entity(repositoryClass=OldPostRepository::class)
@@ -19,60 +20,60 @@ class OldPost
      *
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\ManyToMany(targetEntity=Categorie::class)
      */
-    private $categories;
+    private PersistentCollection|array $categories;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $createdAt;
+    private ?DateTimeInterface $createdAt = null;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class)
      *
      * @ORM\JoinColumn(nullable=false)
      */
-    private $createdBy;
+    private ?User $createdBy = null;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class)
      *
      * @ORM\JoinColumn(nullable=false)
      */
-    private $author;
+    private ?User $author = null;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $publishedAt;
+    private ?DateTimeInterface $publishedAt = null;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $titre;
+    private ?string $titre = null;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $content;
+    private ?string $content = null;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $image;
+    private ?string $image = null;
 
     /**
      * @ORM\OneToOne(targetEntity=Historique::class, mappedBy="oldPost", cascade={"persist", "remove"})
      */
-    private $historique;
+    private ?Historique $historique = null;
 
     public function __construct()
     {
-        $this->categories = new ArrayCollection();
+        $this->categories = new PersistentCollection();
     }
 
     public function getId(): ?int
@@ -81,7 +82,7 @@ class OldPost
     }
 
     /**
-     * @return Collection|Categorie[]
+     * @return Collection
      */
     public function getCategories(): Collection
     {
@@ -114,12 +115,12 @@ class OldPost
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setCreatedAt(DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -150,12 +151,12 @@ class OldPost
         return $this;
     }
 
-    public function getPublishedAt(): ?\DateTimeInterface
+    public function getPublishedAt(): ?DateTimeInterface
     {
         return $this->publishedAt;
     }
 
-    public function setPublishedAt(?\DateTimeInterface $publishedAt): self
+    public function setPublishedAt(?DateTimeInterface $publishedAt): self
     {
         $this->publishedAt = $publishedAt;
 

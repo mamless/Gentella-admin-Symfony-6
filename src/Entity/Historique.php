@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\HistoriqueRepository;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -18,40 +19,40 @@ class Historique
      *
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="historiques")
      *
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user;
+    private ?User $user = null;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $action;
+    private ?string $action = null;
 
     /**
      * @ORM\Column(type="datetime")
      *
      * @Gedmo\Timestampable()
      */
-    private $actionDate;
+    private ?DateTimeInterface $actionDate = null;
 
     /**
      * @ORM\ManyToOne(targetEntity=BlogPost::class, inversedBy="historiques")
      *
      * @ORM\JoinColumn(nullable=false)
      */
-    private $blogPost;
+    private ?BlogPost $blogPost = null;
 
     /**
      * @ORM\OneToOne(targetEntity=OldPost::class, inversedBy="historique", cascade={"persist", "remove"})
      */
-    private $oldPost;
+    private ?OldPost $oldPost = null;
 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -80,12 +81,12 @@ class Historique
         return $this;
     }
 
-    public function getActionDate(): ?\DateTimeInterface
+    public function getActionDate(): ?DateTimeInterface
     {
         return $this->actionDate;
     }
 
-    public function setActionDate(\DateTimeInterface $actionDate): self
+    public function setActionDate(DateTimeInterface $actionDate): self
     {
         $this->actionDate = $actionDate;
 

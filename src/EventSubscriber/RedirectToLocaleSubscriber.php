@@ -26,30 +26,20 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class RedirectToLocaleSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var UrlGeneratorInterface
-     */
-    private $urlGenerator;
-
-    /**
      * List of supported locales.
      *
      * @var string[]
      */
     private $locales = [];
 
-    /**
-     * @var string
-     */
-    private $defaultLocale = '';
+    private string $defaultLocale = '';
 
     /**
      * @param string      $locales       Supported locales separated by '|'
      * @param string|null $defaultLocale
      */
-    public function __construct(UrlGeneratorInterface $urlGenerator, $locales, $defaultLocale = null)
+    public function __construct(private UrlGeneratorInterface $urlGenerator, $locales, $defaultLocale = null)
     {
-        $this->urlGenerator = $urlGenerator;
-
         $this->locales = explode('|', trim($locales));
 
         if (empty($this->locales)) {

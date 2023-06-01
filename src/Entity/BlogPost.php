@@ -3,9 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\BlogPostRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -28,75 +28,75 @@ class BlogPost
     /**
      * @ORM\Column(type="text")
      */
-    private $content;
+    private ?string $content = null;
 
     /**
      * @ORM\Column(type="string", length=255,unique=true)
      *
      * @Gedmo\Slug(fields={"titre"})
      */
-    private $slug;
+    private ?string $slug = null;
 
     /**
      * @ORM\Column(type="string", length=255,unique=true)
      */
-    private $titre;
+    private ?string $titre = null;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $blogImage;
+    private ?string $blogImage = null;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $plubishedAt;
+    private ?\DateTimeInterface $plubishedAt = null;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $deleted;
+    private ?bool $deleted = null;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $valid;
+    private ?bool $valid = null;
 
     /**
      * @ORM\Column(type="datetime")
      *
      * @Gedmo\Timestampable(on="create")
      */
-    private $createdAt;
+    private ?\DateTimeInterface $createdAt = null;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="blogPosts")
      *
      * @ORM\JoinColumn(nullable=false)
      */
-    private $author;
+    private ?User $author = null;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="blogPostsCreated")
      *
      * @ORM\JoinColumn(nullable=false)
      */
-    private $creator;
+    private ?User $creator = null;
 
     /**
      * @ORM\ManyToMany(targetEntity=Categorie::class, inversedBy="blogPosts")
      */
-    private $categories;
+    private PersistentCollection|array $categories;
 
     /**
      * @ORM\OneToMany(targetEntity=Historique::class, mappedBy="blogPost")
      */
-    private $historiques;
+    private PersistentCollection|array $historiques;
 
     public function __construct()
     {
-        $this->categories = new ArrayCollection();
-        $this->historiques = new ArrayCollection();
+        $this->categories = new PersistentCollection();
+        $this->historiques = new PersistentCollection();
     }
 
     public function getId(): ?int
