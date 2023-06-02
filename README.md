@@ -1,6 +1,6 @@
 <p align="center"><img src="https://symfony.com/images/logos/header-logo.svg"></p>
 
-# **Symfony 5 backoffice with Gentella Free Bootstrap 4 Admin Dashboard Template**
+# **Symfony 6 backoffice with Gentella Free Bootstrap 4 Admin Dashboard Template**
 
 Gentelella A skeleton application with user account functionality on the foundation of the Symfony 5 framework, Twitter Bootstrap and Gentelella template .
 
