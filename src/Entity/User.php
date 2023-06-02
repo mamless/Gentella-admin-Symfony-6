@@ -82,6 +82,11 @@ class User implements UserInterface, EquatableInterface, PasswordAuthenticatedUs
         return (string) $this->username;
     }
 
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->username;
+    }
+
     public function setUsername($username): self
     {
         $this->username = $username;
@@ -116,13 +121,7 @@ class User implements UserInterface, EquatableInterface, PasswordAuthenticatedUs
         return $this->password;
     }
 
-    /**
-     * @see UserInterface
-     */
-    public function getSalt()
-    {
-        // not needed for apps that do not check user passwords
-    }
+
 
     /**
      * @see UserInterface
@@ -329,5 +328,14 @@ class User implements UserInterface, EquatableInterface, PasswordAuthenticatedUs
         }
 
         return false;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSalt(): ?string
+    {
+        //not used here
+        return null;
     }
 }

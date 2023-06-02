@@ -11,7 +11,6 @@
         "doctrine/orm": "^2.7",
         "knplabs/knp-paginator-bundle": "^5.2",
         "liip/imagine-bundle": "^2.3",
-        "sensio/framework-extra-bundle": "^5.5",
         "stof/doctrine-extensions-bundle": "^1.4",
         "symfony/apache-pack": "^1.0",
         "symfony/asset": "5.4.*",

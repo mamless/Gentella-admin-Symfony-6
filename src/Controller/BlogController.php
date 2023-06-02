@@ -12,7 +12,7 @@ use App\Repository\BlogPostRepository;
 use App\Repository\HistoriqueRepository;
 use App\Services\UploadHelper;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
