@@ -10,6 +10,7 @@ Gentelella A skeleton application with user account functionality on the foundat
 **[Template Demo](https://colorlib.com/polygon/gentelella/index.html)**
 
 
+
 # **Features**
 - Administration Dashboard with Gentelella Admin Theme
 - Responsive Layout
@@ -21,13 +22,27 @@ Gentelella A skeleton application with user account functionality on the foundat
 - Translation functionality (Easy to set up whatever language you need/use)
 
 # **Requirements**
-- PHP >= 7.4
+- PHP >= 8.0.1
 - Symfony >5.4.*
 - MySQL
 
+**Recent Updates**
+- removed sec check : **OK**
+- upgraded to symfony 5.4 : **OK**
+- next remove depreciations : **OK**
+- new symfony security **OK**
+- fix data fixtures **OK**
+- PHP 8 compatible **OK**
+- Annotations replacement for attribute **OK**
+- Entities properties are typed now
+
 # **Credits**
-[Gentelella](https://github.com/ColorlibHQ/gentelella) - Admin template project is developed and maintained by [Colorlib](https://colorlib.com/ "Colorlib - Make Your First Blog") and Aigars Silkalns
-Mamour Wane (Mamless) co-founder of [ONETECHSN](https://onetechsn.com)
+- [Gentelella](https://github.com/ColorlibHQ/gentelella) - Admin template project is developed and maintained by [Colorlib](https://colorlib.com/ "Colorlib - Make Your First Blog") and Aigars Silkalns
+- Mamour Wane (Mamless) co-founder of [ONETECHSN](https://onetechsn.com) designed and maintened the project so far
+
+# **Third party tools**
+- Rector (https://github.com/rectorphp/rector) nice php open source tool to help upgrade code be compatible with higher version of framework and languages
+- PHP-CS-Fixer (https://github.com/PHP-CS-Fixer/PHP-CS-Fixer) nice php open source tool fixes your code to follow standards (refactor)
 
 ## License information
 Gentelella is licensed under The MIT License (MIT). Which means that you can use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software. But you always need to state that Colorlib is the original author of this template.
@@ -65,12 +80,17 @@ And use the next credentials to login.
 
 **ENJOY**
 
-**Update scheduled**
+**Recent Updates**
 - removed sec check : **OK**
 - upgraded to symfony 5.4 : **OK**
-- next remove depreciations : **Next**
-- redirection issues fix
+- next remove depreciations : **OK**
+- new symfony security **ok**
+- fix data fixtures **ok**
+- PHP 8 compatible **ok**
+- Annotations replacement for attribute **ok**
+- Entities properties are typed now
+***
+** Updates coming **
 - categories issues
-- fix data fixtures (commented for now )
-- symfony security
 - go to symfony 6
+- translation deprecation : Deprecated: Creation of dynamic property App\Form\ChangePwsdFormType::$translator is deprecated 
