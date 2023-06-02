@@ -107,9 +107,6 @@
     "knplabs/knp-paginator-bundle": {
         "version": "v5.2.0"
     },
-    "laminas/laminas-code": {
-        "version": "3.4.1"
-    },
     "liip/imagine-bundle": {
         "version": "2.11",
         "recipe": {
@@ -337,9 +334,6 @@
     "symfony/polyfill-mbstring": {
         "version": "v1.17.0"
     },
-    "symfony/polyfill-php73": {
-        "version": "v1.17.0"
-    },
     "symfony/polyfill-php80": {
         "version": "v1.17.0"
     },
@@ -381,9 +375,6 @@
         "version": "v5.1.0"
     },
     "symfony/security-csrf": {
-        "version": "v5.1.0"
-    },
-    "symfony/security-guard": {
         "version": "v5.1.0"
     },
     "symfony/security-http": {

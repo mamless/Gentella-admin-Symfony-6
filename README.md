@@ -22,8 +22,8 @@ Gentelella A skeleton application with user account functionality on the foundat
 - Translation functionality (Easy to set up whatever language you need/use)
 
 # **Requirements**
-- PHP >= 8.0.1
-- Symfony >5.4.*
+- PHP >= 8 (8.2.4 used in composer.json)
+- Symfony- 6.2.*
 - MySQL
 
 **Recent Updates**
@@ -35,6 +35,7 @@ Gentelella A skeleton application with user account functionality on the foundat
 - PHP 8 compatible **OK**
 - Annotations replacement for attribute **OK**
 - Entities properties are typed now
+- **UPDATED TO SYMFONY 6**
 
 # **Credits**
 - [Gentelella](https://github.com/ColorlibHQ/gentelella) - Admin template project is developed and maintained by [Colorlib](https://colorlib.com/ "Colorlib - Make Your First Blog") and Aigars Silkalns
@@ -92,5 +93,4 @@ And use the next credentials to login.
 ***
 ** Updates coming **
 - categories issues
-- go to symfony 6
 - translation deprecation : Deprecated: Creation of dynamic property App\Form\ChangePwsdFormType::$translator is deprecated 

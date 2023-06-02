@@ -44,7 +44,7 @@ class CategorieController extends BaseController
             return $this->redirectToRoute('app_admin_categories');
         }
 
-        return $this->render('admin/categorie/categorieform.html.twig', ['categorieForm' => $form->createView()]);
+        return $this->render('admin/categorie/categorieform.html.twig', ['categorieForm' => $form]);
     }
 
     #[Route(path: '/admin/categorie/edit/{id}', name: 'app_admin_edit_categorie')]
@@ -63,7 +63,7 @@ class CategorieController extends BaseController
             return $this->redirectToRoute('app_admin_categories');
         }
 
-        return $this->render('admin/categorie/categorieform.html.twig', ['categorieForm' => $form->createView()]);
+        return $this->render('admin/categorie/categorieform.html.twig', ['categorieForm' => $form]);
     }
 
     #[Route(path: '/admin/categorie/changevalidite/{id}', name: 'app_admin_changevalidite_categorie', methods: ['post'])]

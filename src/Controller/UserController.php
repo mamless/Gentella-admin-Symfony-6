@@ -70,7 +70,7 @@ class UserController extends BaseController
             return $this->redirectToRoute('app_admin_users');
         }
 
-        return $this->render('admin/user/userform.html.twig', ['userForm' => $form->createView()]);
+        return $this->render('admin/user/userform.html.twig', ['userForm' => $form]);
     }
 
     #[Route(path: '/admin/user/edit/{id}', name: 'app_admin_edit_user')]
@@ -97,7 +97,7 @@ class UserController extends BaseController
             return $this->redirectToRoute('app_admin_users');
         }
 
-        return $this->render('admin/user/userform.html.twig', ['userForm' => $form->createView()]);
+        return $this->render('admin/user/userform.html.twig', ['userForm' => $form]);
     }
 
     #[Route(path: '/admin/user/changevalidite/{id}', name: 'app_admin_changevalidite_user', methods: ['post'])]
@@ -135,7 +135,7 @@ class UserController extends BaseController
             } else {
                 $this->addFlash('error', $translator->trans('backend.user.new_passwod_must_be'));
 
-                return $this->render('admin/params/changeMdpForm.html.twig', ['passwordForm' => $form->createView()]);
+                return $this->render('admin/params/changeMdpForm.html.twig', ['passwordForm' => $form]);
             }
 
             $this->entityManager->persist($user);
@@ -145,7 +145,7 @@ class UserController extends BaseController
             return $this->redirectToRoute('app_admin_index');
         }
 
-        return $this->render('admin/params/changeMdpForm.html.twig', ['passwordForm' => $form->createView()]);
+        return $this->render('admin/params/changeMdpForm.html.twig', ['passwordForm' => $form]);
     }
 
     #[Route(path: '/admin/user/groupaction', name: 'app_admin_groupaction_user')]

@@ -71,7 +71,7 @@ class BlogController extends BaseController
             return $this->redirectToRoute('app_admin_blogPosts');
         }
 
-        return $this->render('admin/blog/blogform.html.twig', ['blogForm' => $form->createView()]);
+        return $this->render('admin/blog/blogform.html.twig', ['blogForm' => $form]);
     }
 
     #[Route(path: '/admin/blog/edit/{id}', name: 'app_admin_edit_blogPosts')]
@@ -114,7 +114,7 @@ class BlogController extends BaseController
             return $this->redirectToRoute('app_admin_blogPosts');
         }
 
-        return $this->render('admin/blog/blogform.html.twig', ['blogForm' => $form->createView()]);
+        return $this->render('admin/blog/blogform.html.twig', ['blogForm' => $form]);
     }
 
     #[Route(path: '/admin/blog/changevalidite/{id}', name: 'app_admin_changevalidite_blogPost', methods: ['post'])]
@@ -273,7 +273,7 @@ class BlogController extends BaseController
     {
         $form = $this->createForm(OldPostFormType::class, $oldPost);
 
-        return $this->render('admin/blog/oldpostform.html.twig', ['oldPostForm' => $form->createView()]);
+        return $this->render('admin/blog/oldpostform.html.twig', ['oldPostForm' => $form]);
     }
 
     #[Route(path: '/admin/blog/historiques', name: 'app_admin_allhistorique_blogPosts')]

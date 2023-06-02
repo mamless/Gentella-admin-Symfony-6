@@ -23,7 +23,7 @@ class ResetPasswordController extends AbstractController
 {
     use ResetPasswordControllerTrait;
 
-    public function __construct(private ResetPasswordHelperInterface $resetPasswordHelper)
+    public function __construct(private ResetPasswordHelperInterface $resetPasswordHelper, private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
     {
     }
 
@@ -44,7 +44,7 @@ class ResetPasswordController extends AbstractController
         }
 
         return $this->render('reset_password/request.html.twig', [
-            'requestForm' => $form->createView(),
+            'requestForm' => $form,
         ]);
     }
 
@@ -109,7 +109,7 @@ class ResetPasswordController extends AbstractController
             );
 
             $user->setPassword($encodedPassword);
-            $this->getDoctrine()->getManager()->flush();
+            $this->managerRegistry->getManager()->flush();
 
             // The session is cleaned up after the password has been changed.
             $this->cleanSessionAfterReset();
@@ -118,13 +118,13 @@ class ResetPasswordController extends AbstractController
         }
 
         return $this->render('reset_password/reset.html.twig', [
-            'resetForm' => $form->createView(),
+            'resetForm' => $form,
         ]);
     }
 
     private function processSendingPasswordResetEmail(string $emailFormData, MailerInterface $mailer): RedirectResponse
     {
-        $user = $this->getDoctrine()->getRepository(User::class)->findOneBy([
+        $user = $this->managerRegistry->getRepository(User::class)->findOneBy([
             'email' => $emailFormData,
         ]);
 

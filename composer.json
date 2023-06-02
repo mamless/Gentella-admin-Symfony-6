@@ -2,35 +2,35 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": "^8.0.2",
+        "php": "^8.2.4",
         "ext-ctype": "*",
-        "ext-gd": "^8.0.2",
+        "ext-gd": "^8.2.4",
         "ext-iconv": "*",
-        "doctrine/doctrine-bundle": "^2.1",
-        "doctrine/doctrine-migrations-bundle": "^2.1",
+        "doctrine/doctrine-bundle": "^2.9.1",
+        "doctrine/doctrine-migrations-bundle": "^3.2.3",
         "doctrine/orm": "^2.7",
         "knplabs/knp-paginator-bundle": "^5.2",
         "liip/imagine-bundle": "^2.3",
         "stof/doctrine-extensions-bundle": "^1.4",
         "symfony/apache-pack": "^1.0",
-        "symfony/asset": "5.4.*",
-        "symfony/console": "5.4.*",
-        "symfony/debug-bundle": "5.4.*",
-        "symfony/dotenv": "5.4.*",
+        "symfony/asset": "6.2.*",
+        "symfony/console": "6.2.*",
+        "symfony/debug-bundle": "6.2.*",
+        "symfony/dotenv": "6.2.*",
         "symfony/flex": "^2.1",
-        "symfony/form": "5.4.*",
-        "symfony/framework-bundle": "5.4.*",
-        "symfony/mailer": "5.4.*",
+        "symfony/form": "6.2.*",
+        "symfony/framework-bundle": "6.2.*",
+        "symfony/mailer": "6.2.*",
         "symfony/monolog-bundle": "^3.0",
-        "symfony/runtime": "5.4.*",
-        "symfony/security-bundle": "5.4.*",
-        "symfony/serializer": "5.4.*",
-        "symfony/stopwatch": "5.4.*",
-        "symfony/twig-bundle": "5.4.*",
-        "symfony/validator": "5.4.*",
-        "symfony/var-dumper": "5.4.*",
-        "symfony/web-profiler-bundle": "5.4.*",
-        "symfony/yaml": "5.4.*",
+        "symfony/runtime": "6.2.*",
+        "symfony/security-bundle": "6.2.*",
+        "symfony/serializer": "6.2.*",
+        "symfony/stopwatch": "6.2.*",
+        "symfony/twig-bundle": "6.2.*",
+        "symfony/validator": "6.2.*",
+        "symfony/var-dumper": "6.2.*",
+        "symfony/web-profiler-bundle": "6.2.*",
+        "symfony/yaml": "6.2.*",
         "symfonycasts/reset-password-bundle": "^1.1",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0"
@@ -46,7 +46,7 @@
             "*": "dist"
         },
         "platform": {
-            "php": "8.0.2"
+            "php": "8.2.4"
         },
         "sort-packages": true,
         "allow-plugins": {
@@ -91,7 +91,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": true,
-            "require": "5.4.*"
+            "require": "6.2.*"
         }
     }
 }
