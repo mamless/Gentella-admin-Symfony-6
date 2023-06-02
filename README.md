@@ -42,8 +42,8 @@ Gentelella A skeleton application with user account functionality on the foundat
 - Mamour Wane (Mamless) co-founder of [ONETECHSN](https://onetechsn.com) designed and maintened the project so far
 
 # **Third party tools**
-- Rector (https://github.com/rectorphp/rector) nice php open source tool to help upgrade code be compatible with higher version of framework and languages
-- PHP-CS-Fixer (https://github.com/PHP-CS-Fixer/PHP-CS-Fixer) nice php open source tool fixes your code to follow standards (refactor)
+- [Rector](https://github.com/rectorphp/rector) nice php open source tool to help upgrade code be compatible with higher version of framework and languages
+- [PHP-CS-Fixer](https://github.com/PHP-CS-Fixer/PHP-CS-Fixer) nice php open source tool fixes your code to follow standards (refactor)
 
 ## License information
 Gentelella is licensed under The MIT License (MIT). Which means that you can use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software. But you always need to state that Colorlib is the original author of this template.
