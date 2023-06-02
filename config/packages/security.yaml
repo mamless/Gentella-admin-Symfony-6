@@ -2,7 +2,7 @@ security:
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
 
-    enable_authenticator_manager: true
+    #enable_authenticator_manager: true
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
@@ -49,7 +49,7 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/(%app_locales%)/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/(%app_locales%)/admin/login, roles: PUBLIC_ACCESS}
         - { path: ^/(%app_locales%)/admin, roles: ROLE_ADMIN}
         # - { path: ^/profile, roles: ROLE_USER }
 
