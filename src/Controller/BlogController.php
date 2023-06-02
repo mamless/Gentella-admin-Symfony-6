@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class BlogController extends BaseController
 {
@@ -27,7 +28,7 @@ class BlogController extends BaseController
     }
 
     #[Route(path: '/admin/blog', name: 'app_admin_blogPosts')]
-    #[IsGranted(['ROLE_WRITER'])]
+    #[IsGranted('ROLE_WRITER')]
     public function blogPosts(): Response
     {
         $blogPosts = $this->blogPostRepository->findAll();
@@ -36,7 +37,7 @@ class BlogController extends BaseController
     }
 
     #[Route(path: '/admin/blog/new', name: 'app_admin_new_blogPosts')]
-    #[IsGranted(['ROLE_WRITER'])]
+    #[IsGranted('ROLE_WRITER')]
     public function newBlogPost(Request $request)
     {
         $historique = new Historique();
@@ -75,7 +76,7 @@ class BlogController extends BaseController
     }
 
     #[Route(path: '/admin/blog/edit/{id}', name: 'app_admin_edit_blogPosts')]
-    #[IsGranted(['ROLE_WRITER'])]
+    #[IsGranted('ROLE_WRITER')]
     public function editBlogPost(BlogPost $blogPost, Request $request)
     {
         $oldPost = new OldPost();
@@ -118,7 +119,7 @@ class BlogController extends BaseController
     }
 
     #[Route(path: '/admin/blog/changevalidite/{id}', name: 'app_admin_changevalidite_blogPost', methods: ['post'])]
-    #[IsGranted(['ROLE_EDITORIAL'])]
+    #[IsGranted('ROLE_EDITORIAL')]
     public function activate(BlogPost $blogPost): JsonResponse
     {
         if ($blogPost->getValid()) {
@@ -139,7 +140,7 @@ class BlogController extends BaseController
     }
 
     #[Route(path: '/admin/blog/delete/{id}', name: 'app_admin_delete_blogPost')]
-    #[IsGranted(['ROLE_WRITER'])]
+    #[IsGranted('ROLE_WRITER')]
     public function delete(BlogPost $blogPost): JsonResponse
     {
         $historique = new Historique();
@@ -156,7 +157,7 @@ class BlogController extends BaseController
     }
 
     #[Route(path: '/admin/blog/groupaction', name: 'app_admin_groupaction_blogPost')]
-    #[IsGranted(['ROLE_EDITORIAL '])]
+    #[IsGranted('ROLE_EDITORIAL ')]
     public function groupAction(Request $request): JsonResponse
     {
         $action = $request->get('action');
@@ -197,14 +198,14 @@ class BlogController extends BaseController
     }
 
     #[Route(path: '/admin/blog/historique/{id}', name: 'app_admin_historique_blogPost')]
-    #[IsGranted([['ROLE_SUPERUSER']])]
+    #[IsGranted('ROLE_SUPERUSER')]
     public function historique(BlogPost $blogPost): Response
     {
         return $this->render('admin/blog/historique.html.twig', ['blogPost' => $blogPost]);
     }
 
     #[Route(path: '/admin/blog/historique/undo/{id}', name: 'app_admin_historique_undo')]
-    #[IsGranted([['ROLE_SUPERUSER']])]
+    #[IsGranted('ROLE_SUPERUSER')]
     public function undo(Historique $historique): RedirectResponse
     {
         $blogPost = $historique->getBlogPost();
@@ -260,7 +261,7 @@ class BlogController extends BaseController
 
     // TODO: add image upload support
     #[Route(path: '/admin/blog/preview/{id}', name: 'app_admin_preview_blogpost')]
-    #[IsGranted(['ROLE_ADMIN'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function preview(BlogPost $blogPost): JsonResponse
     {
         // TODO: preview page for admins
@@ -268,7 +269,7 @@ class BlogController extends BaseController
     }
 
     #[Route(path: '/admin/blog/historique/oldpost/{id}', name: 'app_admin_oldpost_blogPosts')]
-    #[IsGranted(['ROLE_WRITER'])]
+    #[IsGranted('ROLE_WRITER')]
     public function oldPost(OldPost $oldPost): Response
     {
         $form = $this->createForm(OldPostFormType::class, $oldPost);
@@ -277,7 +278,7 @@ class BlogController extends BaseController
     }
 
     #[Route(path: '/admin/blog/historiques', name: 'app_admin_allhistorique_blogPosts')]
-    #[IsGranted(['ROLE_WRITER'])]
+    #[IsGranted('ROLE_WRITER')]
     public function historiques(): Response
     {
         $historiques = $this->historiqueRepository->findAll();

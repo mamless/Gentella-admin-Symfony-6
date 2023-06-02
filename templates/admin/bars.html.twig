@@ -91,14 +91,14 @@
             <div class="alert alert-danger alert-dismissible " role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
                 </button>
-                <strong>{{ "backend.global.error"|trans }}</strong> {{ message }}
+                <strong>{{ "backend.global.error"|trans }}</strong> {{ message|trans }}
             </div>
         {% endfor %}
         {% for message in app.flashes("success") %}
             <div class="alert alert-success alert-dismissible " role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
                 </button>
-                <strong>{{ "backend.global.success"|trans }}</strong> {{ message }}
+                <strong>{{ "backend.global.success"|trans }}</strong> {{ message|trans }}
             </div>
         {% endfor %}
         {% block contenpage %}{% endblock %}
