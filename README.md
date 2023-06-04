@@ -19,6 +19,7 @@ Gentelella A skeleton application with user account functionality on the foundat
 - Password reset and send email, with link to reset the password
 - Authentication system
 - Powerful blog management module (CRUD, Change histrory, file upload access control for Writers and Editors )
+- FAQ module
 - Translation functionality (Easy to set up whatever language you need/use)
 
 # **Requirements**
