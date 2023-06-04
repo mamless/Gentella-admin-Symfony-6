@@ -93,6 +93,3 @@ And use the next credentials to login.
 ***
 ** Updates coming **
 - categories issues
-- translation deprecation : Deprecated: Creation of dynamic property App\Form\ChangePwsdFormType::$translator is deprecated 
-- symfony 6.2 depecations
-- update recipes 

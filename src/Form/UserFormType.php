@@ -11,32 +11,35 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UserFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->translator = $options['translator'];
+
+        /** @var TranslatorInterface $translator */
+        $translator = $options['translator'];
 
         $builder
-            ->add('username', TextType::class, ['label' => $this->translator->trans('backend.user.username')])
+            ->add('username', TextType::class, ['label' => $translator->trans('backend.user.username')])
             ->add('email', EmailType::class)
-            ->add('nomComplet', TextType::class, ['label' => $this->translator->trans('backend.user.name')])
+            ->add('nomComplet', TextType::class, ['label' => $translator->trans('backend.user.name')])
             ->add('justpassword', TextType::class, [
-                'label' => $this->translator->trans('backend.user.password'),
+                'label' => $translator->trans('backend.user.password'),
                 'required' => true,
                 'mapped' => false,
                 'constraints' => [
-                    new NotBlank(['message' => $this->translator->trans('backend.global.must_not_be_empty')]),
+                    new NotBlank(['message' => $translator->trans('backend.global.must_not_be_empty')]),
                 ],
             ])
             ->add('role', EntityType::class, [
                 'mapped' => false,
                 'class' => Role::class,
                 'required' => true,
-                'placeholder' => $this->translator->trans('backend.role.choice_role'),
+                'placeholder' => $translator->trans('backend.role.choice_role'),
                 'constraints' => [
-                    new NotBlank(['message' => $this->translator->trans('backend.global.must_not_be_empty')]),
+                    new NotBlank(['message' => $translator->trans('backend.global.must_not_be_empty')]),
                 ],
             ]);
     }

@@ -3,7 +3,7 @@
     <div class="col-md-3 left_col menu_fixed">
         <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-                <a href="{{ path('app_admin_index') }}" class="site_title"><i class="fa fa-paw"></i> <span>ONEHEALTH</span></a>
+                <a href="{{ path('app_admin_index') }}" class="site_title"><i class="fa fa-paw"></i> <span>G S 6</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -12,7 +12,7 @@
             <div class="profile clearfix">
                 <div class="profile_pic">
                     {% if is_granted('ROLE_ADMIN') %}
-                    <img src="{{ app.user.avatarUrl(50) }}" alt="..." class="img-circle profile_img">
+                    <img src="{{ app.user.avatarUrl() }}" alt="..." class="img-circle profile_img">
                     {% endif %}
                 </div>
                 <div class="profile_info">
@@ -72,7 +72,7 @@
                 <ul class=" navbar-right">
                     <li class="nav-item dropdown open" style="padding-left: 15px;">
                         <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                            <img src="{{ app.user.avatarUrl(30) }}" alt="">{{ app.user.nomComplet }}
+                            <img src="{{ app.user.avatarUrl() }}" alt="">{{ app.user.nomComplet }}
                         </a>
                         <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item"  href="{{ path('app_admin_changepswd') }}"><i class="fa fa-key pull-right"></i>{{ "backend.global.change_my_password"|trans }}</a>

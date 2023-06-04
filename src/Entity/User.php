@@ -187,9 +187,10 @@ class User implements UserInterface, EquatableInterface, PasswordAuthenticatedUs
         return $this;
     }
 
-    public function getAvatarUrl($size): string
+
+    public function getAvatarUrl(): string
     {
-        return "https://api.adorable.io/avatars/$size/".$this->username;
+        return "https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=".$this->username;
     }
 
     public function getColorCode(): string
