@@ -94,5 +94,5 @@ And use the next credentials to login.
 ***
 ** Updates coming **
 - Add FAQ 
-- Add contact
+- Add contact 
 - upgrade to symfony 6.4 (the LTS version)
