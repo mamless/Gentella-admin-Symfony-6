@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Categorie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -70,4 +72,23 @@ class CategorieRepository extends ServiceEntityRepository
 
         return $categorie;
     }
+
+
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function countChildCategories($id) : ?int
+    {
+        return (int) $this->createQueryBuilder('c')
+            ->select('count(c.id)')
+            ->andWhere("c.CategorieParente= :id")
+            ->andWhere('c.deleted = false')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getSingleScalarResult()
+            ;
+    }
+
+
 }
