@@ -93,6 +93,6 @@ And use the next credentials to login.
 - Entities properties are typed now
 ***
 ** Updates coming **
-- Add FAQ
+- Add FAQ 
 - Add contact
 - upgrade to symfony 6.4 (the LTS version)
