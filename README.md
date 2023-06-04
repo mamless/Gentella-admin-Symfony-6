@@ -37,7 +37,7 @@ Gentelella A skeleton application with user account functionality on the foundat
 - Annotations replacement for attribute **OK**
 - Entities properties are typed now
 - **UPDATED TO SYMFONY 6**
-- upgrade to symfony 6.4 (the LTS version)
+- Add FAQ
 
 # **Credits**
 - [Gentelella](https://github.com/ColorlibHQ/gentelella) - Admin template project is developed and maintained by [Colorlib](https://colorlib.com/ "Colorlib - Make Your First Blog") and Aigars Silkalns
@@ -90,6 +90,5 @@ And use the next credentials to login.
 - Entities properties are typed now
 ***
 ** Updates coming **
-- Add FAQ 
 - Add contact 
-- upgrade to symfony 6.4 (the LTS version)
+- upgrade to symfony 6.4 (the LTS version november 2023)
