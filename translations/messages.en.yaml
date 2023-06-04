@@ -19,6 +19,9 @@ backend:
     categories: Categories
     blog: Blog
     history: History
+    settings: Settings
+    general: General
+    faq: FAQ
   role:
     choice_role: Choose a role
   user:

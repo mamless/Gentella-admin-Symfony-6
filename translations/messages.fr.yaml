@@ -19,6 +19,9 @@ backend:
     categories: Categorie
     blog: Blog
     history: Historique
+    settings: Parametre
+    general: Génerale
+    faq: FAQ
   role:
     choice_role: Choisissez un role
   user:

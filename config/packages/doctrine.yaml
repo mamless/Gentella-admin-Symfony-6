@@ -6,6 +6,9 @@ doctrine:
         # either here or in the DATABASE_URL env var (see .env file)
         server_version: '5.6'
         #server_version: '15'
+        options:
+            table_prefix:
+
     orm:
         auto_generate_proxy_classes: true
         enable_lazy_ghost_objects: true

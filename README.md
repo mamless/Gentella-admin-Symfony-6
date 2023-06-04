@@ -62,12 +62,8 @@ Gentelella is licensed under The MIT License (MIT). Which means that you can use
     php bin/console doctrine:schema:create
 ~~~
 
-3 - Create scheme using migration command:
-~~~
-    php bin/console doctrine:migrations:migrate
-~~~
 
-4 - You will need to populate your database using fixtures for login.
+3 - You will need to populate your database using fixtures for login.
 
 Run:
 

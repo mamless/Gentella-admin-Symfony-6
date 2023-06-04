@@ -52,7 +52,17 @@
                             </ul>
                         </li>
                         {% endif %}
+                        {% if is_granted("ROLE_ADMINISTRATOR") %}
+
+                            <li><a><i class="fa fa-cog"></i> {{ "backend.menu.settings"|trans }} <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="{{ path('app_admin_parametre_generale') }}">{{ "backend.menu.general"|trans }}</a></li>
+                                    <li><a href="{{ path('app_admin_faqs') }}">{{ "backend.menu.faq"|trans }}</a></li>
+                                </ul>
+                            </li>
+                        {% endif %}
                     </ul>
+
                 </div>
 
             </div>
