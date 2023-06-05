@@ -267,6 +267,32 @@
                 .find('.custom-file-label')
                 .html(inputFile.files[0].name);
         });
+
+        $(".mail_link").on("click",function (e) {
+            e.preventDefault();
+            var link = $(this).attr("href");
+            var mail_link = $(this);
+            $.ajax({
+                url: link,
+                method: 'POST',
+                data : {},
+                success: function(data){
+                    $(".mail_list").removeClass("selected_mail");
+                    $(".inbox-body").attr("style","");
+                    mail_link.find(".mail_list").removeClass("not_read_mail").addClass("selected_mail");
+                    mail_link.find(".mail_list .left i").removeClass("fa-envelope","fa-envelope-o").addClass("fa-envelope-o");
+                    $("#objetPlace").html("Objet : "+data.object);
+                    $("#datePlace").html(data.sendedAt);
+                    $("#namePlace").html(data.fullName);
+                    $("#emailPlace").html("("+data.email+")");
+                    $(".view-mail").html(data.message);
+                },
+                error: function(xhr){
+                    $(".inbox-body").attr("style","display:none");
+                    notif("error","Erreur","Une erreur innatendue est survenue");
+                }
+            });
+        })
     </script>
 
 {% endblock %}

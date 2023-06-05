@@ -90,5 +90,11 @@ And use the next credentials to login.
 - Entities properties are typed now
 ***
 ** Updates coming **
-- Add contact 
+- Add contact module : 
+- - Read messages in an inbox style **ok**
+- - Sort by date and read status
+- - Research in contacts
+- - load mail with ajax
+- Add faker to generate fake data 
+- add SEO fields to each entity
 - upgrade to symfony 6.4 (the LTS version november 2023)

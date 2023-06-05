@@ -22,6 +22,8 @@ backend:
     settings: Settings
     general: General
     faq: FAQ
+    contact: Conctact
+    inbox: Inbox
   role:
     choice_role: Choose a role
   user:

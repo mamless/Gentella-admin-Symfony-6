@@ -22,15 +22,17 @@ backend:
     settings: Parametre
     general: Génerale
     faq: FAQ
+    contact: Conctact
+    inbox: Boîte de reception
   role:
     choice_role: Choisissez un role
   user:
     listing: Listing
-    user_listing: Liste des ustilisateurs
+    user_listing: Liste des utilisateurs
     group_actions: Action de groupe
-    deactivate: Desactiver
+    deactivate: Désactiver
     Activate: Activer
-    delete: Suprimer
+    delete: Supprimer
     username: Nom d'utilisateur
     email: Email
     name: Nom Complet

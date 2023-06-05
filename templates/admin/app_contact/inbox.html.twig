@@ -1,0 +1,99 @@
+{% extends "admin/bars.html.twig" %}
+
+{% block contenpage %}
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>Inbox</h3>
+            </div>
+
+            <div class="title_right">
+                <div class="col-md-8 col-sm-8   form-group pull-right top_search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Recherche">
+                        <span class="input-group-btn">
+                      <button class="btn btn-secondary" type="button"><i class="fa fa-search"></i></button>
+                    </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Inbox</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="row">
+                            <div style="height: 700px;overflow-y: scroll;" class="col-sm-3 mail_list_column">
+                                {% for contact in contacts %}
+                                    <a class="mail_link" href="{{ path('app_admin_read_contact', {'id': contact.id}) }}">
+                                        <div class="mail_list {% if not contact.isRead%} not_read_mail {% endif %}">
+                                            <div class="left">
+                                                {% if not contact.isRead%}
+                                                    <i class="fa fa-envelope"></i>
+                                                {% else %}
+                                                    <i class="fa fa-envelope-o"></i>
+                                                {% endif %}
+                                                {% if contact.isAnswered%}
+                                                    <i class="fa fa-reply"></i>
+                                                {% endif %}
+                                            </div>
+                                            <div class="right">
+                                                <h3>{{ contact.fullName}}<small>{{ contact.sendedAt|date("d/m/y h:i:s") }}</small></h3>
+                                                <p>{{ contact.message[0:25] }}...</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                {% endfor %}
+                            </div>
+                            <!-- /MAIL LIST -->
+
+                            <!-- CONTENT MAIL -->
+                            <div style="height: 700px;overflow-y: scroll" class="col-sm-9 mail_view">
+                                <div style="display: none;" class="inbox-body">
+                                    <div class="mail_heading row">
+                                        <div class="col-md-8">
+                                            <div class="btn-group">
+                                                <button class="btn btn-sm btn-primary" type="button"><i class="fa fa-reply"></i> Répondre</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 text-right">
+                                            <p id="datePlace" class="date"> date</p>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <h4 id="objetPlace">Objet</h4>
+                                        </div>
+                                    </div>
+                                    <div class="sender-info">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <strong id="namePlace" >Nom complet</strong>
+                                                <span id="emailPlace">(adresss mail)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="view-mail">
+                                        contenu
+                                    </div>
+                                    <div class="btn-group">
+                                        <button class="btn btn-sm btn-primary" type="button"><i class="fa fa-reply"></i> Répondre</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- /CONTENT MAIL -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
