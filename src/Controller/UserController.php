@@ -5,12 +5,14 @@ namespace App\Controller;
 use App\Entity\Role;
 use App\Entity\User;
 use App\Form\ChangePwsdFormType;
+use App\Form\ResetPwsdFormType;
 use App\Form\UserFormType;
 use App\Repository\RoleRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -40,7 +42,7 @@ class UserController extends BaseController
     }
 
     #[Route(path: '/admin/user', name: 'app_admin_users')]
-    #[IsGranted('ROLE_SUPERUSER')]
+    #[IsGranted('ROLE_LIST_USER')]
     public function users(): Response
     {
         $users = $this->userRepository->findAll();
@@ -49,7 +51,7 @@ class UserController extends BaseController
     }
 
     #[Route(path: '/admin/user/new', name: 'app_admin_new_user')]
-    #[IsGranted('ROLE_SUPERUSER')]
+    #[IsGranted('ROLE_ADD_USER')]
     public function newUser(Request $request)
     {
         $form = $this->createForm(UserFormType::class, null, ['translator' => $this->translator]);
@@ -57,14 +59,14 @@ class UserController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var User $user */
             $user = $form->getData();
-            /** @var Role $role */
             $password = $form['justpassword']->getData();
-            $role = $form['role']->getData();
+            $role = $form->get("role")->getData();
             $user->setValid(true)
                 ->setDeleted(false)
+                ->setCreatedBy($this->getUser())
                 ->setAdmin(true)
                 ->setPassword($this->passwordHasher->hashPassword($user, $password))
-                ->setRoles([$role->getRoleName()]);
+                ->setRoles([$role]);
             $this->entityManager->persist($user);
             $this->entityManager->flush();
             $this->addFlash('success', $this->translator->trans('backend.user.add_user'));
@@ -76,22 +78,18 @@ class UserController extends BaseController
     }
 
     #[Route(path: '/admin/user/edit/{id}', name: 'app_admin_edit_user')]
-    #[IsGranted('ROLE_SUPERUSER')]
+    #[IsGranted('ROLE_EDIT_USER')]
     public function editUser(User $user, Request $request)
     {
+        $this->errorNotFound($user);
         $form = $this->createForm(UserFormType::class, $user, ['translator' => $this->translator]);
-        $form->get('justpassword')->setData($user->getPassword());
-        $therole = $this->roleRepository->findOneBy(['roleName' => $user->getRoles()[0]]);
+        $therole =  $user->getRoles()[0];
         $form->get('role')->setData($therole);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var Role $role */
-            $role = $form['role']->getData();
-            $password = $form['justpassword']->getData();
-            $user->setRoles([$role->getRoleName()]);
-            if ($user->getPassword() != $password) {
-                $user->setPassword($this->passwordHasher->hashPassword($user, $password));
-            }
+            $role = $form->get("role")->getData();
+            $user->setRoles([$role])
+                ->setModfiedBy($this->getUser());
             $this->entityManager->persist($user);
             $this->entityManager->flush();
             $this->addFlash('success', $this->translator->trans('backend.user.modify_user'));
@@ -103,26 +101,28 @@ class UserController extends BaseController
     }
 
     #[Route(path: '/admin/user/changevalidite/{id}', name: 'app_admin_changevalidite_user', methods: ['post'])]
-    #[IsGranted('ROLE_SUPERUSER')]
+    #[IsGranted('ROLE_ENABLE_USER')]
     public function activate(User $user): JsonResponse
     {
+        $this->errorNotFound($user);
+        $user->setModfiedBy($this->getUser());
         $user = $this->userRepository->changeValidite($user);
 
         return $this->json(['message' => 'success', 'value' => $user->isValid()]);
     }
 
     #[Route(path: '/admin/user/delete/{id}', name: 'app_admin_delete_user')]
-    #[IsGranted('ROLE_SUPERUSER')]
+    #[IsGranted('ROLE_DELETE_USER')]
     public function delete(User $user): JsonResponse
     {
+        $this->errorNotFound($user);
+        $user->setModfiedBy($this->getUser());
         $user = $this->userRepository->delete($user);
-        /*$this->addFlash("success","Utilisateur supprimé");
-        return $this->redirectToRoute('app_admin_users');*/
         return $this->json(['message' => 'success', 'value' => $user->isDeleted()]);
     }
 
     #[Route(path: '/admin/user/changePassword', name: 'app_admin_changepswd')]
-    #[IsGranted('ROLE_SUPERUSER')]
+    #[IsGranted('ROLE_USER')]
     public function changePswd(Request $request)
     {
         $user = $this->getUser();
@@ -134,9 +134,9 @@ class UserController extends BaseController
 
             if ($this->passwordHasher->isPasswordValid($user, $password)) {
                 $user->setPassword($this->passwordHasher->hashPassword($user, $newPassword));
+                $user->setInitMdp(false)->setModfiedBy($this->getUser());
             } else {
                 $this->addFlash('error', 'backend.user.new_passwod_must_be');
-
                 return $this->render('admin/params/changeMdpForm.html.twig', ['passwordForm' => $form]);
             }
 
@@ -151,26 +151,33 @@ class UserController extends BaseController
     }
 
     #[Route(path: '/admin/user/groupaction', name: 'app_admin_groupaction_user')]
-    #[IsGranted('ROLE_SUPERUSER')]
+    #[IsGranted('ROLE_AG_USER')]
     public function groupAction(Request $request): JsonResponse
     {
         $action = $request->get('action');
         $ids = $request->get('ids');
         $users = $this->userRepository->findBy(['id' => $ids]);
 
-        if ($action == $this->translator->trans('backend.user.deactivate')) {
+        if ($action == $this->translator->trans('backend.user.deactivate')  && $this->isGranted("ROLE_AG_ENABLE_USER")) {
             foreach ($users as $user) {
-                $user->setValid(false);
+                $this->errorNotFound($user);
+                $user->setValid(false)
+                    ->setModfiedBy($this->getUser());
                 $this->entityManager->persist($user);
             }
-        } elseif ($action == $this->translator->trans('backend.user.Activate')) {
+        } elseif ($action == $this->translator->trans('backend.user.Activate') && $this->isGranted("ROLE_AG_ENABLE_USER")) {
             foreach ($users as $user) {
-                $user->setValid(true);
+                $this->errorNotFound($user);
+                $user->setValid(true)
+                    ->setModfiedBy($this->getUser());
                 $this->entityManager->persist($user);
             }
-        } elseif ($action == $this->translator->trans('backend.user.delete')) {
+        } elseif ($action == $this->translator->trans('backend.user.delete') && $this->isGranted("ROLE_AG_DELETE_USER")) {
             foreach ($users as $user) {
-                $user->setDeleted(true);
+                $this->errorNotFound($user);
+                $user->setDeleted(true)
+                    ->setModfiedBy($this->getUser())
+                    ->oldify();
                 $this->entityManager->persist($user);
             }
         } else {
@@ -179,5 +186,36 @@ class UserController extends BaseController
         $this->entityManager->flush();
 
         return $this->json(['message' => 'success', 'nb' => count($users)]);
+    }
+
+    #[Route(path: '/admin/user/resetPassword/{id}', name: 'app_admin_resetpswd')]
+    #[IsGranted('ROLE_RESET_PASSWORD_USER')]
+    public function resetPswd(User $user,Request $request): RedirectResponse|Response
+    {
+        $this->errorNotFound($user);
+        $form = $this->createForm(ResetPwsdFormType::class, $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var User $user */
+            $user = $form->getData();
+            $newPassword = $form['newpassword']->getData();
+            $user->setPassword($this->passwordHasher->hashPassword($user, $newPassword))
+                ->setModfiedBy($this->getUser());
+
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+            $this->addFlash('success', 'Mot de passe modifié');
+
+            return $this->redirectToRoute('app_admin_users');
+        }
+
+        return $this->render('admin/user/resetMdpForm.html.twig', ['passwordForm' => $form->createView()]);
+    }
+
+    public function errorNotFound(User $user)
+    {
+        if ($user->isDeleted()){
+            throw $this->createNotFoundException("User not found");
+        }
     }
 }

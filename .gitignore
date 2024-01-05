@@ -17,3 +17,7 @@
 /tools/php-cs-fixer/vendor/
 /.php-cs-fixer.cache
 .php-cs-fixer.php
+
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###

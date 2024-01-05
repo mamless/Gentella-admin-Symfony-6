@@ -13,17 +13,35 @@ security:
                 class: App\Entity\User
                 property: username
     role_hierarchy:
-        ROLE_SUPERUSER: [ROLE_ADMINISTRATOR , ROLE_EDITORIAL]
-        ROLE_ADMINISTRATOR: [ROLE_ADMIN, ROLE_MANAGER,ROLE_ALLOWED_TO_SWITCH,ROLE_PREMIUM_USER,ROLE_FREE_USER]
-        ROLE_EDITORIAL: [ROLE_ADMIN,ROLE_WRITER,ROLE_PUBLISHER,ROLE_PREMIUM_USER,ROLE_FREE_USER]
-        ROLE_WRITER: [ROLE_ADMIN]
-        ROLE_USER: [ROLE_FREE_USER]
+        ROLE_SUPERUSER: [ROLE_ADMINISTRATOR,ROLE_EDITORIAL,ROLE_WRITER,ROLE_USER ,ROLE_ENABLE_PROFILE,ROLE_EDIT_PROFILE,ROLE_ADD_PROFILE,ROLE_AG_ENABLE_USER,ROLE_AG_DELETE_USER,ROLE_RESET_PASSWORD_USER,ROLE_DELETE_USER,ROLE_ENABLE_USER,ROLE_ADD_USER,ROLE_VIEW_USER,ROLE_EDIT_USER,ROLE_AG_ENABLE_PROFILE,ROLE_AG_DELETE_PROFILE,ROLE_DELETE_PROFILE ]
+        #Roles for profile CRUD
+        ROLE_ACCESS_MENU_MANAGE_PROFILE: [ ROLE_ACCESS_MENU_USER,ROLE_ADMIN ]
+        ROLE_LIST_PROFILE: [ ROLE_ACCESS_MENU_MANAGE_PROFILE ]
+        ROLE_EDIT_PROFILE: [ ROLE_LIST_PROFILE ]
+        ROLE_ADD_PROFILE: [ ROLE_LIST_PROFILE ]
+        ROLE_ENABLE_PROFILE: [ ROLE_LIST_PROFILE ]
+        ROLE_DELETE_PROFILE: [ ROLE_LIST_PROFILE ]
+        ROLE_AG_PROFILE: [ ROLE_LIST_PROFILE ]
+        ROLE_AG_DELETE_PROFILE: [ ROLE_AG_PROFILE ]
+        ROLE_AG_ENABLE_PROFILE: [ ROLE_AG_PROFILE ]
+        #Role for user crud
+        ROLE_ACCESS_MENU_MANAGE_USER: [ ROLE_ACCESS_MENU_USER,ROLE_ADMIN ]
+        ROLE_LIST_USER: [ ROLE_ACCESS_MENU_MANAGE_USER ]
+        ROLE_EDIT_USER: [ ROLE_LIST_USER ]
+        ROLE_VIEW_USER: [ ROLE_LIST_USER ]
+        ROLE_ADD_USER: [ ROLE_LIST_USER ]
+        ROLE_ENABLE_USER: [ ROLE_LIST_USER ]
+        ROLE_DELETE_USER: [ ROLE_LIST_USER ]
+        ROLE_RESET_PASSWORD_USER: [ ROLE_LIST_USER ]
+        ROLE_AG_USER: [ ROLE_LIST_USER ]
+        ROLE_AG_DELETE_USER: [ ROLE_AG_USER ]
+        ROLE_AG_ENABLE_USER: [ ROLE_AG_USER ]
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-
             pattern: ^/
             user_checker: App\Security\UserChecker
             lazy: true
@@ -37,6 +55,10 @@ security:
                 secret: '%kernel.secret%'
                 lifetime: 2592000
             switch_user: true
+
+            login_throttling:
+                max_attempts: 4          # per minute ...
+                interval: '2 minutes' # ... or in a custom period
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall

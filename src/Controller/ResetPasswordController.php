@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\ChangePasswordFormType;
 use App\Form\ResetPasswordRequestFormType;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -23,7 +24,7 @@ class ResetPasswordController extends AbstractController
 {
     use ResetPasswordControllerTrait;
 
-    public function __construct(private ResetPasswordHelperInterface $resetPasswordHelper, private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
+    public function __construct(private readonly ResetPasswordHelperInterface $resetPasswordHelper, private readonly ManagerRegistry $managerRegistry)
     {
     }
 
@@ -55,7 +56,7 @@ class ResetPasswordController extends AbstractController
     public function checkEmail(): Response
     {
         // We prevent users from directly accessing this page
-        if (!$this->canCheckEmail()) {
+        if (!$this->getTokenFromSession()) {
             return $this->redirectToRoute('app_forgot_password_request');
         }
 

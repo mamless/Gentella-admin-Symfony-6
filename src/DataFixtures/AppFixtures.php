@@ -47,7 +47,6 @@ class AppFixtures extends Fixture
             $user->setDeleted(false);
             $user->setAdmin(true);
             $manager->persist($user);
-
             $manager->flush();
         }
     }

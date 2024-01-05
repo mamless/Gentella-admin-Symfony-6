@@ -15,6 +15,7 @@ backend:
   menu:
     home: Home
     user: User
+    profil: User profile
     manage: Manage
     categories: Categories
     blog: Blog

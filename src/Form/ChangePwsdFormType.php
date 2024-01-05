@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ChangePwsdFormType extends AbstractType
@@ -35,6 +36,8 @@ class ChangePwsdFormType extends AbstractType
                 'type' => PasswordType::class,
                 'constraints' => [
                     new NotBlank(['message' => $translator->trans('backend.global.must_not_be_empty')]),
+                    new Regex("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\d\s]).{8,}$/","Il faut Au moins 8 caractères avec au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial ")
+
                 ],
                 'first_options' => ['label' => $translator->trans('backend.user.new_password')],
                 'second_options' => ['label' => $translator->trans('backend.user.confirm_password')],

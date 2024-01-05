@@ -19,6 +19,9 @@ class Role
     #[ORM\Column(length: 100)]
     private ?string $libelle = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $description = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -51,5 +54,17 @@ class Role
     public function __toString(): string
     {
         return (string) $this->libelle;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
     }
 }

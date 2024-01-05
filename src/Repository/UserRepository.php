@@ -85,6 +85,7 @@ class UserRepository extends ServiceEntityRepository
     public function delete(User $user)
     {
         $user->setDeleted(true);
+        $user->setDeleted(true)->oldify();
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 

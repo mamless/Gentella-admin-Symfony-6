@@ -40,6 +40,8 @@ class RedirectToLocaleSubscriber implements EventSubscriberInterface
      */
     public function __construct(private UrlGeneratorInterface $urlGenerator, $locales, $defaultLocale = null)
     {
+
+
         $this->locales = explode('|', trim($locales));
 
         if (empty($this->locales)) {
@@ -67,12 +69,16 @@ class RedirectToLocaleSubscriber implements EventSubscriberInterface
 
     public function onKernelRequest(RequestEvent $event)
     {
+
         $request = $event->getRequest();
 
         // Ignore sub-requests and all URLs but the homepage
         if ('/admin' !== $request->getPathInfo()) {
             return;
         }
+
+
+
 
         // Ignore requests from referrers with the same HTTP host in order to prevent
         // changing language for users who possibly already selected it for this application.

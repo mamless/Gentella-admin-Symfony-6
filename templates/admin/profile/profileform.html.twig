@@ -1,0 +1,94 @@
+{% extends "admin/displayPage.html.twig" %}
+
+
+{% set role_ag = "ROLE_USER" %}
+{% set role_add = "ROLE_USER" %}
+{% set role_ag_enable = "ROLE_USER" %}
+{% set role_ag_delete = "ROLE_USER" %}
+{% set role_edit = "ROLE_USER" %}
+{% set role_enable = "ROLE_USER" %}
+{% set role_delete = "ROLE_USER" %}
+
+{%block titreSection %}<a href="{{ path('app_admin_profiles') }}">Liste des profiles</a> >> Nouveau profile  {% endblock%}
+{% block showTitle %} Nouveau profile {% endblock %}
+{% block newLinks %}{% endblock %}
+{% block GroupAction %}{% endblock %}
+
+{% block beforeTable %}
+{{ form_start(ProfileForm,{ 'attr' : { 'class': 'col-12' } }) }}
+    <div class="row mt-3 mb-3">
+        <div class="col">
+
+            <label class="form-label">{{ field_label(ProfileForm.nom) }}</label>
+            <div class="form-error">
+                {{ form_errors(ProfileForm.nom) }}
+            </div>
+            <input type="text" name="{{ field_name(ProfileForm.nom) }}" value="{{ field_value(ProfileForm.nom) }}"  required="required" class="form-control" >
+        </div>
+    </div>
+
+    {% endblock %}
+    {% block showTableHead %}
+        <thead>
+        <th><input type="checkbox" id="select_all" name="select_all"></th>
+        <th>Nom</th>
+        <th>Libellé</th>
+        <th>Descripction</th>
+        </thead>
+    {% endblock %}
+    {% block showTableBody%}
+        <tbody>
+        {% if ProfileForm.vars.value %}
+        {% for role in ProfileForm.vars.value.roles  %}
+            <tr>
+                <td><input type="checkbox" class="chkgrp" checked="checked" name="chkgrp[]" value="{{ role.id }}"></td>
+                <td>{{ role.rolename }}</td>
+                <td>{{ role.libelle }}</td>
+                <td>{{ role.description }}</td>
+            </tr>
+        {% endfor %}
+        {% endif %}
+        {% for role in roles  %}
+            <tr>
+                <td><input type="checkbox" class="chkgrp"  name="chkgrp[]" value="{{ role.id }}"></td>
+                <td>{{ role.rolename }}</td>
+                <td>{{ role.libelle }}</td>
+                <td>{{ role.description }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    {% endblock %}
+    {% block afterTable %}
+
+    <div class="ln_solid"></div>
+    <div class="item form-group">
+        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+            <a class="btn btn-warning" href="{{ path('app_admin_profiles') }}">Annuler</a>
+            <button type="submit" name="valider" class="btn btn-success">Enregistrer</button>
+        </div>
+    </div>
+{{ form_end(ProfileForm) }}
+{% endblock %}
+
+
+{% block dataTableConf %}
+    var dataminetables = $('.dataminetables').dataTable({
+    "iDisplayLength": 100,
+    "columnDefs": [
+    {"orderable": false, "targets": 0}
+    ]
+    });
+
+
+    var datasorttables = $('.dataminetables').DataTable();
+
+
+
+        $("form").submit(function (e){
+            if ($('.chkgrp').filter(':checked').length <= 0){
+                alert("Choisissez au moins un rôle");
+                e.preventDefault();
+
+            }
+        })
+{% endblock %}

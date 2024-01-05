@@ -30,10 +30,15 @@
                     <ul class="nav side-menu">
                         <li><a href="{{ path('app_admin_index') }}"><i class="fa fa-home"></i> {{ "backend.menu.home"|trans }}</a>
                         </li>
-                        {% if is_granted("ROLE_SUPERUSER") %}
+                        {% if is_granted("ROLE_ACCESS_MENU_USER") %}
                             <li><a><i class="fa fa-user"></i> {{ "backend.menu.user"|trans }} <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
+                                    {% if is_granted("ROLE_ACCESS_MENU_MANAGE_USER") %}
                                     <li><a href="{{ path('app_admin_users') }}">{{ "backend.menu.manage"|trans }}</a></li>
+                                    {% endif %}
+                                    {% if is_granted("ROLE_ACCESS_MENU_MANAGE_PROFILE") %}
+                                    <li><a href="{{ path('app_admin_profiles') }}">{{ "backend.menu.profil"|trans }}</a></li>
+                                    {% endif %}
                                 </ul>
                             </li>
                         {% endif %}

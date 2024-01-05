@@ -39,6 +39,9 @@ class User implements UserInterface, EquatableInterface, PasswordAuthenticatedUs
     #[Assert\Email(message: 'Email invalide')]
     private ?string $email= null;
 
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?Profile $profile = null;
+
     #[ORM\Column]
     private ?bool $valid = null;
 
@@ -59,6 +62,18 @@ class User implements UserInterface, EquatableInterface, PasswordAuthenticatedUs
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Historique::class)]
     private Collection $historiques;
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    private $createdBy;
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    private $modfiedBy;
+
+    #[ORM\Column]
+    private ?bool $initMdp = null;
+
 
     public function __construct()
     {
@@ -102,6 +117,12 @@ class User implements UserInterface, EquatableInterface, PasswordAuthenticatedUs
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
+        if ($this->getProfile() != null && !$this->profile->isDeleted() && $this->getProfile()->getValid()){
+            $profileRoles = array_map(function($e) {
+                    return is_object($e) ? $e->getRoleName() : $e['roleName'];
+                }, $this->getProfile()->getRoles()->toArray());
+            $roles = array_merge($roles,$profileRoles);
+        }
 
         return array_unique($roles);
     }
@@ -187,6 +208,23 @@ class User implements UserInterface, EquatableInterface, PasswordAuthenticatedUs
         return $this;
     }
 
+    public function getProfile(): ?Profile
+    {
+        return $this->profile;
+    }
+
+    public function setProfile(?Profile $profile): self
+    {
+        $this->profile = $profile;
+
+        return $this;
+    }
+
+    public function oldify(): void
+    {
+        $this->email .= '-old-'.$this->id;
+        $this->username .= '-old-'.$this->id;
+    }
 
     public function getAvatarUrl(): string
     {
@@ -321,6 +359,42 @@ class User implements UserInterface, EquatableInterface, PasswordAuthenticatedUs
         return $this;
     }
 
+    public function getModfiedBy(): ?User
+    {
+        return $this->modfiedBy;
+    }
+
+    public function setModfiedBy(?User $modfiedBy): self
+    {
+        $this->modfiedBy = $modfiedBy;
+
+        return $this;
+    }
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(?User $createdBy): self
+    {
+        $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    public function isInitMdp(): ?bool
+    {
+        return $this->initMdp;
+    }
+
+    public function setInitMdp(bool $initMdp): self
+    {
+        $this->initMdp = $initMdp;
+
+        return $this;
+    }
+
     public function isEqualTo(UserInterface $user): bool
     {
         if ($user instanceof User) {
@@ -339,4 +413,6 @@ class User implements UserInterface, EquatableInterface, PasswordAuthenticatedUs
         //not used here
         return null;
     }
+
+
 }

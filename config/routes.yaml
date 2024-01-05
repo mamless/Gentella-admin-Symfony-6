@@ -9,3 +9,7 @@ controllers:
         namespace: App\Controller
     type: attribute
 
+# When using symfony translations cant find a way to override path "/" in controller so had to set it here
+real_index:
+    path: /
+    controller: App\Controller\AdminController::realIndex

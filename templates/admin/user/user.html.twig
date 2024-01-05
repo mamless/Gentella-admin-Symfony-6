@@ -1,5 +1,14 @@
 {% extends "admin/bars.html.twig" %}
 
+{% set role_ag = "ROLE_AG_USER" %}
+{% set role_add = "ROLE_ADD_USER" %}
+{% set role_ag_enable = "ROLE_AG_ENABLE_USER" %}
+{% set role_ag_delete = "ROLE_AG_DELETE_USER" %}
+{% set role_edit = "ROLE_EDIT_USER" %}
+{% set role_enable = "ROLE_ENABLE_USER" %}
+{% set role_delete = "ROLE_DELETE_USER" %}
+{% set role_reset_password_user = "ROLE_RESET_PASSWORD_USER" %}
+
 {% block contenpage %}
 	<div class="">
 		<div class="page-title">
@@ -19,68 +28,81 @@
 						<h2>
 							{{ "backend.user.user_listing"|trans }}</h2>
 						<ul class="nav navbar-right panel_toolbox">
+							{% if is_granted(role_add) %}
 							<li>
 								<a href="{{ path('app_admin_new_user') }}" class="btn btn-success">NEW</a>
 							</li>
+							{% endif %}
 						</ul>
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
 						<div class="row">
+							{% if is_granted(role_ag) %}
 							<form action="{{ path('app_admin_groupaction_user') }}" id="grpaction" method="post" name="grpaction">
 								<div class="form-group form-inline">
 									<select class="form-control" name="action" required id="action_select">
-										<option value="">
-											{{ "backend.user.group_actions"|trans }}</option>
-										<option value="{{"backend.user.deactivate"|trans }}">
-											{{ "backend.user.deactivate"|trans }}</option>
-										<option value="{{"backend.user.Activate"|trans }}">
-											{{ "backend.user.Activate"|trans }}</option>
-										<option value="{{"backend.user.delete"|trans }}">
-											{{ "backend.user.delete"|trans }}</option>
+										<option value="">{{ "backend.user.group_actions"|trans }}</option>
+										{% if is_granted(role_ag_enable) %}
+										<option value="{{"backend.user.deactivate"|trans }}">{{ "backend.user.deactivate"|trans }}</option>
+										<option value="{{"backend.user.Activate"|trans }}">{{ "backend.user.Activate"|trans }}</option>
+										{% endif %}
+										{% if is_granted(role_ag_delete) %}
+										<option value="{{"backend.user.delete"|trans }}">{{ "backend.user.delete"|trans }}</option>
+										{% endif %}
 									</select>
 									<button class="btn btn-primary" type="submit">Go!!</button>
 								</div>
-
 							</form>
+							{% endif %}
 							<table id="example" class="display table table-striped table-bordered dataminetables">
 								<thead>
+								{% if is_granted(role_ag) %}
 									<th><input type="checkbox" id="select_all" name="select_all"></th>
+								{% endif %}
 									<th>{{ "backend.user.username"|trans }}</th>
 									<th>{{ "backend.user.email"|trans }}</th>
 									<th>{{ "backend.user.name"|trans }}</th>
+								{% if is_granted(role_reset_password_user) %}
+									<th>Reinitialiser</th>
+								{% endif %}
+								{% if is_granted(role_edit) %}
 									<th>{{ "backend.user.modifier"|trans }}</th>
+								{% endif %}
+								{% if is_granted(role_enable) %}
 									<th>{{ "backend.user.status"|trans }}</th>
+								{% endif %}
+								{% if is_granted(role_delete) %}
 									<th>{{ "backend.user.delete"|trans }}</th>
+								{% endif %}
 								</thead>
 								<tbody>
 									{% for user in users|filter(user => not user.deleted)  %}
 										<tr>
-											<td><input type="checkbox" class="chkgrp" name="chkgrp[]" value="{{ user.id }}"></td>
+											{% if is_granted(role_ag) %}
+												<td><input type="checkbox" class="chkgrp" name="chkgrp[]" value="{{ user.id }}"></td>
+											{% endif %}
 											<td>{{ user.username }}</td>
 											<td>{{ user.email }}</td>
 											<td>{{ user.nomComplet }}</td>
-											<td>
-												<a class="btn btn-primary" href="{{ path('app_admin_edit_user',{"id":user.id}) }}">
-													<i class="fa fa-edit"></i>
-												</a>
-											</td>
-											<td>
-												{%  if user.valid %}
-													<a class="btn btn-success activate-link" href="{{ path('app_admin_changevalidite_user', {'id': user.id}) }}">
-														<i class="fa fa-check"></i>
-													</a>
-												{% else %}
-													<a class="btn btn-warning activate-link" href="{{ path('app_admin_changevalidite_user', {'id': user.id}) }}">
-														<i class="fa fa-times"></i>
-													</a>
-												{% endif %}
-											</td>
-											<td>
-												<a href="{{ path('app_admin_delete_user', {'id': user.id}) }}" class="btn btn-danger disable-btn del-link" type="submit">
-													<i class="fa fa-trash"></i>
-												</a>
-											</td>
+											{% if is_granted(role_reset_password_user) %}
+												<td><a class="btn btn-primary" href="{{ path('app_admin_resetpswd',{"id":user.id}) }}"><i class="fa fa-key"></i></a></td>
+											{% endif %}
+											{% if is_granted(role_edit) %}
+												<td><a class="btn btn-primary" href="{{ path('app_admin_edit_user',{"id":user.id}) }}"><i class="fa fa-edit"></i></a></td>
+											{% endif %}
+											{% if is_granted(role_enable) %}
+												<td>
+													{%  if user.valid %}
+														<a class="btn btn-success activate-link" href="{{ path('app_admin_changevalidite_user', {'id': user.id}) }}"> <i class="fa fa-check"></i></a>
+													{% else %}
+														<a class="btn btn-warning activate-link" href="{{ path('app_admin_changevalidite_user', {'id': user.id}) }}"> <i class="fa fa-times"></i></a>
+													{% endif %}
+												</td>
+											{% endif %}
+											{% if is_granted(role_delete) %}
+												<td><a href="{{ path('app_admin_delete_user', {'id': user.id}) }}" class="btn btn-danger disable-btn del-link" type="submit" ><i class="fa fa-trash"></i></a></td>
+											{% endif %}
 										</tr>
 									{% endfor %}
 								</tbody>

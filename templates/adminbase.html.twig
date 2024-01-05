@@ -103,6 +103,7 @@
     <!-- Summernote -->
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <script>
+        {% block dataTableConf %}
         var dataminetables = $('.dataminetables').dataTable({
             "columnDefs": [
                 {"orderable": false, "targets": 0}
@@ -110,6 +111,8 @@
         });
 
         var datasorttables = $('.dataminetables').DataTable();
+
+        {% endblock %}
 
         var datanotminetables = $('.datanotminetables').dataTable({
         });

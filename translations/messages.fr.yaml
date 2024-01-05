@@ -16,6 +16,7 @@ backend:
     home: Accueil
     user: Utilisateur
     manage: Gérer
+    profil: Profile utilisateur
     categories: Categorie
     blog: Blog
     history: Historique

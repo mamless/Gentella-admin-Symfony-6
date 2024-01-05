@@ -1,0 +1,74 @@
+{% extends "admin/bars.html.twig" %}
+{% block contenpage %}
+<div class="">
+    <div class="page-title">
+        <div class="title_left">
+            <h5> {%block titreSection %}Listing {% endblock%} </h5>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>{% block showTitle%} Liste de X {% endblock %}</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        {% if is_granted(role_add) %}
+                        {% block newLinks %}
+                        <li><a href="{% block showNew%}#{% endblock %}" class="btn btn-primary">Nouveau</a>
+                        </li>
+                        {% endblock %}
+                        {% endif %}
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="row">
+                        {% if is_granted(role_ag) %}
+                            {% block GroupAction %}
+                            <form action="{% block showGroup%}#{% endblock %}" id="grpaction" method="post" name="grpaction">
+                                <div class="form-group form-inline">
+                                    <select class="form-control" name="action" required id="action_select">
+                                        <option value="">Action de groupe</option>
+                                        {% if is_granted(role_ag_enable) %}
+                                            <option value="desactiver">Desactiver</option>
+                                            <option value="activer">Activer</option>
+                                        {% endif %}
+                                        {% if is_granted(role_ag_delete) %}
+                                            <option value="supprimer">Supprimer</option>
+                                        {% endif %}
+                                    </select>
+                                    <button class="btn btn-primary" type="submit">Go!!</button>
+                                </div>
+
+                            </form>
+                            {% endblock %}
+                        {% endif %}
+                        {% block beforeTable %}{% endblock %}
+                        {% block showTable%}
+                        <table id="example" class="display table table-striped table-bordered dataminetables" >
+                            {% block showTableHead%}
+                                <thead>
+                                <th><input type="checkbox" id="select_all" name="select_all"></th>
+                                <th>Nom</th>
+                                <th>Code</th>
+                                <th>Modifier</th>
+                                <th>Etat ?</th>
+                                <th>Suprimer</th>
+                                </thead>
+                            {% endblock %}
+                            {% block showTableBody%}
+                                <tbody></tbody>
+                            {% endblock %}
+                        </table>
+                        {% endblock%}
+                        {% block afterTable %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
