@@ -1,7 +1,7 @@
 {% extends 'admin/formPage.html.twig' %}
 {% set title = "Ancienne version poste" %}
 
-{% block Item %} <h5><a href="{{ path('app_admin_blogPosts') }}">Listing</a> <i class="fa fa-long-arrow-right"></i> <a href="{{ path('app_admin_edit_blogPosts', {'id': oldPostForm.vars.value.historique.blogPost.id}) }}">Modifié blog</a>  <i class="fa fa-long-arrow-right"></i>
+{% block Item %} <a href="{{ path('app_admin_blogPosts') }}">Listing</a> <i class="fa fa-long-arrow-right"></i> <a href="{{ path('app_admin_edit_blogPosts', {'id': oldPostForm.vars.value.historique.blogPost.id}) }}">Modifié blog</a>  <i class="fa fa-long-arrow-right"></i>
     <a href="{{ path('app_admin_historique_blogPost', {'id': oldPostForm.vars.value.historique.blogPost.id }) }}">Historique</a>  <i class="fa fa-long-arrow-right"></i> {{ title }}{% endblock %}
 
 {% block formContent %}
