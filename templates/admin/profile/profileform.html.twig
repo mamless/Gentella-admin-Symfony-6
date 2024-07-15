@@ -1,5 +1,5 @@
 {% extends "admin/displayPage.html.twig" %}
-
+{% if ProfileForm.vars.value %} {% set title = "Modifier profil" %} {% else %} {% set title = "Nouvelle profil" %} {% endif%}
 
 {% set role_ag = "ROLE_USER" %}
 {% set role_add = "ROLE_USER" %}
@@ -9,8 +9,7 @@
 {% set role_enable = "ROLE_USER" %}
 {% set role_delete = "ROLE_USER" %}
 
-{%block titreSection %}<a href="{{ path('app_admin_profiles') }}">Liste des profiles</a> >> Nouveau profile  {% endblock%}
-{% block showTitle %} Nouveau profile {% endblock %}
+{%block titreSection %}<a href="{{ path('app_admin_profiles') }}">Liste des profils</a> >> {{ title }} {% endblock%}
 {% block newLinks %}{% endblock %}
 {% block GroupAction %}{% endblock %}
 

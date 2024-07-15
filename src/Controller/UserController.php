@@ -45,7 +45,7 @@ class UserController extends BaseController
     #[IsGranted('ROLE_LIST_USER')]
     public function users(): Response
     {
-        $users = $this->userRepository->findAll();
+        $users = $this->userRepository->findBy(["deleted"=>false]);
 
         return $this->render('admin/user/user.html.twig', ['users' => $users]);
     }

@@ -1,10 +1,11 @@
 {% extends 'admin/bars.html.twig' %}
-
+{% set title = "backend.user.changer_password"|trans %}
+{% block title %}{{ title }}{% endblock %}
 {% block contenpage %}
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>{{ "backend.user.changer_password"|trans }}</h3>
+                <h3>{{ title }}</h3>
             </div>
 
         </div>
@@ -15,7 +16,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>{{ "backend.user.changer_my_password"|trans }}</h2>
+                        <h2>{{ title }}</h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                             </li>
@@ -31,7 +32,7 @@
                         <div class="item form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                                 <a class="btn btn-warning" href="{{ path('app_admin_index') }}">{{ "backend.user.cancel"|trans }}</a>
-                                <button type="submit" name="valider" class="btn btn-success">{{ "backend.user.register"|trans }}</button>
+                                <button type="submit" name="valider" class="btn btn-success">{{ "backend.global.save"|trans }}</button>
                             </div>
                         </div>
                         {{ form_end(passwordForm) }}

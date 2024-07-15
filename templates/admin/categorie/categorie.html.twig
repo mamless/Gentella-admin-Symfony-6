@@ -1,72 +1,62 @@
-{% extends "admin/bars.html.twig" %}
+{% extends "admin/displayPage.html.twig" %}
 
-{% block contenpage %}
-    <div class="">
-        <div class="page-title">
-            <div class="title_left">
-                <h5> Listing </h5>
-            </div>
-        </div>
+{% set role_ag = "ROLE_AG_CATEGORIE" %}
+{% set role_add = "ROLE_ADD_CATEGORIE" %}
+{% set role_ag_enable = "ROLE_AG_ENABLE_CATEGORIE" %}
+{% set role_ag_delete = "ROLE_AG_DELETE_CATEGORIE" %}
+{% set role_edit = "ROLE_EDIT_CATEGORIE" %}
+{% set role_enable = "ROLE_ENABLE_CATEGORIE" %}
+{% set role_delete = "ROLE_DELETE_CATEGORIE" %}
 
-        <div class="clearfix"></div>
+{% set title = "Liste des categories" %}
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="x_panel">
-                    <div class="x_title">
-                        <h2>Liste des categories</h2>
-                        <ul class="nav navbar-right panel_toolbox">
-                            <li><a href="{{ path('app_admin_new_categorie') }}" class="btn btn-success">NEW</a>
-                            </li>
-                        </ul>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="x_content">
-                        <div class="row">
-                            <form action="{{ path('app_admin_groupaction_categorie') }}" id="grpaction" method="post" name="grpaction">
-                                <div class="form-group form-inline">
-                                    <select class="form-control" name="action" required id="action_select">
-                                        <option value="">Action de groupe</option>
-                                        <option value="desactiver">Desactiver</option>
-                                        <option value="activer">Activer</option>
-                                        <option value="supprimer">Supprimer</option>
-                                    </select>
-                                    <button class="btn btn-primary" type="submit">Go!!</button>
-                                </div>
-
-                            </form>
-                            <table id="example" class="display table table-striped table-bordered dataminetables" >
-                                <thead>
-                                <th><input type="checkbox" id="select_all" name="select_all"></th>
-                                <th>Libelle</th>
-                                <th>Cat. parente</th>
-                                <th>Modifier</th>
-                                <th>Etat ?</th>
-                                <th>Suprimer</th>
-                                </thead>
-                                <tbody>
-                                {% for categorie in categories|filter(categorie => not categorie.deleted)  %}
-                                    <tr>
-                                        <td><input type="checkbox" class="chkgrp" name="chkgrp[]" value="{{ categorie.id }}"></td>
-                                        <td>{{ categorie.libelle }}</td>
-                                        <td>{%  if categorie.categorieParente %} {{ categorie.categorieParente.libelle }} {% endif %}</td>
-                                        <td><a class="btn btn-primary" href="{{ path('app_admin_edit_categorie',{"id":categorie.id}) }}"><i class="fa fa-edit"></i></a></td>
-                                        <td>
-                                            {%  if categorie.valid %}
-                                                <a class="btn btn-success activate-link" href="{{ path('app_admin_changevalidite_categorie', {'id': categorie.id}) }}"> <i class="fa fa-check"></i></a>
-                                            {% else %}
-                                                <a class="btn btn-warning activate-link" href="{{ path('app_admin_changevalidite_categorie', {'id': categorie.id}) }}"> <i class="fa fa-times"></i></a>
-                                            {% endif %}
-                                        </td>
-                                        <td><a href="{{ path('app_admin_delete_categorie', {'id': categorie.id}) }}" class="btn btn-danger disable-btn del-link" type="submit" ><i class="fa fa-trash"></i></a></td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+{% block showNew %}{{ path('app_admin_new_categorie') }}{% endblock %}
+{% block showGroup %}{{ path('app_admin_groupaction_categorie') }}{% endblock %}
+{% block showTableHead %}
+    <thead>
+    {% if is_granted(role_ag) %}
+        <th><input type="checkbox" id="select_all" name="select_all"></th>
+    {% endif %}
+    <th>Libelle</th>
+    <th>Cat. parente</th>
+    {% if is_granted(role_edit) %}
+        <th>Modifier</th>
+    {% endif %}
+    {% if is_granted(role_enable) %}
+        <th>Etat ?</th>
+    {% endif %}
+    {% if is_granted(role_delete) %}
+        <th>Suprimer</th>
+    {% endif %}
+    </thead>
 {% endblock %}
+{% block showTableBody%}
+    <tbody>
+    {% for categorie in categories  %}
+        <tr>
+            {% if is_granted(role_ag) %}
+                <td><input type="checkbox" class="chkgrp" name="chkgrp[]" value="{{ categorie.id }}"></td>
+            {% endif %}
+
+            <td>{{ categorie.libelle }}</td>
+            <td>{%  if categorie.categorieParente %} {{ categorie.categorieParente.libelle }} {% endif %}</td>
+            {% if is_granted(role_edit) %}
+                <td><a class="btn btn-primary" href="{{ path('app_admin_edit_categorie',{"id":categorie.id}) }}"><i class="fa fa-edit"></i></a></td>
+            {% endif %}
+            {% if is_granted(role_enable) %}
+                <td>
+                    {%  if categorie.valid %}
+                        <a class="btn btn-success activate-link" href="{{ path('app_admin_changevalidite_categorie', {'id': categorie.id}) }}"> <i class="fa fa-check"></i></a>
+                    {% else %}
+                        <a class="btn btn-warning activate-link" href="{{ path('app_admin_changevalidite_categorie', {'id': categorie.id}) }}"> <i class="fa fa-times"></i></a>
+                    {% endif %}
+                </td>
+            {% endif %}
+            {% if is_granted(role_delete) %}
+                <td><a href="{{ path('app_admin_delete_categorie', {'id': categorie.id}) }}" class="btn btn-danger disable-btn del-link" type="submit" ><i class="fa fa-trash"></i></a></td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    </tbody>
+{% endblock %}
+

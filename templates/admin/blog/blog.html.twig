@@ -1,88 +1,77 @@
-{% extends "admin/bars.html.twig" %}
+{% extends "admin/displayPage.html.twig" %}
 
-{% block contenpage %}
-    <div class="">
-        <div class="page-title">
-            <div class="title_left">
-                <h5> Listing </h5>
-            </div>
-        </div>
+{% set role_ag = "ROLE_AG_BLOG" %}
+{% set role_add = "ROLE_ADD_BLOG" %}
+{% set role_ag_enable = "ROLE_AG_ENABLE_BLOG" %}
+{% set role_ag_delete = "ROLE_AG_DELETE_BLOG" %}
+{% set role_edit = "ROLE_EDIT_BLOG" %}
+{% set role_enable = "ROLE_ENABLE_BLOG" %}
+{% set role_delete = "ROLE_DELETE_BLOG" %}
+{% set role_preview = "ROLE_PREVIEW_BLOG" %}
 
-        <div class="clearfix"></div>
+{% set title = "Liste Blog" %}
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="x_panel">
-                    <div class="x_title">
-                        <h2>Liste des post du blog</h2>
-                        <ul class="nav navbar-right panel_toolbox">
-                            <li><a href="{{ path('app_admin_new_blogPosts') }}" class="btn btn-success">NEW</a>
-                            </li>
-                        </ul>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="x_content">
-                        <div class="row">
-                            <form action="{{ path('app_admin_groupaction_blogPost') }}" id="grpaction" method="post" name="grpaction">
-                                <div class="form-group form-inline">
-                                    {%  if is_granted("ROLE_EDITORIAL") %}
-                                        <select class="form-control" name="action" required id="action_select">
-                                            <option value="">Action de groupe</option>
-                                            <option value="desactiver">Desactiver</option>
-                                            <option value="activer">Activer</option>
-                                            <option value="supprimer">Supprimer</option>
-                                        </select>
-                                        <button class="btn btn-primary" type="submit">Go!!</button>
-                                    {% endif %}
-                                </div>
 
-                            </form>
-                            <table id="example" class="display table table-striped table-bordered {% if is_granted("ROLE_EDITORIAL") %} dataminetables {% else %} datanotminetables {% endif %}" >
-                                <thead>
-                                {% if is_granted("ROLE_EDITORIAL") %}
-                                    <th><input type="checkbox" id="select_all" name="select_all"></th>
-                                {% endif %}
-                                <th>Titre</th>
-                                <th>Date Creation</th>
-                                <th>Date de publication</th>
-                                <th>Modifier</th>
-                                {% if is_granted("ROLE_EDITORIAL") %}
-                                    <th>Etat ?</th>
-                                    <th>Suprimer</th>
-                                {% endif %}
-                                <th>Preview</th>
-                                </thead>
-                                <tbody>
-                                {% for blogPost in blogPosts|filter(blogPost => not blogPost.deleted)  %}
-                                    <tr>
-                                        {% if is_granted("ROLE_EDITORIAL") %}
-                                            <td><input type="checkbox" class="chkgrp" name="chkgrp[]" value="{{ blogPost.id }}"></td>
-                                        {% endif %}
-                                        <td>{{ blogPost.titre }}</td>
-                                        <td>{{ blogPost.createdAt|date("d/m/y h:i:s") }}</td>
-                                        <td>{{ blogPost.plubishedAt|date("d/m/y h:i:s") }}</td>
-                                        <td><a class="btn btn-primary" href="{{ path('app_admin_edit_blogPosts',{"id":blogPost.id}) }}"><i class="fa fa-edit"></i></a></td>
-                                        {% if is_granted("ROLE_EDITORIAL") %}
-                                            <td>
-                                                {%  if blogPost.valid %}
-                                                    <a class="btn btn-success activate-link" href="{{ path('app_admin_changevalidite_blogPost', {'id': blogPost.id}) }}"> <i class="fa fa-check"></i></a>
-                                                {% else %}
-                                                    <a class="btn btn-warning activate-link" href="{{ path('app_admin_changevalidite_blogPost', {'id': blogPost.id}) }}"> <i class="fa fa-times"></i></a>
-                                                {% endif %}
-                                            </td>
-                                            <td><a href="{{ path('app_admin_delete_blogPost', {'id': blogPost.id}) }}" class="btn btn-danger disable-btn del-link" type="submit" ><i class="fa fa-trash"></i></a></td>
-                                        {% endif %}
-                                        <td>
-                                            <a href="{{ path('app_admin_preview_blogpost', {'id': blogPost.id}) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+{% block showNew %}{{ path('app_admin_new_blogPosts') }}{% endblock %}
+{% block showGroup %}{{ path('app_admin_groupaction_blogPost') }}{% endblock %}
+
+
+{% block showTableHead %}
+<thead>
+{% if is_granted(role_ag) %}
+    <th><input type="checkbox" id="select_all" name="select_all"></th>
+{% endif %}
+<th>titre</th>
+<th>Date Creation</th>
+<th>Date de publication</th>
+{% if is_granted(role_edit) %}
+    <th>Modifier</th>
+{% endif %}
+{% if is_granted(role_enable) %}
+    <th>Etat ?</th>
+{% endif %}
+{% if is_granted(role_delete) %}
+    <th>Suprimer</th>
+{% endif %}
+{% if is_granted(role_preview) %}
+<th>Preview</th>
+{% endif %}
+</thead>
+{% endblock %}
+{% block showTableBody%}
+    <tbody>
+    {% for blogPost in blogPosts  %}
+        <tr>
+            {% if is_granted(role_ag) %}
+                <td><input type="checkbox" class="chkgrp" name="chkgrp[]" value="{{ blogPost.id }}"></td>
+            {% endif %}
+
+            <td>{{ blogPost.titre }}</td>
+            <td>{{ blogPost.createdAt|date("d/m/y h:i:s") }}</td>
+            <td>{{ blogPost.plubishedAt|date("d/m/y h:i:s") }}</td>
+            {% if is_granted(role_edit) %}
+                <td><a class="btn btn-primary" href="{{ path('app_admin_edit_blogPosts',{"id":blogPost.id}) }}"><i class="fa fa-edit"></i></a></td>
+            {% endif %}
+            {% if is_granted(role_enable) %}
+                <td>
+                    {%  if blogPost.valid %}
+                        <a class="btn btn-success activate-link" href="{{ path('app_admin_changevalidite_blogPost', {'id': blogPost.id}) }}"> <i class="fa fa-check"></i></a>
+                    {% else %}
+                        <a class="btn btn-warning activate-link" href="{{ path('app_admin_changevalidite_blogPost', {'id': blogPost.id}) }}"> <i class="fa fa-times"></i></a>
+                    {% endif %}
+                </td>
+            {% endif %}
+            {% if is_granted(role_delete) %}
+                <td><a href="{{ path('app_admin_delete_blogPost', {'id': blogPost.id}) }}" class="btn btn-danger disable-btn del-link" type="submit" ><i class="fa fa-trash"></i></a></td>
+            {% endif %}
+
+            {% if is_granted(role_preview) %}
+            <td>
+                <a href="{{ path('app_admin_preview_blogpost', {'id': blogPost.id}) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
+            </td>
+            {% endif %}
+
+        </tr>
+    {% endfor %}
+    </tbody>
 {% endblock %}

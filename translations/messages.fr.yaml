@@ -12,6 +12,7 @@ backend:
     please_confirm: Veuillez confirmer votre action?
     choice_action: Selectionner une action
     no_item_selected: Aucun article selectionné
+    save: Enregistrer
   menu:
     home: Accueil
     user: Utilisateur
@@ -52,3 +53,5 @@ backend:
     changed_password: Mot de passe modifié
     add_user: Utilisateur ajouté
     modify_user: Utilisateur modifié
+    new_user : Nouvel utilisateur
+    edit_user : Modifier utilisateur

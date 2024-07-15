@@ -165,7 +165,7 @@
                     url: link,
                     method: 'POST',
                     success: function(data){
-                        if(data.message=="success"){
+                        if(data.message==="success"){
                             if(data.value===true){
                                 notif("success","Reussi","Suprimmé");
                                 // Get the position of the current data from the node
@@ -177,7 +177,9 @@
                             }
 
 
-                        }else {
+                        }else if(data.message==="warning"){
+                            notif("warning","Warning", "Vous ne pouvez pas supprimer cette catégorie."  );
+                        } else {
                             notif("error","{{"backend.global.error"|trans }}", "{{"backend.global.an_unexpected_error"|trans }}"  );
                         }
                     },

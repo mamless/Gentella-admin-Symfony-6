@@ -28,16 +28,15 @@ class BlogController extends BaseController
     }
 
     #[Route(path: '/admin/blog', name: 'app_admin_blogPosts')]
-    #[IsGranted('ROLE_WRITER')]
+    #[IsGranted('ROLE_LIST_BLOG')]
     public function blogPosts(): Response
     {
-        $blogPosts = $this->blogPostRepository->findAll();
-
+        $blogPosts = $this->blogPostRepository->findBy(["deleted"=>false]);
         return $this->render('admin/blog/blog.html.twig', ['blogPosts' => $blogPosts]);
     }
 
     #[Route(path: '/admin/blog/new', name: 'app_admin_new_blogPosts')]
-    #[IsGranted('ROLE_WRITER')]
+    #[IsGranted('ROLE_ADD_BLOG')]
     public function newBlogPost(Request $request)
     {
         $historique = new Historique();
@@ -57,6 +56,7 @@ class BlogController extends BaseController
 
             $image = $this->uploadHelper->uploadBlogImage($blogImage, $blogPost->getTitre());
             $blogPost->setDeleted(false)
+                ->setCreatedBy($this->getUser())
                 ->setCreator($this->getUser())
                 ->setBlogImage($image->getFilename())
             ;
@@ -76,9 +76,10 @@ class BlogController extends BaseController
     }
 
     #[Route(path: '/admin/blog/edit/{id}', name: 'app_admin_edit_blogPosts')]
-    #[IsGranted('ROLE_WRITER')]
+    #[IsGranted('ROLE_EDIT_BLOG')]
     public function editBlogPost(BlogPost $blogPost, Request $request)
     {
+        $this->errorNotFoundBlog($blogPost);
         $oldPost = new OldPost();
         $oldPost->setContent($blogPost->getContent())
             ->setTitre($blogPost->getTitre())
@@ -108,6 +109,8 @@ class BlogController extends BaseController
              * if (!$this->uploadHelper->validateImg($blogImage)){
 
             }*/
+
+            $blogPost->setModfiedBy($this->getUser());
             $this->entityManager->persist($blogPost);
             $this->entityManager->flush();
             $this->addFlash('success', 'Post modifié');
@@ -119,9 +122,10 @@ class BlogController extends BaseController
     }
 
     #[Route(path: '/admin/blog/changevalidite/{id}', name: 'app_admin_changevalidite_blogPost', methods: ['post'])]
-    #[IsGranted('ROLE_EDITORIAL')]
+    #[IsGranted('ROLE_ENABLE_BLOG')]
     public function activate(BlogPost $blogPost): JsonResponse
     {
+        $this->errorNotFoundBlog($blogPost);
         if ($blogPost->getValid()) {
             $action = 'Desactiver';
         } else {
@@ -132,7 +136,9 @@ class BlogController extends BaseController
             ->setBlogPost($blogPost)
             ->setUser($this->getUser())
             ->setAction($action);
+        $blogPost->setModfiedBy($this->getUser());
         $blogPost = $this->blogPostRepository->changeValidite($blogPost);
+
         $this->entityManager->persist($historique);
         $this->entityManager->flush();
 
@@ -140,14 +146,16 @@ class BlogController extends BaseController
     }
 
     #[Route(path: '/admin/blog/delete/{id}', name: 'app_admin_delete_blogPost')]
-    #[IsGranted('ROLE_WRITER')]
+    #[IsGranted('ROLE_DELETE_BLOG')]
     public function delete(BlogPost $blogPost): JsonResponse
     {
+        $this->errorNotFoundBlog($blogPost);
         $historique = new Historique();
         $historique->setUser($this->getUser())
             ->setAction('Suppression')
             ->setBlogPost($blogPost);
         $blogPost->oldify();
+        $blogPost->setModfiedBy($this->getUser());
         $blogPost = $this->blogPostRepository->delete($blogPost);
 
         $this->entityManager->persist($historique);
@@ -157,7 +165,7 @@ class BlogController extends BaseController
     }
 
     #[Route(path: '/admin/blog/groupaction', name: 'app_admin_groupaction_blogPost')]
-    #[IsGranted('ROLE_EDITORIAL ')]
+    #[IsGranted('ROLE_AG_BLOG')]
     public function groupAction(Request $request): JsonResponse
     {
         $action = $request->get('action');
@@ -165,27 +173,33 @@ class BlogController extends BaseController
         $historique = new Historique();
         $historique->setUser($this->getUser());
         $bloPosts = $this->blogPostRepository->findBy(['id' => $ids]);
-        if ($action == 'desactiver' && $this->isGranted('ROLE_EDITORIAL')) {
+        if ($action == 'desactiver' && $this->isGranted('ROLE_AG_ENABLE_BLOG')) {
             foreach ($bloPosts as $blogPost) {
+                $this->errorNotFoundBlog($blogPost);
                 $blogPost->setValid(false);
                 $historique->setAction('Desactiver')
                     ->setBlogPost($blogPost);
+                $blogPost->setModfiedBy($this->getUser());
                 $this->entityManager->persist($historique);
                 $this->entityManager->persist($blogPost);
             }
-        } elseif ($action == 'activer' && $this->isGranted('ROLE_EDITORIAL')) {
+        } elseif ($action == 'activer' && $this->isGranted('ROLE_AG_ENABLE_BLOG')) {
             foreach ($bloPosts as $blogPost) {
+                $this->errorNotFoundBlog($blogPost);
                 $blogPost->setValid(true);
                 $historique->setAction('Activer')
                     ->setBlogPost($blogPost);
+                $blogPost->setModfiedBy($this->getUser());
                 $this->entityManager->persist($historique);
                 $this->entityManager->persist($blogPost);
             }
-        } elseif ($action == 'supprimer' && $this->isGranted('ROLE_EDITORIAL')) {
+        } elseif ($action == 'supprimer' && $this->isGranted('ROLE_AG_DELETE_BLOG')) {
             foreach ($bloPosts as $blogPost) {
+                $this->errorNotFoundBlog($blogPost);
                 $blogPost->setDeleted(true);
                 $historique->setAction('Suppression')
                     ->setBlogPost($blogPost);
+                $blogPost->setModfiedBy($this->getUser());
                 $this->entityManager->persist($historique);
                 $this->entityManager->persist($blogPost);
             }
@@ -198,14 +212,14 @@ class BlogController extends BaseController
     }
 
     #[Route(path: '/admin/blog/historique/{id}', name: 'app_admin_historique_blogPost')]
-    #[IsGranted('ROLE_SUPERUSER')]
+    #[IsGranted('ROLE_UNDO_HISTORYBLOG')]
     public function historique(BlogPost $blogPost): Response
     {
         return $this->render('admin/blog/historique.html.twig', ['blogPost' => $blogPost]);
     }
 
     #[Route(path: '/admin/blog/historique/undo/{id}', name: 'app_admin_historique_undo')]
-    #[IsGranted('ROLE_SUPERUSER')]
+    #[IsGranted('ROLE_UNDO_HISTORYBLOG')]
     public function undo(Historique $historique): RedirectResponse
     {
         $blogPost = $historique->getBlogPost();
@@ -259,30 +273,38 @@ class BlogController extends BaseController
         return $this->redirectToRoute('app_admin_historique_blogPost', ['id' => $historique->getBlogPost()->getId()]);
     }
 
-    // TODO: add image upload support
     #[Route(path: '/admin/blog/preview/{id}', name: 'app_admin_preview_blogpost')]
     #[IsGranted('ROLE_ADMIN')]
     public function preview(BlogPost $blogPost): JsonResponse
     {
         // TODO: preview page for admins
+        $this->errorNotFoundBlog($blogPost);
         return $this->json(['TODO']);
     }
 
     #[Route(path: '/admin/blog/historique/oldpost/{id}', name: 'app_admin_oldpost_blogPosts')]
-    #[IsGranted('ROLE_WRITER')]
+    #[IsGranted('ROLE_VIEW_HISTORYBLOG')]
     public function oldPost(OldPost $oldPost): Response
     {
-        $form = $this->createForm(OldPostFormType::class, $oldPost);
 
+        $form = $this->createForm(OldPostFormType::class, $oldPost);
         return $this->render('admin/blog/oldpostform.html.twig', ['oldPostForm' => $form]);
     }
 
     #[Route(path: '/admin/blog/historiques', name: 'app_admin_allhistorique_blogPosts')]
-    #[IsGranted('ROLE_WRITER')]
+    #[IsGranted('ROLE_LIST_HISTORYBLOG')]
     public function historiques(): Response
     {
         $historiques = $this->historiqueRepository->findAll();
 
         return $this->render('admin/blog/fullhistorique.html.twig', ['historiques' => $historiques]);
     }
+
+    public function errorNotFoundBlog(BlogPost $blogPost)
+    {
+        if ( $blogPost->isDeleted()){
+            throw $this->createNotFoundException("blogPost not found");
+        }
+    }
+
 }

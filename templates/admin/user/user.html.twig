@@ -8,13 +8,13 @@
 {% set role_enable = "ROLE_ENABLE_USER" %}
 {% set role_delete = "ROLE_DELETE_USER" %}
 {% set role_reset_password_user = "ROLE_RESET_PASSWORD_USER" %}
-
+{% set title = "backend.user.user_listing"|trans  %}
+{% block title %}{{ title }}{% endblock %}
 {% block contenpage %}
 	<div class="">
 		<div class="page-title">
 			<div class="title_left">
 				<h5>
-					{{ "backend.user.listing"|trans }}
 				</h5>
 			</div>
 		</div>
@@ -26,7 +26,7 @@
 				<div class="x_panel">
 					<div class="x_title">
 						<h2>
-							{{ "backend.user.user_listing"|trans }}</h2>
+							{{ title }}</h2>
 						<ul class="nav navbar-right panel_toolbox">
 							{% if is_granted(role_add) %}
 							<li>

@@ -3,9 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\CategorieRepository;
+use App\Traits\StateEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -13,6 +15,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[UniqueEntity(fields: ['libelle'])]
 class Categorie
 {
+    use StateEntity;
+    use TimestampableEntity;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -28,11 +32,6 @@ class Categorie
     #[ORM\OneToMany(mappedBy: 'CategorieParente', targetEntity: Categorie::class)]
     private Collection $categories;
 
-    #[ORM\Column(type: 'boolean')]
-    private ?bool $valid = null;
-
-    #[ORM\Column(type: 'boolean')]
-    private ?bool $deleted = null;
 
     #[ORM\ManyToMany(targetEntity: BlogPost::class, mappedBy: 'categories')]
     private Collection $blogPosts;
@@ -103,29 +102,6 @@ class Categorie
         return $this;
     }
 
-    public function getValid(): ?bool
-    {
-        return $this->valid;
-    }
-
-    public function setValid(bool $valid): self
-    {
-        $this->valid = $valid;
-
-        return $this;
-    }
-
-    public function getDeleted(): ?bool
-    {
-        return $this->deleted;
-    }
-
-    public function setDeleted(bool $deleted): self
-    {
-        $this->deleted = $deleted;
-
-        return $this;
-    }
 
     public function __toString(): string
     {
@@ -158,5 +134,10 @@ class Categorie
         }
 
         return $this;
+    }
+
+    public function oldify(): void
+    {
+        $this->libelle .= '-old-'.$this->id;
     }
 }

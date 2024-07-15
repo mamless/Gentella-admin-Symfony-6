@@ -12,6 +12,7 @@ backend:
     please_confirm: Please confirm your action?
     choice_action: Select an action
     no_item_selected: No items selected
+    save: Save
   menu:
     home: Home
     user: User
@@ -52,6 +53,8 @@ backend:
     changed_password: Changed password
     add_user: Added user
     modify_user: Modified user
+    new_user: New user
+    edit_user: Edit user
   login:
     new_site: New to site?
     create_acount: Create Account

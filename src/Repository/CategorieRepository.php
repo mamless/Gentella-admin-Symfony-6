@@ -66,7 +66,7 @@ class CategorieRepository extends ServiceEntityRepository
 
     public function delete(Categorie $categorie)
     {
-        $categorie->setDeleted(true);
+        $categorie->setDeleted(true)->oldify();
         $this->entityManager->persist($categorie);
         $this->entityManager->flush();
 

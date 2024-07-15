@@ -3,42 +3,57 @@
 namespace App\Entity;
 
 use App\Repository\AppContactRepository;
+use App\Traits\StateEntity;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: AppContactRepository::class)]
 class AppContact
 {
+    use StateEntity;
+    use TimestampableEntity;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups('mail')]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('mail')]
     private ?string $fullName = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('mail')]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('mail')]
     private ?string $object = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups('mail')]
     private ?string $message = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('mail')]
     private ?string $phone = null;
 
     #[ORM\Column]
+    #[Groups('mail')]
     private ?bool $isRead = null;
 
     #[ORM\Column]
+    #[Groups('mail')]
     private ?bool $deleted = null;
 
     #[ORM\Column]
+    #[Groups('mail')]
     private ?\DateTimeImmutable $sendedAt = null;
 
     #[ORM\Column]
+    #[Groups('mail')]
     private ?bool $isAnswered = null;
 
     public function getId(): ?int

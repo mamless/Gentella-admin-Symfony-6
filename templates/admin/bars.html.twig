@@ -42,32 +42,43 @@
                                 </ul>
                             </li>
                         {% endif %}
-                        {% if is_granted("ROLE_WRITER") %}
+                        {% if is_granted("ROLE_ACCESS_MENU_CATEGORIE") %}
                             <li><a><i class="fa fa-bookmark"></i>{{ "backend.menu.categories"|trans }} <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
                                     <li><a href="{{ path('app_admin_categories') }}">{{ "backend.menu.manage"|trans }}</a></li>
                                 </ul>
                             </li>
+                        {% endif %}
+                        {% if is_granted("ROLE_ACCESS_MENU_BLOG") %}
                             <li><a><i class="fa fa-clipboard"></i> {{ "backend.menu.blog"|trans }} <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
+                                    {% if is_granted("ROLE_ACCESS_MENU_MANAGE_BLOG") %}
                                     <li><a href="{{ path('app_admin_blogPosts') }}">{{ "backend.menu.manage"|trans }}</a></li>
-                                    {% if is_granted("ROLE_EDITORIAL") %}
+                                    {% endif %}
+
+                                    {% if is_granted("ROLE_ACCESS_MENU_MANAGE_HISTORYBLOG") %}
                                         <li><a href="{{ path('app_admin_allhistorique_blogPosts') }}">{{ "backend.menu.history"|trans }}</a></li>
                                     {% endif %}
                                 </ul>
                             </li>
+                        {% endif %}
+                        {% if is_granted("ROLE_ACCESS_MENU_CONTACT") %}
                             <li><a><i class="fa fa-envelope"></i>{{ "backend.menu.contact"|trans }} <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
                                     <li><a href="{{ path('app_admin_contacts') }}"> {{ "backend.menu.inbox"|trans }}</a></li>
                                 </ul>
                             </li>
                         {% endif %}
-                        {% if is_granted("ROLE_ADMINISTRATOR") %}
+                        {% if is_granted("ROLE_ACCESS_MENU_PARAMETRE") %}
 
                             <li><a><i class="fa fa-cog"></i> {{ "backend.menu.settings"|trans }} <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
+                                    {% if is_granted("ROLE_ACCESS_MENU_MANAGE_GENERAL") %}
                                     <li><a href="{{ path('app_admin_parametre_generale') }}">{{ "backend.menu.general"|trans }}</a></li>
+                                    {% endif %}
+                                    {% if is_granted("ROLE_ACCESS_MENU_MANAGE_FAQ") %}
                                     <li><a href="{{ path('app_admin_faqs') }}">{{ "backend.menu.faq"|trans }}</a></li>
+                                    {% endif %}
                                 </ul>
                             </li>
                         {% endif %}

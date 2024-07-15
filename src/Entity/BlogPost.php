@@ -3,18 +3,23 @@
 namespace App\Entity;
 
 use App\Repository\BlogPostRepository;
+use App\Traits\StateEntity;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: BlogPostRepository::class)]
 #[UniqueEntity(fields: ['titre'])]
 class BlogPost
 {
+    use StateEntity;
+    use TimestampableEntity;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -37,15 +42,6 @@ class BlogPost
     #[ORM\Column( nullable: true)]
     private ?DateTime $plubishedAt = null;
 
-    #[ORM\Column]
-    private ?bool $deleted = null;
-
-    #[ORM\Column]
-    private ?bool $valid = null;
-
-    #[Gedmo\Timestampable(on:'create')]
-    #[ORM\Column]
-    private ?DateTime $createdAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'blogPosts')]
     #[ORM\JoinColumn(nullable: false)]
@@ -128,42 +124,6 @@ class BlogPost
     public function setPlubishedAt(?DateTimeInterface $plubishedAt): self
     {
         $this->plubishedAt = $plubishedAt;
-
-        return $this;
-    }
-
-    public function getDeleted(): ?bool
-    {
-        return $this->deleted;
-    }
-
-    public function setDeleted(bool $deleted): self
-    {
-        $this->deleted = $deleted;
-
-        return $this;
-    }
-
-    public function getValid(): ?bool
-    {
-        return $this->valid;
-    }
-
-    public function setValid(bool $valid): self
-    {
-        $this->valid = $valid;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?DateTime
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(DateTime $createdAt): self
-    {
-        $this->createdAt = $createdAt;
 
         return $this;
     }

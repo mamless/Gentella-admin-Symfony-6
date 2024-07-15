@@ -22,13 +22,14 @@ class ParamsController extends BaseController
     }
 
     #[Route(path: '/admin/parametre/generale', name: 'app_admin_parametre_generale')]
-    #[IsGranted('ROLE_ADMINISTRATOR')]
+    #[IsGranted('ROLE_ACCESS_MENU_MANAGE_GENERAL')]
     public function parametres(Request $request): Response
     {
         $params = $this->paramsRepository->findOneBy(["realId"=>1]);
         if ($params == null){
             $params = new Params();
             $params->setRealId(1)
+                ->setCreatedBy($this->getUser())
                 ->init();
             $this->entityManager->persist($params);
             $this->entityManager->flush();
@@ -36,6 +37,7 @@ class ParamsController extends BaseController
         $form = $this->createForm(ParamsFormType::class,$params);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
+            $params->setModfiedBy($this->getUser());
             $this->entityManager->persist($params);
             $this->entityManager->flush();
             $this->addFlash("success","Parametre modifié");
@@ -43,4 +45,5 @@ class ParamsController extends BaseController
         }
         return $this->render("admin/params/generale/generale.html.twig",["Form"=>$form->createView()]);
     }
+
 }
