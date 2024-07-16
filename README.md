@@ -1,4 +1,4 @@
-<p align="center"><img src="https://symfony.com/images/logos/header-logo.svg"></p>
+<p align="center"><img alt="symfony logo" src="https://symfony.com/images/logos/header-logo.svg"></p>
 
 # **Symfony 6 backoffice with Gentella Free Bootstrap 4 Admin Dashboard Template**
 
@@ -79,6 +79,11 @@ And use the next credentials to login.
 
 **ENJOY**
 
+**Latest Updates 15/07/2024 (long time no see)**
+- Add rate limiter for password
+- Add a new concept of profile for users instead of directly giving roles to user , we create a profile with a set of roles and then link it to the user , now each controller method and each action on twig templates is secured by a dedicated role, the role system is completely configurable as pleased. But we can steal give users roles directly 
+- Data fixtures contains all the new roles
+
 **Recent Updates**
 - removed sec check : **OK**
 - upgraded to symfony 5.4 : **OK**
@@ -97,4 +102,5 @@ And use the next credentials to login.
 - - load mail with ajax
 - Add faker to generate fake data 
 - add SEO fields to each entity
-- upgrade to symfony 6.4 (the LTS version november 2023)
+- ~~upgrade to symfony 6.4 (the LTS version november 2023)~~
+- upgrade to symfony 7 
