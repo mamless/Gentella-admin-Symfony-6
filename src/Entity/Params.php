@@ -55,6 +55,8 @@ class Params
 
     public function init(): void
     {
+        $this->setDeleted(false);
+        $this->setValid(true);
         $this->setUseTerms("vide");
     }
 }
