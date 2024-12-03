@@ -29,7 +29,7 @@
         "symfony/stopwatch": "6.2.*",
         "symfony/twig-bundle": "6.2.*",
         "symfony/validator": "6.2.*",
-        "symfony/var-dumper": "6.2.*",
+        "symfony/var-dumper": "6.4.*",
         "symfony/web-profiler-bundle": "6.2.*",
         "symfony/yaml": "6.2.*",
         "symfonycasts/reset-password-bundle": "^1.1",
